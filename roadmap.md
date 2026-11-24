@@ -185,9 +185,50 @@ $$
 
 At fixed nonzero $k$ this survives at the small-ball curvature order. Relative to $\eta_0\delta A|_V$ its leading coefficient is $-\beta g k^2/(3\eta_0D)$. The term vanishes in the long-wavelength source limit at fixed amplitude in the linear response coefficient, or when $\beta g=0$. A single constant tidal tensor on the reference sphere would miss this term. The numerical probe uses $\eta_0$ chosen to match $G_0$ at zero momentum and verifies both the finite-wavelength force correction and the $r^4$ residual scaling. The prescribed density mode does not itself provide a conformal matter state or its modular entropy. The calculation establishes a mismatch in the modeled UV response, while the full generalized entropy balance remains open.
 
+### CFT modular response and the full first variation in the comparison model
+
+🟢 [Done] Evaluated the vacuum-subtracted CFT state contribution for a static conserved density mode. It cancels the area term at the matched Einstein coupling and leaves the massive-shell entropy residual. Reproduce the quadrature with [cft_ball_balance.py](experiments/cft_ball_balance.py).
+
+Use a free massless Weyl fermion in 3+1 dimensions. In a large infrared box take two positive-energy one-particle modes of the same helicity and momenta $\mathbf p_\pm=(p_\perp,0,\pm k/2)$, with $p_\perp>0$. Their energies are equal, $E=\sqrt{p_\perp^2+k^2/4}$. Form the equal-weight sum and difference of the two one-particle states, choosing their relative phase so that the spinor overlap is real. Each superposition is stationary. For unit-normalized spinors the overlap magnitude is $p_\perp/E$, so the energy-density interference is nonzero. For each state form a positive statistical mixture of the vacuum and that excitation and differentiate the two mixture paths at zero admixture. Their difference removes the common homogeneous stress tensor and selects $\delta\langle T_{00}\rangle=\rho_k\cos(kz)$. Averaging the prepared mixtures over rotations about the wave axis projects onto the scalar sector. Conservation of the free stress tensor ensures that the nonzero Fourier mode satisfies $k\,\delta T^{z\nu}=0$. Transverse stresses need not vanish and can affect the lapse equation, but do not enter the Hamiltonian constraint or the vacuum ball's state modular response. The box is a normalization regulator for the stationary Fourier mode. The modular kernel used below is the infinite-flat-space vacuum kernel, and the comparison is made per unit Fourier amplitude in that limit.
+
+For the reference sphere of radius $r$, the CFT entanglement first law on the fixed flat background gives
+
+$$
+\delta S_{\rm matter}
+=2\pi\int_{B_r}w\,\delta\langle T_{00}\rangle\,d^3x,
+\qquad
+w=\frac{r^2-|x|^2}{2r}.
+$$
+
+This is the state variation of vacuum-subtracted matter entropy, with the usual ball modular Hamiltonian for the fermionic CFT. A shift of the surface acting on this already first-order matter integrand contributes only at second order. Geometry-dependent vacuum terms belong to the assumed UV/geometry response in this comparison. [Casini, Huerta, and Myers, spherical vacuum modular flow](https://arxiv.org/abs/1102.0440) · [Jacobson, state and geometry variations](https://arxiv.org/abs/1505.04753)
+
+Use $\nabla^2\Psi=4\pi G_0\,\delta\langle T_{00}\rangle$. At the boundary $w=0$ and $\partial_nw=-1$, while $\nabla^2w=-3/r$ in the bulk. Integration by parts gives
+
+$$
+\delta S_{\rm matter}
+=\frac{1}{2G_0}\left(\int_{\partial B_r}\Psi\,dA_0-\frac{3}{r}\int_{B_r}\Psi\,dV_0\right)
+=-\frac{\delta A|_V}{4G_0}.
+$$
+
+The last identity uses the fixed-volume area formula in the preceding section. It holds to first order for smooth scalar profiles in this comparison, without expanding in $kr$. Denote the integrated massive-shell term from the preceding section by $\delta S_b$. The modeled total entropy variation is
+
+$$
+\delta S_{\rm gen}|_V
+=\left(\eta_0-\frac{1}{4G_0}\right)\delta A|_V+\delta S_b.
+$$
+
+At $4\eta_0G_0=1$, the entire area contribution cancels at linear order and the residual for the cosine mode is
+
+$$
+\delta S_{\rm gen}|_V
+=\frac{32\pi^2\beta g G_0}{45(M^2+v^2k^2)}\,k^2\rho_k r^4+O(r^6).
+$$
+
+It is nonzero for generic nonzero $\beta g k^2\rho_k$. In the small-ball coefficient, a constant change of $\eta_0$ can compensate it at one chosen wave number, but cannot compensate the different $k$ dependence across the source family. The result is for the assumed entropy functional $\eta_0 A+S_b+S_{\rm matter}$. It does not determine additional geometry-dependent vacuum or regulator terms of a microscopic model. The numerical check independently integrates the modular weight and the shell angular profile, and tests both matched and mismatched area coefficients.
+
 ### Highest-priority follow-up
 
-🟠 [Next] Test whether a microscopic entropy functional or the fixed geometric quantity contributes the compensating two-derivative term. Use multiple conserved source profiles, a matter state with an independently known modular response, and the same coupling normalization. Require independent derivations of $\eta_0$ and $G_0$ before interpreting agreement of their values as a prediction.
+🟠 [Next] Derive geometry-dependent vacuum entropy and the fixed-region prescription from a microscopic model or a specified covariant effective action. Test whether they supply the compensating derivative contribution across multiple wave numbers with a single normalization. Require an independent determination of $\eta_0$ and $G_0$ before treating their agreement as a prediction.
 
 ## 3. Joint gravitational response in a single model
 
