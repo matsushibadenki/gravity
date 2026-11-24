@@ -892,7 +892,357 @@ $$
 
 The time- and space-curvature couplings change the constraint coefficients without producing cancellation in this comparison. The script checks three speeds, including the luminal reference, and solves the updated lapse equation before testing the entropy. Its proper-time band is shorter than the squared radii in the numerical window. The calculation is a two-derivative and leading-area test, rather than a strict small-ball limit through the proper-time scale or a proof for arbitrary foliation-dependent operators. Additional local curvature or clock terms and their entropy may contribute beyond the retained order.
 
-🟠 [Next] Compute the next derivative terms of this same clock-dependent determinant and the corresponding replica response on the moving geometry. At that order solve the corrected constraints and check whether any new finite clock-dependent term changes the independently matched $r^4$ coefficient.
+🟠 [Next] The next section computes the four-derivative terms of the luminal member, solves the corrected constraints, and tests the retained local entropy. The nonluminal member and independent finite clock terms remain open.
+
+### Four-derivative shell terms and the corrected moving-ball constraint
+
+🟢 [Done] Derived the four-derivative terms from the same heavy-tensor proper-time band and solved the corrected scalar lapse and momentum constraints for the luminal member. Recomputed the local boundary entropy on that data. Run [higher_derivative_clock_ball.py](experiments/higher_derivative_clock_ball.py).
+
+Set $v=1$, so the matter and shell effective metrics agree. Write $A=A_0+C$ for the matched two-derivative coefficient and define
+$J=\int_{s_1}^{s_2}e^{-M^2s}\,ds/s$ in the same band that gives $C=5(192\pi^2)^{-1}\int_{s_1}^{s_2}e^{-M^2s}\,ds/s^2$. The Lorentzian higher-derivative Lagrangian from the minimal rank-five Bochner operator is
+
+$$
+\frac{J}{32\pi^2}
+\left[5\left(\frac{R^2}{72}+\frac{C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma}}{120}
+-\frac{E_4}{360}\right)
++\frac{\operatorname{tr}(\Omega_{\mu\nu}\Omega^{\mu\nu})}{12}\right].
+$$
+
+Here $C_{\mu\nu\rho\sigma}$ is the Weyl tensor, distinct from the coefficient $C$. Denote the scalar and Weyl couplings by $B_R=5J/(2304\pi^2)$ and $B_C=5J/(3840\pi^2)$. Use the same treatment of the integrated total derivative and the topologically completed Euler term as in the curved-ball calculation. Use identity fiber gluing for the heavy regional trace and the usual metric cone prescription for the rank part. Work on the perturbative branch continuously connected to the Einstein-scalar solution. In a constraint term already proportional to a four-derivative coefficient, evaluate the higher time derivatives using the leading equations, rather than keeping extra modes of a truncated action. [Vassilevich, four-derivative heat coefficient](https://arxiv.org/abs/hep-th/0306138) · [Fursaev, Patrushev, and Solodukhin, geometric cone curvature terms](https://arxiv.org/abs/1306.4000)
+
+Choose the positive-expansion reference and the initial comoving scalar data $\zeta=f$, $\dot\zeta=0$ at $a_{\rm FLRW}=1$. This notation refers to the perturbation coefficient. At zeroth order in $B_R,B_C$, $\bar R=-6H^2$, $\dot{\bar R}=-6H\bar R$, $\delta K_0=\Delta f/H$, and $\delta R$ and the electric and magnetic Weyl tensors vanish on the test slice. They need not remain zero in time. In particular, $\delta\dot R=-2\bar R\,\Delta f/H$ follows from the clock trace equation and the leading scalar evolution $\ddot\zeta=\Delta f$ at the chosen time. The clock-projected spatial bundle has a trivial reference connection on flat FLRW slices in a comoving orthonormal frame. At linear order its spatial connection is that of the spatial metric, and the temporal internal rotation from a scalar shift is zero. Thus the quadratic connection-curvature action in this scalar calculation is independent of lapse and longitudinal shift. It does not correct these two constraints. Its canonical entropy variation also vanishes by the component trace under the stipulated gluing.
+
+Let $U^{R}_{\mu\nu}$ and $U^{C}_{\mu\nu}$ be the metric Euler tensors of $R^2$ and Weyl-squared, so the field equation reads $2(A G_{\mu\nu}+B_R U^{R}_{\mu\nu}+B_C U^{C}_{\mu\nu})=T_{\mu\nu}$ in the metric sector. Work with projections onto the normalized clock normal $n$ and the slice. The $R^2$ tensor is $2R R_{\mu\nu}-g_{\mu\nu}R^2/2+2(g_{\mu\nu}\Box-\nabla_\mu\nabla_\nu)R$. The nonzero contributions to the order-reduced constraint at the chosen reading are
+
+$$
+\delta U^R_{nn}=-24\bar R\,\Delta f,\qquad
+\delta U^R_{ni}=\frac{4\bar R}{H}\partial_i\Delta f,\qquad
+\delta U^C_{ni}=-8H\partial_i\Delta f,\qquad
+\delta U^C_{nn}=0.
+$$
+
+For the Weyl momentum contribution, the Weyl-squared variation is conformally covariant on the four-dimensional conformally flat background. In the flat conformal frame at the chosen reading the nonzero term is $4\partial_j\delta\dot E_{ij}$, where $\delta\dot E_{ij}=-3H(\partial_i\partial_j f)^{\rm TF}$. The lapse contraction contains only spatial derivatives of $E_{ij}$ and vanishes on this slice. [Bueno et al., curvature-action variation](https://arxiv.org/abs/1612.04374) · [Conformal weight of the Bach tensor](https://link.springer.com/article/10.1140/epjc/s10052-024-13168-9)
+
+The corrected homogeneous lapse equation at fixed $H$ is $\bar\rho_\varphi=6AH^2+324B_RH^4$ at this order. In the linear density variation, use $\delta\rho_\varphi=-12AH^2\alpha$ because the lapse perturbation $\alpha$ is already of first order in the higher-derivative coefficients. The momentum equation fixes $\alpha$ and the lapse equation then fixes $\psi$, with the same infrared convention as before:
+
+$$
+\alpha=\frac{12B_R+4B_C}{A}\Delta f,\qquad
+\psi=-\frac{f}{H}\left(1+\frac{12B_R\bar R}{A}\right),\qquad
+\delta K=-3H\alpha-\Delta\psi .
+$$
+
+The correction induces a nonzero clock energy variation even though it was zero in the two-derivative comparison. The script checks both updated constraints exactly for the example Fourier amplitude.
+
+For the boundary calculation the intrinsic slice data $f$ are held fixed by the initial-data choice, so the physical fixed-volume area variation is the same geometric functional of $f$. The $R^2$ entropy shifts the reference area density by $8\pi B_R\bar R$. Its additional term proportional to $B_R\delta R$ is second order in four-derivative coefficients, since $\delta R$ vanished at leading order. Likewise the Weyl entropy is zero at the retained order, even though the Weyl momentum contribution changed the lapse. The connected fiber heat trace has no linear contribution on the specified replica. The local geometric result is $\eta_{\rm ref}\delta A|_V$, with $\eta_{\rm ref}=4\pi(A+2B_R\bar R)$.
+
+For a one-loop comparison, retain the leading reduced scalar vacuum collar response of the previous section. In a loop expansion a heavy one-loop change of the light vacuum determinant is a mixed higher-loop correction. The regional algebra, clock conditioning, and collar subtraction are those specified earlier. For the two-sinc profile with no central quartic monomial the retained light collar has zero $r^4$ coefficient. Therefore the retained fixed-volume coefficient is
+
+$$
+\left[\delta S_{\rm comparison}|_V\right]_{r^4}
+=-\frac{2\pi}{5}\eta_{\rm ref}k^2 .
+$$
+
+It is nonzero in the perturbative regime with $\eta_{\rm ref}>0$. The numerical check uses a common band $[10^{-6},2\times10^{-6}]$ for the heavy induced Einstein coefficient and both curvature-squared couplings. It verifies the coefficient over four radii in the local band regime. This test includes solved higher-derivative constraints and the corresponding local entropy, at fixed physical volume, for $v=1$. It does not derive the finite terms of a unified microscopic collar prescription, evaluate additional clock interactions, or establish the result at $v\ne1$.
+
+🟠 [Next] The next section supplies a common proper-time Gaussian benchmark and an action-derived fixed volume. The physical inhomogeneous light determinant still has to be computed.
+
+### Shared proper-time band and the Einstein-frame volume test
+
+🟢 [Done] Matched a light and heavy Gaussian comparison in a common proper-time band, derived its local boundary terms and a fixed generalized volume from the retained action, and tested the corrected constraints. The actual inhomogeneous reduced clock determinant remains open. Run [shared_regulator_clock_ball.py](experiments/shared_regulator_clock_ball.py).
+
+Stay in the luminal member and use the expanding clock-aligned reference. At leading order the reduced scalar on homogeneous flat FLRW has constant $\varepsilon_H=3$. Its quadratic action on that reference becomes the massless minimally coupled scalar action after a constant canonical normalization. This equivalence fixes the homogeneous operator. To conduct a shared-regulator benchmark, **choose** its off-reference extension to be the minimal covariant scalar operator $D_l=-\nabla^2$. For the five heavy components use the previously specified projected Bochner operator $D_h=-\nabla_\Omega^2+M^2$. Take a single finite proper-time band on the same metric, with identity gluing for the internal bundle, and the metric cone prescription for the rank terms. This defines a common Gaussian comparison. It is not yet a derivation of the physical light Hessian on the inhomogeneous constrained background. [Maldacena, reduced scalar dynamics](https://arxiv.org/abs/astro-ph/0210603) · [Vassilevich, Laplace-type coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+Write $I_l,I_h$ for $\int_{s_1}^{s_2}ds\,e^{-m^2s}/s^2$ at masses $0,M$, and $J_l,J_h$ for the integrals with $ds/s$. After matching the cosmological term, the smooth coefficients are
+
+$$
+A_E=A_0+\frac{I_l+5I_h}{192\pi^2},\qquad
+B_R=\frac{J_l+5J_h}{2304\pi^2},\qquad
+B_C=\frac{J_l+5J_h}{3840\pi^2}.
+$$
+
+The Euler coefficient is $-(J_l+5J_h)/(11520\pi^2)$ and the projected connection contributes $J_h\operatorname{tr}\Omega^2/(384\pi^2)$ in the action. Use the topologically completed Euler contribution and the same total-derivative convention as before. The cone area response is $(I_l+5I_h)/(48\pi)$ per unit area, exactly $4\pi(A_E-A_0)$. The band contributions are accounted for once through the matched action and its boundary terms; the separate light mutual-information collar is not added to this benchmark. For fixed band bounds these contributions are finite, but this is not a claim about all finite terms of the renormalized theory. [Solodukhin, proper-time entropy and coupling renormalization](https://arxiv.org/abs/1104.3712)
+
+For a specified generalized volume use the Einstein-frame volume of the $F(R)=A_E R+B_R R^2$ sector. This is defined from the action by its auxiliary scalar $F'(R)$, not by imposing stationarity on the test ball. Normalize the conformal transformation to the spatially homogeneous reference at the chosen clock reading. For $F'(\bar R)>0$ this gives
+
+$$
+W_E=\int_B\left[\frac{F'(R)}{F'(\bar R)}\right]^{3/2}dV,\qquad
+\delta W_E=\delta V+\frac{3B_R}{A_E+2B_R\bar R}\int_B\delta R\,dV_0 .
+$$
+
+This coincides at first order with the normalized curvature-derivative expression of the $f(R)$ comparison. The Weyl curvature derivative is trace free and has zero volume-projection contribution, while the explicitly spatial projected connection has zero contraction with the clock normal in that projection. The Euler term is treated topologically. This defines a fixed geometric quantity in the specified local action. It does not assert that the maximally symmetric causal-diamond first law already holds on expanding FLRW with a fluctuating clock. [Bueno et al., $f(R)$ generalized volume](https://arxiv.org/abs/1612.04374)
+
+Re-solve the luminal expanding-background constraints of the preceding section with the total $A_E,B_R,B_C$. At $\zeta=f,\ \dot\zeta=0$ on the chosen reading, the corrected lapse is $(12B_R+4B_C)\Delta f/A_E$ and the shift potential is $-f(1+12B_R\bar R/A_E)/H$. The scalar energy changes through this lapse, and the checked normal and momentum constraints include these corrections. On the leading constrained data $\delta R=\delta C_{\mu\nu\rho\sigma}=0$ on the slice. The corrected scalar curvature perturbation enters $\delta W_E$ multiplied by $B_R$ and the corrected Weyl perturbation enters the entropy multiplied by $B_C$. Both effects are beyond first order in the four-derivative couplings for this profile. Thus fixed $W_E$ gives the same ball displacement as fixed $V$ at the retained order.
+
+The finite $R^2$ boundary response in the band is $8\pi B_R\bar R\,\delta A|_V$. The Weyl and Euler variations and the identity-sewn projected-connection term add no first-order response on these data. For the two-sinc profile in the previous section the retained result is therefore
+
+$$
+\left[\delta S_{\rm band+local}|_{W_E}\right]_{r^4}
+=-\frac{8\pi^2}{5}(A_E+2B_R\bar R)\,k^2 .
+$$
+
+The same-cut displacement has zero linear state modular response in the Gaussian comparison. This nonzero coefficient is verified with the corrected constraints and four ball radii in the short proper-time regime. There is also a perturbative obstruction independent of the numerical band: with a nonzero bare Einstein term and quantum and finite curvature corrections treated as loops, the leading coefficient is $-8\pi^2 A_0 k^2/5$. A candidate cancellation order by order would need another term at that same classical order, or a different leading fixed-quantity prescription. This observation does not apply to a purely induced theory with no tree Einstein term.
+
+The result leaves open the actual shared microscopic clock-tensor question. To replace $D_l$ by the true reduced light operator, expand the coupled action to quadratic order in quantum fluctuations about the spatially inhomogeneous constraint solution, include the measure from eliminating lapse and shift, and derive the branched regional trace. Agreement of homogeneous covariances alone does not fix that operator or its finite boundary terms. The remaining long proper-time and possible clock-dependent contributions are also outside this local band result.
+
+🟠 [Next] The following sections derive the inhomogeneous bulk scalar block and its canonical Gaussian measure. The common regulated boundary trace remains to be evaluated.
+
+### Reduced light Hessian on inhomogeneous clock data
+
+🟢 [Done] Derived the first-order-in-background scalar bulk Hessian by constraint elimination and the induced configuration measure of the reduced canonical theory. Found an explicit kinetic response that differs from the minimal scalar extension used in the shared-band benchmark. The branched determinant and its finite boundary coefficient remain open. Run [inhomogeneous_clock_hessian.py](experiments/inhomogeneous_clock_hessian.py).
+
+Work at the leading Einstein-scalar order for the light one-loop operator. In uniform-clock gauge put $h_{ij}=a_{\rm FLRW}^2e^{2\zeta}\delta_{ij}$ in the scalar sector, keeping the original metric variable that specifies the cut. Let $A=M_{\rm Pl}^2/2$, $N_i$ be the covariant shift, and $E_{ij}=(\dot h_{ij}-2D_{(i}N_{j)})/2$. With the ordinary Einstein boundary convention the scalar-gauge bulk ADM action is
+
+$$
+S=\int dt\,d^3x\,\sqrt h
+\left[N A R^{(3)}+
+\frac{A(E_{ij}E^{ij}-E^2)+\dot{\bar\varphi}^{\,2}/2}{N}\right].
+$$
+
+The inhomogeneous background profile is $\zeta=\epsilon f(t,x)$, with $f$ evolving by the leading equation and with $\dot f=0$ at the test reading. Write the fluctuation as $z$, and use the fixed infrared inverse of the coordinate Laplacian in
+$\alpha[q]=\dot q/H$ and $\psi[q]=-q/H+a_{\rm FLRW}^2\varepsilon_H\Delta^{-1}\dot q$.
+The complete scalar-to-scalar quadratic **bulk form through first order in $\epsilon$** has the following coefficient-extraction representation:
+
+1. In the ADM action substitute $\zeta=\epsilon f+t z$, $N=1+\alpha[\epsilon f+t z]$, and $N_i=\partial_i\psi[\epsilon f+t z]$.
+2. Expand to total degree three and extract the coefficient of $t^2$, retaining $\epsilon^0$ and $\epsilon^1$. Polarize this form in $z$ to define the Hessian. Time and space derivatives act before the coefficient extraction. This definition preserves the original field variable and avoids integrating by parts across the future replica cut.
+
+The representation eliminates the lapse and shift for the bulk scalar block to the stated order. Corrections to their homogeneous linear solution multiply a constraint already zero on that solution and first affect the substituted cubic action only at higher degree. Equivalently this is the first derivative of the auxiliary Schur complement. A background scalar can mix the reduced scalar and tensors at quadratic order. A mixed insertion has zero first trace against a block-diagonal reference operator with independent sewing, but block-diagonal sewing must be checked for the constrained regional algebra. The extraction here gives the scalar diagonal block and makes no assertion of full regional factorization. [Maldacena, constraint substitution through cubic order, Section 3.2](https://arxiv.org/abs/astro-ph/0210603)
+
+The auxiliary lapse stiffness illustrates why the homogeneous extension fails. At fixed $h$, set $\delta N=\bar N\alpha$, $e_{ij}=\delta E_{ij}$, and $Q_0=A(\bar E_{ij}\bar E^{ij}-\bar E^2)+\dot{\bar\varphi}^{\,2}/2$. The quadratic terms in these auxiliary variables are
+
+$$
+\frac{\sqrt h}{\bar N}\left[
+Q_0\alpha^2-2A\alpha(\bar E^{ij}-\bar Eh^{ij})e_{ij}
++A(e_{ij}e^{ij}-e^2)\right].
+$$
+
+On the leading constrained background $Q_0=\bar N^2 A R^{(3)}$, so the first term vanishes in flat FLRW and is generally present on the perturbed slice. The reduced kinetic form $\mathcal M_f$ is the velocity-velocity Hessian of the extracted action. At the test reading, an independent expression for its quadratic form is obtained by setting $z=0$, $\dot z=w$, $e_{ij}=h_{ij}w-D_{(i}s_{j)}$, and $s_i=3\partial_i\Delta^{-1}w$ at $a_{\rm FLRW}=1$. Insert these in the displayed form with $\alpha=w/H$. The script differentiates the result at zero background amplitude. For an explicit noncollinear Fourier test $f=\cos z_{\rm coord}$ and $w=\cos x_{\rm coord}(1+\cos z_{\rm coord})$, the variation of the velocity-quadratic action density divided by $A$ is $31.75$ in the chosen units. A minimal scalar with the same homogeneous kinetic normalization on the perturbed metric gives $9.00$. Both agree at zero background amplitude. This is a bulk operator comparison, not a new curvature coefficient inferred from entropy.
+
+### Reduced measure and the remaining replica calculation
+
+In the reduced scalar phase-space convention the canonical momentum is conjugate to the original $\zeta$ variable, as follows from the trace part of $\pi^{ij}\delta h_{ij}$. Use the canonical Liouville measure in these variables at a finite time-sliced regulator. Gaussian integration of the reduced momentum multiplies the configuration measure by $(\det\mathcal M_f)^{1/2}$ on each time step, up to a common normalization. At first order its log variation is $\tfrac12\operatorname{Tr}(\mathcal M_0^{-1}\delta\mathcal M)$. This is the measure of the reduced scalar canonical model. It is not permission to discard the determinants from an unreduced gauge-fixed covariant integral if that integral is used instead.
+
+On a finite bulk regulator where $\mathcal O_f$ is the Euclidean quadratic form and $\mathcal M_f$ the measure metric, the normalized determinant is that of $\mathcal M_f^{-1/2}\mathcal O_f\mathcal M_f^{-1/2}$ with its induced domain. Since the inverse spatial Laplacian enters the reduced kinetic form, normalizing the field this way need not commute with restricting it to a ball. Consequently the canonical cyclic sewing of the original variables cannot just be reused as scalar identity sewing for the normalized field. The lapse and shift Green functions, the physical regional algebra, and the induced measure must be implemented on the sewn regulator before taking the shared proper-time trace.
+
+If that replica operator is $D_n$ with the canonical measure included, the needed first variation in the same band would be $\tfrac12\int_{s_1}^{s_2}ds\,\operatorname{Tr}(e^{-sD_{n,0}}\delta D_n)$ before taking the replica derivative. The bulk Hessian above determines inputs to this trace but does not determine the sewn domains and boundary operators. A scalar Laplace-type coefficient from the earlier minimal extension is therefore not a calculation of the finite boundary term for the true reduced clock. No full fixed-generalized-volume $r^4$ cancellation is decided here. The previous nonzero classical coefficient for a separate bare Einstein term remains a perturbative check, with the same limitations on the leading boundary prescription. [Vassilevich, operator and boundary dependence of heat coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+The domain transformation can be fixed at finite time spacing. If the original configuration variable obeys $z^+=P_Bz^-$ across the seam, with $P_B$ the cyclic permutation of the retained sites, then $y^\pm=\mathcal M_\pm^{1/2}z^\pm$ obeys
+
+$$
+y^+=\mathcal M_+^{1/2}P_B\mathcal M_-^{-1/2}y^- .
+$$
+
+The two measures need not be the same if the data differ on the two sides. Even with the same mass matrix on both sides, this transformation does not reduce to $P_B$ if the mass matrix mixes sites across the cut. A finite coupled Gaussian transfer comparison in [reduced_clock_sewing.py](experiments/reduced_clock_sewing.py) implements both domains with the same proper-time band. The one-sheet response agrees; at two sheets the linear band-action responses are $-0.046293670$ for the transported canonical seam and $+0.015549479$ if the permutation is left unchanged. This benchmark isolates the change in replica domain. It is not a numerical estimate of the finite sphere coefficient of the constrained clock.
+
+🟠 [Next] The next section evaluates the transported seam insertion of the inhomogeneous ADM kinetic operator on a lattice ball. The complete sewn trace and the finite ball coefficient remain to be extracted.
+
+### Induced replica seam of the reduced clock on a spherical cut
+
+🟢 [Done] Applied the transported sewing rule to the actual first-order ADM kinetic block for a radially inhomogeneous clock profile on a spatial lattice. Evaluated the seam insertion in a common finite proper-time band for the light block and the heavy reference. The full ball determinant and generalized-volume coefficient remain open. Run [reduced_clock_ball_seam.py](experiments/reduced_clock_ball_seam.py).
+
+To isolate this term, freeze the clock data at the test reading. Use the constrained velocity form of the preceding section, divide by the homogeneous coefficient, and write the normalized mass metric $\mathcal M=I+\epsilon M_1+O(\epsilon^2)$. Construct $M_1$ from the spatial derivative matrices, the fixed inverse Laplacian on nonconstant modes, and the chosen profile $f$. At $a_{\rm FLRW}=1$, the fields used in the velocity form are $w=\dot z$, $s_i=3\partial_i\Delta^{-1}w$, and $\alpha=w/H$. The implemented matrix reproduces the prior noncollinear Fourier test of the bulk kinetic form. The test relative to the physical region uses a sampled radial sinc-minus-one profile tapered outside the ball. Its periodic spectral regulator projects out the homogeneous part of the *mass variation*, while a positive reference oscillator regulator retains a full local site algebra. The ball is the set of lattice sites inside the clock-slice sphere at the reference amplitude. For small enough variation no site changes membership. This construction evaluates the sewing insertion at that set of sites; it does not approximate the moving-cut derivative by that fact.
+
+For $n$ integer sheets let $P_B$ be the canonical cyclic permutation. Its first transported variation is $\delta\widetilde P_B=[M_1,P_B]/2$, with $M_1$ repeated across sheets. In the replica Fourier basis the unperturbed seam in branch $j$ is $I+(e^{2\pi i j/n}-1)\Pi_B$, where $\Pi_B$ is the spatial projector onto the sites in the ball. The normalizations use the same frozen mass metric on each side. Each Euclidean time-link action is a squared difference of adjacent normalized variables. Vary the final link by the transported seam, leaving the bulk Hessian fixed to extract the domain contribution. For each branch this gives an explicit Hermitian operator insertion $\delta D_{\rm seam}$ and a band variation
+
+$$
+\delta W_{\rm seam}(n)
+=\frac12\int_{s_1}^{s_2}ds\,
+\operatorname{Tr}(e^{-sD_{n,0}}\delta D_{\rm seam}).
+$$
+
+In the finite numerical test use the same dimensionless band $[0.02,0.04]$ and time lattice for the two reference field operators. With 125 spatial sites and four temporal steps the results are:
+
+| Reference radius | Sites in ball | $\delta W_{\rm seam}(1)$ | $\delta W_{\rm seam}(2)$ | $\delta W_{\rm seam}(3)$ |
+|---:|---:|---:|---:|---:|
+| 0.27 | 7 | 0 | +0.280214 | +0.423390 |
+| 0.38 | 19 | 0 | -0.087399 | -0.134431 |
+
+The two-sheet trace insertion agrees with a separate central difference that transports the seam by the exact square root of the perturbed mass matrix. The heavy reference has a site-local mass metric from the volume element, which commutes with the site projector. Its transported-seam contribution is zero in this same band. This heavy statement is only about the domain change from kinetic normalization. The heavy field can still have a bulk curvature response and the ordinary cone entropy.
+
+The contrast establishes that the original-variable sewing can change the light proper-time replica response even when the reference is a local Gaussian. The displayed entries are **integer-replica action variations from one insertion**, not von Neumann entropies or finite coefficients of $r^4$. Two radii on one coarse lattice do not resolve a small-ball expansion. A replica derivative at one requires the normalized physical replica family, not an interpolation of these entries alone. The full regulated calculation also needs the remaining inhomogeneous time and spatial Hessian insertion, smooth-background subtraction, the continuum moving-cut response at fixed generalized volume, and any scalar-tensor regional constraint contribution. None of these is determined by the isolated insertion. Consequently no full fixed-generalized-volume cancellation is decided here.
+
+🟠 [Next] The next section implements the full frozen-reading quadratic transfer matrix. The time-dependent and continuum moving-cut traces remain open.
+
+### Frozen-reading transfer matrix and the canonical replica derivative
+
+🟢 [Done] Constructed the finite transfer Hamiltonian of the reduced scalar, including its position, velocity, and mixed forms. Evaluated the canonical $n=1$ derivative and compared separate integer-replica band traces with the heavy field at the same regulator. Run [reduced_clock_transfer.py](experiments/reduced_clock_transfer.py).
+
+At the selected clock reading use $a_{\rm FLRW}=1$, $\dot f=0$, and freeze the background coefficients for a transfer comparison. Compute the scalar quadratic fluctuation form from the cubic ADM action by subtracting the constant term and extracting the term quadratic in the fluctuation around the nonuniform $f$. The implementation retains the intrinsic spatial-curvature terms, clock kinetic energy, longitudinal shift, and all velocity-position cross terms. Its velocity block agrees with the independent kinetic extraction used in the seam test. Use the standard reduced quadratic-action convention at the homogeneous reference and the direct cubic ADM extraction for the change. This is a specified canonical convention at one reading. It does not evolve the background or determine a boundary prescription for the full time-dependent path integral.
+
+In original reduced clock variables $z,p$ write the quadratic Lagrangian as
+$\dot z^{\mathsf T}\mathcal M\dot z/2+\dot z^{\mathsf T}Bz-z^{\mathsf T}Kz/2$. Its canonical momentum is $p=\mathcal M\dot z+Bz$ and the frozen Hamiltonian is
+
+$$
+H_{\rm fr}=\tfrac12(p-Bz)^{\mathsf T}\mathcal M^{-1}(p-Bz)+\tfrac12z^{\mathsf T}Kz .
+$$
+
+Use symmetric operator ordering and the canonical Hilbert space of the finite oscillator sites. The background perturbation is small enough that the Hamiltonian is positive. The transfer operator is $e^{-\Delta\tau H_{\rm fr}}$. Integrating over $p$ in the short-step kernel gives the configuration measure proportional to $(\det\mathcal M)^{1/2}$ and gives an imaginary mixed derivative in the Euclidean action. This kernel sews the original variables on the sites inside the cut. A change to normalized variables transports the seam as in the preceding section.
+
+For the canonical Gaussian transfer trace use the ground-state limit of the frozen Hamiltonian. Obtain the regional occupation numbers $b_j=\nu_j-\tfrac12$ from its restricted covariance. They determine the normalized fractional trace for real $n$ near one:
+
+$$
+W_n^{\rm can}=-\log\operatorname{Tr}\rho_B^n
+=\sum_j\log[(1+b_j)^n-b_j^n].
+$$
+
+The derivative at one is the Gaussian entropy and is checked directly against the derivative of the fractional trace, without fitting integer replicas. A two-sided change of the inhomogeneous background gives first variations $-0.377703421$ and $-0.505796764$ for the seven-site and nineteen-site balls. They are unbanded finite-regulator state comparisons on fixed sets of sites. They are not finite gravitational boundary coefficients.
+
+Independently, put the full change of the frozen quadratic form on a four-step Euclidean time regulator, using midpoint links and the canonical measure. Include the transported seam in both the velocity and potential terms. Compare the heavy reference on the same regulator and proper-time band $[0.02,0.04]$. For the heavy test include the base-metric kinetic, gradient, and mass variations. The identity-sewn connection has zero first trace at the trivial reference. For both fields subtract $n\delta W_1$ from the integer-replica band variation. The resulting first variations are:
+
+| Reference radius | Light, $n=2$ | Light, $n=3$ | Heavy rank five, $n=2$ | Heavy rank five, $n=3$ |
+|---:|---:|---:|---:|---:|
+| 0.27 | -0.075035 | -0.112641 | +0.003127 | +0.004884 |
+| 0.38 | -0.017884 | -0.043499 | +0.003657 | +0.005753 |
+
+The band-restricted determinant is a different observable from the complete normalized canonical fractional trace. An analytic continuation of the partial band contributions must be tied to a common physical prescription; the canonical formula for the complete transfer trace does not give that continuation by itself. In particular, the finite one-sheet subtraction cancels the replicated smooth contribution for the same time regulator but does not prove that any remaining number is a universal continuum surface term.
+
+Both calculations use a $3^3$ spatial grid with a fixed set of sites at each radius and a positive infrared oscillator convention. The data do not control the change in site membership when the physical ball moves, the time evolution of the clock background, or possible scalar-tensor sewing from the constrained regional algebra. The two radii therefore do not isolate an $r^4$ coefficient. No conclusion about the cancellation of the finite fixed-$W$ residual follows from these checks.
+
+🟠 [Next] The next section implements time-dependent canonical transfer on a shared spatial regulator and tests boundary tracking. The common renormalized continuum response remains open.
+
+### Evolving clock transfer and a moving-boundary lattice diagnostic
+
+🟢 [Done] Implemented time-dependent Gaussian transfer operators for the light and heavy sectors in original canonical variables, computed their normalized canonical $n=1$ derivatives on a common spatial regulator, and separated the reference shape response of the moving ball. The continuum entropy matching remains open. Run [evolving_clock_transfer.py](experiments/evolving_clock_transfer.py).
+
+Use the luminal Einstein-scalar reference with $a_{\rm FLRW}(t)=t^{1/3}$ between $t=0.9$ and $1$ in the chosen units. Evolve the leading inhomogeneous clock-slice background by its linear scalar equation, with a radially tapered sinc profile and $\dot f=0$ at the final clock reading. Use the same periodic box of length $1.8$ and the same spatial spectral regulator for both sectors. The spatially constant scalar mode has the infrared convention of the transfer comparison; a lattice mean is removed from the sampled deformation. The light Hessian is extracted from the constrained cubic ADM form at each time step, including the background rate $\dot f$ in the lapse and shift. At $a_{\rm FLRW}=1$ and $\dot f=0$ the implementation agrees with the independent frozen-reading Hessian.
+
+The heavy field is a rank-five Gaussian bundle on the same leading geometry. Its kinetic, potential, and mixed matrices include the volume-element, lapse, and shift variations. In the trivial comoving reference frame the five component covariances agree, and the terms linear in the internal projected connection have zero first-order entropy trace with component-blind regional sewing. The rank-five results below use five times the base-metric response. All reported entropy variations are first order in the prescribed background deformation.
+
+For each sector take a specified initial Gaussian, namely the homogeneous instantaneous vacuum at $t=0.9$, and use it in all perturbed evolutions. Propagate the centered covariance by midpoint symplectic transfer with $JH(t)$ in the original canonical variables. Each discrete step is checked to preserve the canonical symplectic form. The momentum measure is the canonical phase-space one; converting to a configuration kernel would again require the kinetic determinant and the transported domain. At the final reading compute the normalized fractional trace from the restricted Gaussian covariance of the physical site algebra. The numerical $n=1$ derivative agrees with the direct Gaussian entropy. This common-regulator calculation uses a spatial cutoff and the complete canonical trace, not an interpolation of a truncated proper-time determinant. The common initial state on the finite regulator has not been shown to have the required ultraviolet behavior on the inhomogeneous continuum background.
+
+Track the physical sphere using the previously defined action-based $W_E$. At the retained order for these data $\delta R^{(4)}=0$ at leading order, so the radius variation at fixed $W_E$ is the fixed-volume result $\delta R_{\rm coord}=-r f_B$. On all three tested lattices the two displaced sphere radii select the same sites as each other. Thus the canonical state variation at that fixed center has no contribution from changes in site membership. It is unsafe to treat this zero discrete crossing count as the physical shape derivative.
+
+As a separate shape calculation, average the center of the **homogeneous reference** over one lattice cell. Let $S_0(B)$ be its regional entropy and let $B_{\mathbf n}$ be the set of sites strictly inside the radius-$r$ sphere centered at $r\mathbf n$, excluding the origin. A boundary crossing adds the origin, and translation invariance relates all lattice sites to this one. The first shape variation of the center-averaged reference entropy is then
+
+$$
+\delta S_{\rm shape}
+=\frac{r^2\,\delta R_{\rm coord}}{a^3}\int_{S^2}
+\left[S_0(B_{\mathbf n}\cup\{0\})-S_0(B_{\mathbf n})\right]d\Omega .
+$$
+
+The integral keeps the regulator dependence of the finite reference entropy. This is a shape diagnostic under the declared center average. It cannot simply be added to a state derivative taken at only the centered cut. A common averaged observable must also average perturbed states with the same translation prescription.
+
+At the larger radius $r=0.67$ the numerical results are:
+
+| Spacing | Light state response, centered | Heavy state response, centered | Light reference shape response | Heavy reference shape response |
+|---:|---:|---:|---:|---:|
+| 0.600 | -3.240375 | +0.790005 | +0.015113 | +0.047269 |
+| 0.360 | -11.944221 | +3.371235 | +0.046972 | +0.192904 |
+| 0.257 | +232.207971 | +14.560293 | +0.107227 | +0.479072 |
+
+The small-radius case $r=0.46$ is also evaluated. Halving the time step at $a=0.36$ changed the centered state responses by at most about $0.0431$ in absolute value, much smaller than the spatial refinement changes. The sphere quadrature was varied on the coarser two spatial grids. There is no controlled continuum plateau. The raw entropies have not been matched to the gravitational determinant in this common spatial scheme, and the spatial dependence may include regulator and initial-state effects. These observations neither prove nor rule out cancellation of the renormalized $r^4$ term at fixed generalized volume.
+
+🟠 [Next] The next section implements a first-adiabatic-order state and a common center average. Independent gravitational matching and a controlled continuum response remain open.
+
+### Adiabatic initial data and a common average of the moving cut
+
+🟢 [Done] Replaced the common homogeneous initial state by a background-matched first-adiabatic-order Gaussian. Evaluated the state and moving-boundary terms with the same cell-center average on three spatial cutoffs. Tested why the known first-order reduced operator is insufficient for matching the smooth gravitational counterterms. Run [adiabatic_clock_ball.py](experiments/adiabatic_clock_ball.py) and [lattice_counterterm_identifiability.py](experiments/lattice_counterterm_identifiability.py).
+
+At the initial clock reading diagonalize each positive, inhomogeneous phase-space Hamiltonian $H$ and construct its instantaneous pure covariance $V_0$. The first adiabatic correction $V_1$ in the tangent space of pure Gaussian covariances solves
+
+$$
+\dot V_0=(JH)V_1+V_1(JH)^{\mathsf T}.
+$$
+
+In the basis that diagonalizes $i H^{1/2}JH^{1/2}$, the off-diagonal pure tangent connects the opposite frequency signs. Solve those entries by dividing the transformed $\dot V_0$ by $-i(\omega_i-\omega_j)$, where the eigenvalues $\omega_i$ are signed. In particular the denominators are frequency sums in absolute value for the mixing of positive and negative frequencies. Set the other entries to zero, then project the positive candidate covariance to the pure Gaussian manifold so the regulator obeys the uncertainty relation exactly. This projection changes the construction beyond the linear adiabatic term. The numerical evolution checks $VJV=J/4$ at the initial and final readings and checks the first-order transport equation in the paired spectral block. The prescription matches the finite-lattice background and its first time derivative. A first-order construction alone does not prove a continuum Hadamard property or sufficient ultraviolet control for the renormalized entropy.
+
+For the region at the final clock reading, average the actual retained site set over centers $c$ in one lattice cell, with the same fixed inhomogeneous profile for both parts of the response. The geometry is the conformal perturbation $f$ of the final slice. Define $f_B(c)$ as its average over the unperturbed radius-$r$ ball about $c$, and let
+
+$$
+L(c,n)=\int_0^r f(c+s n)\,ds .
+$$
+
+The coordinate displacement of the geodesic boundary at fixed volume is
+$\delta R(c,n)=\langle L(c,n)\rangle_{S^2}-r f_B(c)-L(c,n)$.
+A first-order geodesic length can be evaluated on the reference radial segment; path deflections first enter at higher order for fixed endpoints. The mean displacement satisfies the physical volume constraint including the conformal metric variation. As above, fixed $W_E$ and fixed $V$ give this same geometry at the retained order in four-derivative couplings for these data.
+
+Evaluate the state part by averaging its entropy derivative on the unperturbed site sets centered at $c$. Evaluate the shape part by integrating the entropy increment of the site that crosses the cut, with the same center-cell prescription and with the directional displacement $\delta R(c,n)$ inside the integral. Translation invariance is used only to evaluate the *reference* entropy increment at the origin. In the displacement weight the center is mapped back into the original cell and the actual inhomogeneous profile is evaluated there. Thus the measured combination uses one cell average for both parts, unlike the preceding centered-state comparison. The calculation retains the prescribed physical site algebra and normalized canonical fractional traces. Center and angular quadratures are varied separately within two combined numerical settings.
+
+At $r=0.67$ the sums of the state and shape derivatives, with the finer quadratures, are:
+
+| Spatial spacing | Light clock | Heavy rank five |
+|---:|---:|---:|
+| 0.600 | -0.599132 | +0.124442 |
+| 0.360 | -0.104221 | +1.201198 |
+| 0.257 | +43.610937 | +2.990797 |
+
+At $r=0.46$ the light results are approximately $0.346415$, $2.444661$, and $7.417648$. These are bare finite-lattice derivatives. They differ from the earlier experiment in both the initial state and the cut average, so the change cannot be attributed to either modification alone. There is still no controlled spatial-cutoff plateau. The run does not fit an $r^4$ coefficient.
+
+### What is needed for the lattice gravitational subtraction
+
+A same-lattice entropy subtraction requires an independent smooth-action match, including its response at second order in a metric perturbation. The spatial integral of the scalar curvature has zero first variation about a flat periodic slice. In a fixed proper-time band the second variation of a smooth determinant contains both a two-insertion term from $\delta D$ and a single insertion of $\delta^2D$. For example, taking $D_\epsilon=D_0+\epsilon V+\epsilon^2 Q$, changing $Q$ leaves every first-order replica insertion unchanged but changes the smooth determinant's second derivative by $\int_{s_1}^{s_2}ds\,\operatorname{Tr}(e^{-sD_0}\Delta Q)$. The numerical check uses the same type of spatial spectral lattice and a gradient-squared $Q$, and verifies that the change survives at both tested spacings while the first variation is unchanged. This is an identifiability test, not an added term in the proposed theory.
+
+For the physical reduced light operator, this second insertion requires the metric dependence of the constrained Hessian to second order, including the corresponding measure. The cubic bulk reduction supplies the first insertion only. Assigning a lattice Newton counterterm from the first-order entropy or importing its value from the continuum proper-time comparison would bypass the required independent match. Thus the gravitational divergence subtraction in this spatial regulator and the continuum fixed-$W_E$ cancellation are not yet established.
+
+### Quartic constraint elimination and the smooth action response
+
+🟢 [Done] Computed the second background variation of the reduced scalar Hessian and its canonical measure at a fixed clock reading. Evaluated the smooth determinant response on the same spatial spectral lattice used in the preceding ball tests. Reproduce the calculation with [quartic_clock_reduction.py](experiments/quartic_clock_reduction.py) using NumPy and PyTorch.
+
+Let $q=(\zeta,\dot\zeta)$ and $b=(\alpha,s_i)$ denote the scalar initial data and all four ADM auxiliaries. Write $S_k$ for the homogeneous degree-$k$ ADM action on the uniform-clock slice, $C=\partial_b^2 S_2$ on the mean-zero auxiliary space, and $b_1(q)$ for the linear constraint solution. With $g=P_{\ne0}\partial_b S_3(q,b_1)$ the second-order correction and quartic action are
+
+$$
+b_2=-C^{-1}g,\qquad
+S_{4,\mathrm{red}}=S_4(q,b_1)-\tfrac12g^{\mathsf T}C^{-1}g .
+$$
+
+The latter follows from substituting $b_2$ into $g^{\mathsf T}b_2+\tfrac12 b_2^{\mathsf T}Cb_2$. Terms containing $b_3$ multiply the vanishing linear constraint. The implementation includes the transverse shift and the spatial connection. It checks both projected constraints and recovers the existing cubic Hessian. This calculation uses the frozen scalar diagonal block. The homogeneous constraint and scalar–tensor mixing remain open.
+
+At background $q=\epsilon f$, the fluctuation Hessian has derivatives $H_1=S_{3,\mathrm{red}}''(f)$ and $H_2=2S_{4,\mathrm{red}}''(f)$, where primes denote fluctuation Hessians. The kinetic blocks $M_i$ give the canonical configuration weight $\mu\propto\sqrt{\det M}$ and
+
+$$
+(\log\mu)_2=\tfrac12\operatorname{Tr}(M_0^{-1}M_2-M_0^{-1}M_1M_0^{-1}M_1).
+$$
+
+The lattice log determinant verifies this expression. For $M_0=m_0I$, write $m_\epsilon=M_\epsilon/m_0$ and $O_\epsilon$ for the frozen Euclidean quadratic operator scaled by $m_0$. Normalizing on a common domain gives $D_\epsilon=m_\epsilon^{-1/2}O_\epsilon m_\epsilon^{-1/2}$ and
+
+$$
+D_2=O_2-\{m_1,O_1\}
++\{3m_1^2/4-m_2/2,O_0\}+\tfrac12m_1O_0m_1,
+$$
+
+where braces denote the anticommutator. The numerical smooth calculation uses the canonical frequencies of the full frozen kinetic, mixed and potential blocks. It integrates their heat trace per unit Euclidean time over $s\in[0.02,0.04]$, independently of the regional entropy. Amplitude derivatives agree with half-step estimates at relative tolerance $10^{-4}$.
+
+| Spacing | Initial data | Second smooth derivative, cubic alone | Second smooth derivative through quartic |
+|---:|---|---:|---:|
+| 0.600 | Axial, zero velocity | 19846.38 | -22608.66 |
+| 0.360 | Axial, zero velocity | -172592.67 | -287183.56 |
+| 0.360 | Diagonal, zero velocity | -3888429.56 | -4394614.13 |
+| 0.360 | Axial, zero linear extrinsic perturbation | -179772240.06 | -181607112.22 |
+
+The last row uses $\dot f=\Delta f/(3H)$, so the first-order shift vanishes and $\delta K^i{}_j=0$. Its spatial metric agrees with the second row throughout the conformal path on the clock slice. The intrinsic benchmark $\partial_\epsilon^2\int\sqrt h\,{}^{(3)}R=4\int|\nabla f|^2$ is identical for both rows. Their smooth responses differ substantially. A single fit to this benchmark would conflate intrinsic curvature with lapse, evolution, and other operator dependence. At the finer spacing the smallest axial momentum has $qa=2\pi/5$. The fixed positive proper-time band gives a finite smooth response and leaves the ultraviolet divergence undetermined.
+
+🟠 [Next] Match independent curvature and clock invariants on smooth time-dependent backgrounds at $qa\ll1$ using a controlled ultraviolet cutoff sequence and the complete constrained field content. Apply the independently matched counterterms to the common center average, with a verified ultraviolet initial state. Take the continuum limit at fixed generalized volume before extracting the small-ball coefficient. The divergence subtraction and continuum $r^4$ cancellation remain undetermined.
+
+### Time-dependent ultraviolet control
+
+🟢 [Done] Matched the curvature and independent potential insertions in a time-dependent Laplace-type control, using the same periodic box and spectral spatial derivative as the clock reduction. Reproduce the cutoff and spacing sweep with [time_dependent_uv_match.py](experiments/time_dependent_uv_match.py).
+
+Use one real scalar of mass $m=2$, with independent multiplication source $X$, in the Euclidean metric $dt^2+e^{2z(t)}d\mathbf{x}^2$. This tests the minimal scalar part of an effective heavy-sector model. It omits the tensor connection, the dynamical clock and its constraints. For each spatial mode, conjugating by $e^{3z/2}$ gives the flat-measure operator
+
+$$
+D_k=-\partial_t^2+e^{-2z}k^2+m^2+X+\tfrac32 z''+\tfrac94(z')^2 .
+$$
+
+Set $z=\epsilon\cos\nu t$ and average over a period. The first insertion is $(-2k^2-\tfrac32\nu^2)\cos\nu t$. The averaged second insertion is $2k^2+\tfrac94\nu^2$. The two-insertion heat trace contains $\int_0^1 e^{-s u(1-u)\nu^2}du$, from the continuous time momentum Gaussian. Combining it with the single second insertion gives the coefficient of $\nu^2$ in the second variation of the trace per mode as the unperturbed trace times
+
+$$
+s\left[-\tfrac94+3(sk^2)-\tfrac13(sk^2)^2\right].
+$$
+
+The zero-frequency part is projected out by this derivative. The integrated curvature has second variation $6\nu^2$ per reference four-volume, since $\int\sqrt g R=6\int e^{3z}(z')^2$ after periodic integration by parts. This path measures the temporal curvature projection. Varying a constant $X$ at flat metric separately multiplies the heat trace by $-s$. The two independent source derivatives determine the benchmark action coefficients $c_R$ and $c_X$. The spatial regulator can break Euclidean rotation symmetry at finite spacing, so the temporal projection alone cannot identify every geometric operator.
+
+At each fixed lower proper time $\sigma$, compute the action in the band $[\sigma,2\sigma]$. Refine the spatial grid before decreasing $\sigma$. On the $97^3$ lattice the results per scalar are:
+
+| $\sigma$ | $\sigma c_R$ | $\sigma c_X$ |
+|---:|---:|---:|
+| 0.02000 | -0.000236218 | 0.001417306 |
+| 0.00500 | -0.000256646 | 0.001539876 |
+| 0.00125 | -0.000262035 | 0.001572209 |
+
+The dimensionless coefficients approach $-1/(384\pi^2)$ and $1/(64\pi^2)$ in the small-$\sigma$ limit. They follow from the continuum heat trace insertion $R/6-X$ and $\int_\sigma^{2\sigma}s^{-2}ds=1/(2\sigma)$. At $\sigma=0.00125$ the $25^3$ result for $\sigma c_R$ is $-0.000223735$, which quantifies the error from moving the cutoff too close to the spatial resolution. [Continuum heat kernel reference](https://arxiv.org/abs/hep-th/0306138).
+
+In the control calculation only, apply the independently determined $c_R$ to the continuum Gaussian cone area term in the same proper-time band. The latter gives $A\int_\sigma^{2\sigma}(ds/s^2)e^{-s m^2}/(48\pi)$, using the flat normal cone and two tangential dimensions. Adding $4\pi c_R A$ subtracts this term in the spatial continuum and large-box limits at fixed band. At fixed geometric volume the area change is $-(4\pi/30)r^4\delta{}^{(3)}R+O(r^6)$ for a geodesic ball in three spatial dimensions. The local remainder for a unit curvature variation at $\sigma=0.00125$ falls from $-0.16128$ to $+0.00016029$ and then below $10^{-12}$ in units of $r^4$ across the three grids. This comparison uses the continuum local cone expression at every spacing. It tests the sign and normalization of the local subtraction. The generalized volume at Einstein order with constant curvature coefficient is proportional to geometric volume.
+
+🟠 [Next] Derive independent time-dependent curvature and clock vertices for the actual constrained light Hessian, including its second-order background dependence, and for the projected heavy tensor. Match the spatial and temporal curvature projections and the remaining clock invariants at fixed cutoff before taking the small-proper-time limit. The control coefficients cannot be applied to the coupled canonical ball entropy. The subtraction of its divergences and the finite $r^4$ coefficient at fixed full generalized volume remain open.
 
 ### Punctured cone and the canonical tip condition
 

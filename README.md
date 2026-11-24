@@ -24,6 +24,22 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Induced clock-foliation terms.** A specified heavy-field proper-time band gives distinct intrinsic-curvature, expansion, and area coefficients. Solving the modified two-derivative constraints leaves a nonzero fixed-volume $r^4$ response in the retained entropy comparison. Higher-derivative and finite clock entropy terms are still open.
 
+- **Four-derivative moving-ball test.** In the luminal member, the same heavy proper-time band induces scalar-curvature, Weyl, and projected-connection terms. The corrected constraints change the clock density, while the retained one-loop boundary entropy leaves a nonzero fixed-volume $r^4$ coefficient. Finite microscopic boundary matching remains open.
+
+- **Shared-regulator volume benchmark.** A common proper-time band for an explicitly chosen light Gaussian completion and the heavy tensor gives matching local cone and action coefficients. The action's Einstein-frame volume leaves a nonzero $r^4$ response for the tested data. The true reduced light operator on the inhomogeneous clock background has yet to be derived.
+
+- **Inhomogeneous light operator.** Constraint substitution gives a scalar bulk Hessian and its canonical configuration measure. A noncollinear Fourier test distinguishes its kinetic response from the minimal scalar completion. On a regulated spherical set of sites, the ADM kinetic block gives a nonzero transported seam response in integer replicas. The complete replica derivative and finite ball coefficient remain open.
+
+- **Reduced clock transfer.** The frozen-reading transfer includes the time, space, and mixed quadratic terms. Its normalized canonical replica derivative can be computed directly, and a separate shared-band integer calculation subtracts the one-sheet trace. These finite tests leave the continuum moved-cut and band-matched entropy coefficient open.
+
+- **Time-dependent transfer.** Both sectors evolve on a common spatial lattice and admit direct canonical replica derivatives at one. Averaging over the lattice cell resolves the reference shape derivative, but the centered state response varies strongly between grid spacings. No continuum fixed-volume cancellation has been established.
+
+- **Adiabatic moving-cut average.** Light and heavy initial covariances now include a first adiabatic correction on the inhomogeneous lattice. The same center average is used for state and boundary motion. The bare responses still do not converge across the tested cutoffs, and the smooth curvature subtraction requires a second background variation of the reduced operator.
+
+- **Quartic light-clock reduction.** The projected second-order lapse and shift give the second background variation of the reduced scalar Hessian and canonical measure. The same spatial lattice gives a smooth finite-band determinant response independent of the moving-ball entropy calculation. The quartic insertion changes the response substantially, and backgrounds with identical intrinsic curvature give different results. Independent curvature counterterms and the continuum fixed-generalized-volume coefficient remain open.
+
+- **Time-dependent ultraviolet control.** A minimal scalar independently reproduces the local curvature and potential coefficients on refined spectral lattices. The curvature coefficient cancels the local continuum cone area term at fixed Einstein-order volume. The full clock and tensor counterterms and the coupled moving-ball coefficient remain open.
+
 ## Open problems
 
 - Derive the allowed low-energy states, physical regional algebra, and regulator matching in a single microscopic model that passes the entropy-response filter.
