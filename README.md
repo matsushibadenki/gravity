@@ -40,6 +40,42 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Time-dependent ultraviolet control.** A minimal scalar independently reproduces the local curvature and potential coefficients on refined spectral lattices. The curvature coefficient cancels the local continuum cone area term at fixed Einstein-order volume. The full clock and tensor counterterms and the coupled moving-ball coefficient remain open.
 
+- **Projected-connection matching and clock source rank.** Temporal and spatial probes reproduce the rank-five connection's logarithmic coefficient on the spectral regulator. Its linear ball response vanishes about the trivial bundle connection. The constrained clock's intrinsic curvature, expansion and lapse sources have rank two, which limits independent matching from these reduced backgrounds.
+
+- **Independent lapse and metric sources.** The static off-shell lapse–metric cross response and the time-dependent metric response agree on the leading heavy Einstein divergence as the spectral lattice is refined. The associated local area subtraction cancels at fixed Einstein-order volume. The clock and higher-curvature part of the coupled ball subtraction remains open.
+
+- **Canonical ADM gauge and measure.** The homogeneous clock gauge gives an explicit Faddeev–Popov determinant and its canonical cancellation for the nonzero lattice modes. The unreduced lapse–shift Schur complement recovers the physical scalar kinetic measure on three grids. The off-shell source-dependent Hessian and its curvature counterterms remain open.
+
+- **Off-shell Ward check.** A time-dependent Einstein–clock sector with independent sources recovers the classical Ward identity under spectral refinement at fixed smooth profiles. The source term is essential, and profiles near the cutoff exhibit a large lattice defect. The complete gravity and ghost determinant and the coupled ball subtraction remain open.
+
+- **Four-dimensional gauge and heat-trace calibration.** The complete flat metric, clock and ghost symbols give the de Donder Ward identity and the expected net heat weight of three. The primed trace converges under refinement at fixed proper-time band and determines the leading volume divergence. Curvature and clock-gradient coefficients require the varying-background determinant.
+
+- **Independent clock-gradient divergence.** The full flat metric–clock Hessian gives a clock kinetic power divergence from two metric–clock insertions in the specified de Donder prescription. The off-shell Ward test includes the metric tadpole. The kinetic counterterm affects the constraint and has no direct local conical entropy. The coupled curved-background and finite ball tests remain open.
+
+- **Curved four-dimensional Ward test.** The full metric–clock Hessian and de Donder ghost are implemented as lattice operator applications on pure-curvature and combined backgrounds. The classical Ward defect decreases under refinement for a smooth gauge probe. Independent curvature–clock probes were identified. The curved heat traces and the subtracted sphere response remain open.
+
+- **Curved Gaussian heat trace.** A conformal contour and low-mode projection give stable metric–clock and ghost heat traces at fixed positive proper time on a weak conformal family. Separate tests vary the inhomogeneous resolution and transverse cutoff. The curvature and mixed coefficient fit and the subtracted sphere response remain open.
+
+- **Temporal curvature and flat clock wave.** The same curved heat-trace prescription extends to curvature along the winding direction. The independent flat clock-wave calculation gives zero logarithmic coefficient for the clock Hessian invariant in the chosen gauge and basis. The curvature and mixed coefficients and the subtracted ball response remain open.
+
+- **Mixed heat differences and shear probe.** Temporal and spatial finite-shell differences separate the mixed invariants algebraically, but cutoff sensitivity prevents an ultraviolet coefficient fit. A nonconformal shear separates the pure curvature invariants modulo Euler. The conditional fixed-volume local expression exposes an \(r^4\) clock-gradient term whose fully renormalized balance remains open.
+
+- **Direct heat-trace derivatives.** Automatic differentiation and a block exponential give curvature and mixed clock derivatives without finite-amplitude extrapolation. At shorter proper time the mixed response still changes under longitudinal refinement. The controlled full momentum sum and the subtracted ball test remain open.
+
+- **Transverse insertion sums.** The direct heat derivatives factor into a transverse Gaussian times a finite polynomial. This resolves the transverse sum efficiently and exposes longitudinal sensitivity at shorter proper time. The ultraviolet fit and the fully subtracted sphere response remain open.
+
+- **Proper-time band and momentum checks.** The band integrator separates the Einstein and curvature-squared momentum scalings and checks the shear response independently. The short mixed band remains sensitive to longitudinal resolution. The corrected coupled ball response remains open.
+
+- **Short-band refinement.** Four pure-metric band responses pass numerical refinement. The independent shear response rejects the two-wave local Einstein and curvature-squared fit at the tested momenta. Mixed short-band quadrature and the ultraviolet and sphere matching remain open.
+
+- **Temporal mixed quadrature.** The short-band temporal integral is stable under the tested quadrature and transverse refinements. The leading lapse constraint gives a profile-dependent local mixed sphere term. The longitudinal check and full renormalized entropy balance remain open.
+
+- **Resumable band matching.** Shear exchange symmetry reduces the number of operator samples. The long-box band driver can save and resume individual completed grid runs.
+
+- **Temporal mixed band convergence.** The short-band integral agrees between the 17- and 21-point grids at nine quadrature nodes. Both band drivers support checkpoints. The long-box numerical checks pass, while the two-wave local fit disagrees with the independent shear response by 19.3%.
+
+- **Common flat volume subtraction.** Reusing the full flat reference removes the constant introduced by the primed subtraction. The two curvature-squared projections move closer together but remain momentum dependent.
+
 ## Open problems
 
 - Derive the allowed low-energy states, physical regional algebra, and regulator matching in a single microscopic model that passes the entropy-response filter.

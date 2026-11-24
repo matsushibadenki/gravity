@@ -1244,6 +1244,411 @@ In the control calculation only, apply the independently determined $c_R$ to the
 
 🟠 [Next] Derive independent time-dependent curvature and clock vertices for the actual constrained light Hessian, including its second-order background dependence, and for the projected heavy tensor. Match the spatial and temporal curvature projections and the remaining clock invariants at fixed cutoff before taking the small-proper-time limit. The control coefficients cannot be applied to the coupled canonical ball entropy. The subtraction of its divergences and the finite $r^4$ coefficient at fixed full generalized volume remain open.
 
+### Projected tensor ultraviolet matching and the reduced clock source rank
+
+🟢 [Done] Matched the isolated connection term of the rank-five projected tensor on the spectral spatial regulator. Tested which curvature and clock perturbations can be varied independently after applying the implemented ADM constraints. Reproduce both calculations with [projected_uv_matching.py](experiments/projected_uv_matching.py).
+
+For the heavy bundle, insert an independent infinitesimal connection $A_x=\epsilon J\cos(\nu y)$ at fixed base metric, with $y=t$ or $z$. This probes the spin-two representation of the projected connection before pulling it back to the clock and metric. The skew generator $J$ obtained from the tensor basis obeys $\mathrm{tr}(J^2)=-10$ for unit rotation. The perturbations of $-(\partial_x+A_x)^2$ are $-2ik_xJ\cos(\nu y)$ and $-2J^2\cos^2(\nu y)$ at first and second order. In the time probe, the two-insertion term contains the factor $\int_0^1 e^{-su(1-u)\nu^2}du$. In the spatial probe it is evaluated on the same spectral lattice, by shifting the $k_z$ mode by one box momentum and integrating the interpolated heat factors over $u$. In both cases the second insertion cancels from the difference with the zero-momentum heat response. With both index orders included, the integrated $\mathrm{tr}(\Omega_{\mu\nu}\Omega_{\mu\nu})$ has amplitude second derivative $2\nu^2\mathrm{tr}(J^2)$ per reference volume. The temporal coefficient is therefore
+
+$$
+c_{\Omega,t}(\sigma)
+=-\frac{1}{12}\int_\sigma^{2\sigma}ds\,s^2\,
+\frac{e^{-sm^2}}{\sqrt{4\pi s}\,L^3}\sum_k k_x^2 e^{-s|k|^2}.
+$$
+
+This is a Euclidean effective-action coefficient multiplying the trace over the bundle, with no extra rank factor. The temporal column uses the frequency slope and the spatial column uses a finite difference at $2\pi/L$. At $L=1.8$, $m=2$, and $N=97$ points per axis:
+
+| Lower proper time $\sigma$ | Temporal connection coefficient | Spatial connection coefficient |
+|---:|---:|---:|
+| 0.02000 | -0.000162999 | -0.000157440 |
+| 0.00500 | -0.000177693 | -0.000176143 |
+| 0.00125 | -0.000181578 | -0.000181179 |
+
+At the smallest cutoff the spatial and temporal results differ by about 0.22%. The temporal result agrees within 1% with the logarithmic shell coefficient $-\log(2)/(384\pi^2)$ from the continuum heat coefficient $\mathrm{tr}(\Omega^2)/12$. At the same cutoff the temporal value on $N=25$ is $-0.000161773$, showing the need to refine the lattice first. The probe fixes the connection coefficient independently of the regional entropy. Its first variation about the trivial connection has zero component trace on any component-blind cut, consistent with the existing canonical sewing check. Its local counterterm is quadratic in $\Omega$ about $\Omega=0$. Both derivatives therefore vanish separately for this insertion in the linear moving-ball test, including at order $r^4$. The result is specific to the connection and the reference with vanishing bundle curvature. [Heat-kernel coefficient conventions](https://arxiv.org/abs/hep-th/0306138).
+
+For the clock, let $\alpha=\dot\zeta/H$ and $\psi=-\zeta/H+3a_{\mathrm{FLRW}}^2\Delta^{-1}\dot\zeta$ be the implemented lapse and shift. On the mean-zero modes at a fixed reading,
+
+$$
+\delta{}^{(3)}R=-4a_{\mathrm{FLRW}}^{-2}\Delta\zeta,\qquad
+\delta K=-a_{\mathrm{FLRW}}^{-2}\Delta\psi,\qquad
+\delta{}^{(3)}R+4H\delta K+12H^2\alpha=0.
+$$
+
+Here $K$ uses the convention $K=3H$ on the reference. In uniform-clock gauge the perturbation of $-g^{\mu\nu}\partial_\mu T\partial_\nu T$ is proportional to $\alpha$. The pointwise identity holds for arbitrary allowed linear initial data, including time-dependent profiles, because it follows from the constraint solution. The three displayed linear sources have rank two, and their six quadratic products have rank three on the tested grids $N=3,5,7$. Thus a fit to the quadratic products alone determines only three combinations. This rank statement concerns the products of first variations. A complete smooth action match would also have to include the nonlinear background completions of the invariants and their tadpoles.
+
+🟠 [Next] Specify a pre-reduction smooth action match with independent lapse, metric and clock sources, or fix a basis modulo the constraints and derive the entropy and generalized volume in that same basis. Supply the corresponding time-dependent smooth operators and match the remaining background vertices, including the base metric part of the tensor and the full reduced clock measure. Apply those coefficients to the physical lattice cut and take the continuum limit at fixed generalized volume before taking the small-ball limit. The isolated connection result supplies no subtraction for the remaining clock and metric response, and the coupled $r^4$ cancellation remains open.
+
+### Independent lapse and metric sources for the heavy Einstein term
+
+🟢 [Done] Measured the off-shell lapse–metric cross response of the base-metric part of the projected tensor. Compared the resulting Einstein coefficient with the independently computed time-dependent metric response. Reproduce the comparison with [off_shell_tensor_curvature.py](experiments/off_shell_tensor_curvature.py).
+
+Take the static Euclidean metric $ds^2=e^{2n}dt^2+e^{2z}d\mathbf{x}^2$ and the independent source profiles $n=\epsilon_n\cos(qx_3)$ and $z=\epsilon_z\cos(qx_3)$. Before solving any constraint the massive bundle has, in its base-metric block, the quadratic operator formed from the time weight $e^{3z-n}$ and the spatial gradient weight $e^{n+z}$, with configuration weight $e^{n+3z}$. Conjugate the quadratic matrix by multiplication by $e^{-(n+3z)/2}$ on both sides to use the flat spatial and temporal measure. Use the same periodic spectral derivative as in the preceding calculations. The connection has zero internal trace and starts at second order in the effective action with two background derivatives on each connection curvature term. The independent connection form factor is tracked in the preceding section.
+
+For spatial momenta $k,k'$ related by a shift of one box mode, the first lapse and metric vertices, with the Fourier components of the cosine factored out, are
+
+$$
+V_n=-2\omega^2-\tfrac12|k'-k|^2,\qquad
+V_z=k\cdot k'-\tfrac32(|k|^2+|k'|^2).
+$$
+
+The mixed insertion on the diagonal is $\frac54|k|^2+\frac34\langle |k'|^2\rangle-2\langle k\cdot k'\rangle$, where the average uses the two shifted modes. The heat trace uses both insertions and the continuous time Gaussian. Subtract the zero-momentum cross response with the same cosine mean square to remove the derivative-free volume term. On the periodic background, $\int\sqrt g R=\int e^n\sqrt h\,{}^{(3)}R$ up to a total derivative. Its mixed variation per reference four-volume is $2q^2$. Dividing the smooth response by this value estimates the Einstein coefficient at a finite spatial momentum. This estimate includes higher-derivative corrections at finite $\sigma q^2$.
+
+| Lower proper time $\sigma$ | $\sigma c_R$, lapse–metric cross response | $\sigma c_R$, temporal metric response |
+|---:|---:|---:|
+| 0.02000 | -0.000257956 | -0.000236218 |
+| 0.00500 | -0.000262994 | -0.000256646 |
+| 0.00125 | -0.000263685 | -0.000262035 |
+
+Values are per component on $N=97$ points per axis in the existing $L=1.8$ box. Multiply by five for the base-metric trace of the projected tensor. At the smallest cutoff the two estimates differ by 0.63%; $a\to0$ at fixed $\sigma$ precedes $\sigma\to0$. Together with the previous time-dependent calculation this matches the leading heavy Einstein term in two independent projections.
+
+In this Einstein truncation the induced Euclidean term is $5c_R\int\sqrt g R$. The cone contributes $-20\pi c_R A$ to the entropy because the integrated curvature adds $4\pi(1-n_{\rm replica})A$. The opposite bulk counterterm thus gives $+20\pi c_R A$. The Einstein curvature derivative is a constant multiple of the metric antisymmetrizer, so the normalized generalized volume at this order is the ordinary volume. Thus the heavy Einstein subtraction cancels the local coefficient of $\delta A|_V=-(4\pi/30)r^4\delta{}^{(3)}R+O(r^6)$ in the continuum. This tests a specific local divergence using the continuum cone, with the coefficient matched from the smooth lattice. [Generalized volume and its reference-background assumptions](https://arxiv.org/abs/1612.04374).
+
+An independent clock deformation $T=t+\chi$ at fixed flat metric tilts the projected spatial planes. For the specified Levi-Civita projected bundle the connection curvature takes the form $PRP+P(\nabla P\wedge\nabla P)P$ on the vector bundle, then acts in the spin-two representation. With $R=0$ and constant reference $P$, the first clock variation of that curvature is zero. The previously matched $\mathrm{tr}(\Omega^2)$ operator therefore has no quadratic pure-clock response along this path. This is a property of the isolated heavy connection on this reference. The kinetic operator and determinants of the dynamical light clock and gravity on a background with independent sources remain to be supplied.
+
+🟠 [Next] Construct the gauge-fixed smooth clock and gravity Hessian before reduction, with the lapse and shift blocks and the corresponding gauge and measure factors on the same lattice. Match clock and higher-curvature couplings with independent source variations. Derive their boundary entropy and generalized volume with the same action and sewing, then subtract the remaining divergences from the canonical lattice ball calculation. The heavy Einstein result does not determine the finite coupled $r^4$ coefficient.
+
+### Canonical gauge fixing before the homogeneous constraint reduction
+
+🟢 [Done] Fixed the linear ADM gauge on the clock FLRW reference, derived the canonical determinant cancellation for nonzero modes, and checked the unreduced scalar lapse–shift Hessian against the physical kinetic block on three grids. Reproduce the check with [canonical_clock_gauge_measure.py](experiments/canonical_clock_gauge_measure.py).
+
+Start from the Einstein action with a canonically normalized massless clock. Use the ADM phase-space Liouville measure with lapse and shift integrated as multipliers of the Hamiltonian and momentum constraints $\mathcal C_\mu$. At linear order on the homogeneous solution impose $\chi=\delta T=0$ and $G_i=\partial^j\gamma_{ij}=0$, where $\gamma_{ij}$ is the trace-free spatial metric fluctuation divided by the square of the background scale factor. The linear gauge map is block diagonal,
+
+$$
+\delta\chi=\dot{\bar T}\,\xi^0,\qquad
+\delta G_i=\Delta \xi_i+\tfrac13\partial_i\partial_j\xi_j .
+$$
+
+The time diffeomorphism changes only the trace of the homogeneous spatial metric. Use the same odd periodic spatial spectral lattice as the reduced computation, and project out the spatial zero mode as in that computation. The ghost action is $\bar c_\mu M^\mu{}_\nu c^\nu$ with $M=\{G^\mu,\mathcal C_\nu\}$ in an equivalent orientation convention. In this basis it is instantaneous in time. The absolute determinant on each nonzero real Fourier mode is $|\dot{\bar T}|\, (4/3)|k|^6$, from the temporal eigenvalue and the two transverse and one longitudinal spatial eigenvalues. This determinant and the delta-function Jacobian for removing the gauge orbit coordinate cancel mode by mode.
+
+The equivalent phase-space argument uses linear canonical coordinates with the gauge conditions as gauge coordinates. At vanishing gauge coordinates the linearized constraints are affine in the conjugate gauge momenta with coefficient $M$. Integrating the lapse and shift first gives $\delta(\mathcal C_\mu)$. Integrating the gauge momenta then gives $1/|\det M|$, cancelling the ghost determinant in these coordinates and leaving the physical Liouville measure. Gaussian integration over the physical momenta produces the configuration weight $\sqrt{\det M_{\rm kin}}$, where $M_{\rm kin}$ is the physical kinetic matrix. This argument uses the normalized canonical multiplier prescription. A flat configuration-space integral over lapse and shift after integrating the unreduced momenta has a different apparent measure. Its auxiliary Gaussian determinant alone is neither the canonical measure nor the inverse ghost determinant.
+
+The numerical check starts from the unreduced projected ADM scalar action, includes the transverse shift, and verifies that the Schur complement of all four auxiliary blocks has $M_{\rm kin}=12a_{\rm lattice}^3 I$ at $a_{\rm FLRW}=1$ in the action units used in the quartic calculation. This holds to the stated tolerance for $26$, $124$, and $342$ nonzero real spatial modes. On the $5^3$ grid, for example, the log absolute ghost factor is $+1584.368748$, while the separate log absolute auxiliary Gaussian weight in cell units is $-794.570166$. The latter uses the absolute determinant and is only diagnostic for the indefinite Lorentzian auxiliary block. For the homogeneous reference the two transverse traceless graviton polarizations decouple from these constraints at quadratic order. Their canonical measure follows by integrating their physical momenta in the same way. [Uniform-clock scalar and tensor quadratic actions](https://arxiv.org/abs/astro-ph/0210603).
+
+The independent curved backgrounds required for coupling matching are off shell. The derivative of the gauge identity $S_{,i}R^i{}_\alpha=0$ gives
+
+$$
+S_{,ij} R^j{}_\alpha=-S_{,j}\partial_iR^j{}_\alpha
+$$
+
+in the continuum, where $R^i{}_\alpha$ is a gauge generator. Thus the Hessian on a generic independently sourced background has source-dependent entries along the reference gauge directions. The homogeneous determinant identities alone cannot justify dropping these entries or fitting the curved counterterms from only the reduced physical kinetic matrix. On the spectral lattice the homogeneous linear calculation is exact for the specified mode projection. A nonlinear realization of the gauge identity requires additional checks, since products of fields need not satisfy the continuum Leibniz rule on the finite grid.
+
+🟠 [Next] Specify an off-shell source and gauge prescription and verify its lattice Ward identity, including the source-dependent terms. Construct the time-dependent background Hessian together with the accompanying lapse, shift, and ghost contributions, including a prescription for the homogeneous mode. Determine the remaining smooth curvature and clock counterterms before any ball fit. The homogeneous gauge check supplies no new curvature subtraction or generalized-volume correction. The continuum coefficient of the fully subtracted fixed-generalized-volume ball remains undetermined.
+
+### Off-shell Ward identity with independent lapse, shift, metric and clock profiles
+
+🟢 [Done] Tested the classical off-shell Ward identity and the gauge-fixing insertion on a time-dependent Einstein–clock sector with a common spectral derivative in space and time. The test exposed a substantial defect at momenta close to the lattice cutoff. Reproduce it with [off_shell_clock_ward.py](experiments/off_shell_clock_ward.py).
+
+Use a periodic two-coordinate sector of the four-dimensional theory, $ds^2=g_{ab}(t,x)dx^a dx^b+e^{2w(t,x)}(dy^2+dz^2)$, with $T=t+\chi(t,x)$ and periodic $dT$. Parameterize the Lorentzian base by independent lapse, spatial metric and shift, and impose no background equation. In this sector the Einstein density after integration by parts is $\sqrt{-g_2}e^{2w}(R_2+2|\nabla w|^2)$, and the clock density is $-\sqrt{-g_2}e^{2w}|\nabla T|^2/2$. Take the fluctuation Hessian on symmetric metric variations, retaining the metric entries occupied by the lapse and shift. The fields and their Lie derivatives use collocation products and the preceding periodic spectral spatial symbol. This is a symmetry-restricted Lorentzian Hessian test per transverse area and reference base volume, with spectral time discretization for the Ward test.
+
+For a prescribed diffeomorphism vector let $R$ denote the corresponding field variation and $J=S_{,\phi}$ the off-shell tadpole. Automatic differentiation independently forms $H R$ and $(\partial R)^{\mathsf T}J$. Their sum is the differentiated classical Ward defect. A fixed external source in the tangent expansion may cancel the linear term, but then its gauge variation must still be tracked. To test the gauge-fixed Hessian in the two retained directions, use $Fh=(\delta T,\partial_x\delta g_{xx})$. The ghost operator is $M=FR$ and the quadratic gauge term is $\|Fh\|^2/2$ in the coordinate norm of this test. The code checks $(H+F^{\mathsf T}F)R-HR=F^{\mathsf T}M$ by differentiating the gauge-fixed action and independently applying the ghost operator. This test does not invert the ghost operator or assign a determinant to residual gauge directions.
+
+For a fixed smooth low-frequency background and gauge vector the full relative norm $\|HR+(\partial R)^{\mathsf T}J\|/(\|HR\|+\|(\partial R)^{\mathsf T}J\|)$ is:
+
+| Points per retained coordinate | Einstein term | Clock term |
+|---:|---:|---:|
+| 9 | 0.319 | 0.113 |
+| 17 | $3.95\times10^{-3}$ | $2.08\times10^{-4}$ |
+| 33 | $7.55\times10^{-9}$ | $6.74\times10^{-11}$ |
+| 65 | $1.27\times10^{-12}$ | $2.75\times10^{-13}$ |
+
+For fixed low output momenta the residual is already at roundoff on the $33$-point grid. Omitting the source term leaves a relative residual of about $0.5$ with the same normalization. On the $65$-point grid, increasing the spatial harmonic from 1 to 15 also moves a clock harmonic to 30, near the spectral edge. The full residual increases to $0.291$ and $0.829$ respectively. The continuum Ward identity for these smooth functions and the discrete gauge-fixing algebra are distinct from a Ward identity uniform across the loop momenta of the collocation regulator.
+
+🟠 [Next] Extend the source and gauge prescription to all four dimensions with the complete metric and ghost sectors and a treatment of residual gauge modes. For smooth-action matching either control the regulator terms in the Ward identity or verify convergence of the gauge and ghost traces with the proper-time band held fixed during spatial refinement. Only then decrease the proper-time cutoff and determine the remaining local coefficients. An off-shell gauge-fixed determinant also requires a specified source or field parametrization convention before comparing local coefficients. This restricted check yields no new divergence subtraction or generalized-volume correction, and the fully subtracted $r^4$ coefficient remains open. [Background field and gauge-fixing dependence](https://arxiv.org/abs/1805.02149).
+
+### Four-dimensional de Donder operators and flat heat-trace calibration
+
+🟢 [Done] Specified the continuum background Hessian in all four dimensions and verified the complete component count, zero-mode prescription, Ward algebra, and leading volume divergence on a flat four-torus. Reproduce the lattice calibration with [four_dimensional_gauge_heat.py](experiments/four_dimensional_gauge_heat.py).
+
+For the Euclidean Einstein–clock action $S=\int\sqrt g\,(-A R + X/2)$, with $X=T_\mu T^\mu$ and $T_\mu=\partial_\mu T$, use a linear background split $(h_{\mu\nu},\chi)=(\delta g_{\mu\nu},\delta T)$. A differential construction of the bare Hessian is to vary the two density gradients at fixed coordinate volume,
+
+$$
+\sqrt g \left[A G^{\mu\nu}+\tfrac14g^{\mu\nu}X-\tfrac12 T^\mu T^\nu\right],
+\qquad -\sqrt g\,\nabla^2 T .
+$$
+
+In this variation use $\delta\sqrt g=\sqrt g\,h/2$, $\delta T^\mu=\nabla^\mu\chi-h^{\mu\nu}T_\nu$ and $\delta R_{\mu\nu}=\nabla_\rho\delta\Gamma^\rho_{\mu\nu}-\nabla_\nu\delta\Gamma^\rho_{\mu\rho}$, where $\delta\Gamma^\rho_{\mu\nu}=(\nabla_\mu h_\nu{}^\rho+\nabla_\nu h_\mu{}^\rho-\nabla^\rho h_{\mu\nu})/2$. Mixed derivatives and terms multiplying off-shell density gradients are retained by varying the whole density. The de Donder map is $F_\mu=\nabla^\nu h_{\mu\nu}-\nabla_\mu h/2$ and the ghost in the positive principal-symbol convention is $-\nabla^2\delta_\mu{}^\nu-R_\mu{}^\nu$. This gauge acts on the full metric, including its lapse and shift components. These differential expressions specify a continuum starting point. The implemented determinant test below uses only the flat specialization, where the contour and treatment of zero modes are explicit. [Covariant metric–scalar quantization](https://www.numdam.org/item/?id=AIHPA_1974__20_1_69_0).
+
+On a flat Euclidean torus with constant reference $T$, the clock fluctuation is a real free massless scalar and is decoupled from the graviton. In normalized metric units, omitting the Fourier factors of $i$ in $F$ and the linear orbit $R_{\rm gauge}$, the bare and fixed metric symbols obey
+
+$$
+H_{\rm bare}=k^2P-2F^\dagger F,\qquad
+H_{\rm fixed}=k^2P,\qquad
+F R_{\rm gauge}=k^2 I_4,\qquad H_{\rm bare}R_{\rm gauge}=0 ,
+$$
+
+where $P$ is the trace-reversal involution. The check constructs all ten symmetric metric components and tests the identities on 625 Fourier momenta, including the zero mode. The constant vector ghosts represent the residual translations and are removed with their gauge-group volume. Constant metric modes are fixed torus moduli, and the constant scalar is fixed by shift symmetry. These last two omissions are separate infrared prescriptions. The metric trace has one negative direction in the fixed Euclidean Hessian. Rotate that direction to define the magnitude of the Gaussian determinant. The calculation tracks its absolute heat action, with no assignment of a background-dependent contour phase. A constant reference clock does not define a relational time slice.
+
+Discretize all four directions with the odd periodic spectral derivative, including time for this calibration. The primed heat trace per four-volume entering $-\tfrac12\int ds/s$ is
+
+$$
+\frac{10+1-2(4)}{L^4}\sum_{k\ne0}e^{-s k^2}.
+$$
+
+The factor of two is the complex Grassmann ghost weight relative to a real boson. For $L=1.8$ and band $[\sigma,2\sigma]$, the $65^4$ and $129^4$ traces agree at the tested quadrature nodes to relative tolerance $2\times10^{-6}$ for each of the three bands. At $\sigma=0.00125$ the scaled actions $\sigma^2\Gamma_{\rm band}/L^4$ for $N=17,33,65,129$ are $-0.002437064$, $-0.003541289$, $-0.00356191808$, and $-0.00356191811$. In the small-$\sigma$ limit the independently calibrated bulk coefficient satisfies
+
+$$
+\lim_{\sigma\to0}\sigma^2 \frac{\Gamma_{\rm band}}{L^4}
+=-\frac{9}{256\pi^2}.
+$$
+
+This follows from the continuum heat density $3/(4\pi s)^2$. Removing the constant modes shifts the unscaled action density by $3\log 2/(2L^4)$ and leaves the ultraviolet coefficient invariant. The volume divergence has no direct conical entropy in the regular replica limit because its extensive part is proportional to the replica number. It must still be absorbed in the cosmological coupling when imposing the background field equations. It supplies no direct $r^4$ entropy subtraction.
+
+🟠 [Next] Implement the full coupled Hessian on independent curved, varying-clock sources and define the Euclidean contour and zero-mode treatment there. Extend the fixed-band Ward and trace convergence tests to those sources. The flat run cannot probe curvature or clock-gradient counterterms, and it does not define the moving clock ball. The remaining divergence subtraction, corrected generalized volume, and finite $r^4$ coefficient of the coupled model remain open.
+
+### Independent clock-gradient insertion in the full flat metric Hessian
+
+🟢 [Done] Matched the quadratic clock-gradient divergence of the Euclidean clock–gravity determinant on the flat spectral four-torus. The full metric–clock mixing and all ten metric components are retained. Reproduce the Ward and heat-trace checks with [clock_gradient_heat.py](experiments/clock_gradient_heat.py).
+
+Use $S=\int\sqrt g\,(-A R+X/2)$ in the dimensionless action units $A=1$, with $X=g^{\mu\nu}\partial_\mu T\partial_\nu T$. Set the reference clock one-form to $v\,dt$ at fixed flat metric. This is a prescribed winding background with periodic fluctuations. It isolates the $X$ insertion at $R=0$ and is off shell for the metric. Its metric tadpole is $J^{ab}=v^2(\delta^{ab}/4-t^at^b/2)$, with $t$ the unit time covector. The de Donder gauge fixing depends only on the metric fluctuation. Its flat vector ghost determinant is independent of $v$ and cancels in the derivative with respect to $X$. Use the same constant-mode projection and perturbative conformal contour as in the flat calibration.
+
+For an orthonormal basis of symmetric matrices $h_a$, define $\tau_a=\mathrm{tr}(h_a)$, $\ell_a=t^{\mathsf T}h_a t$, and $u_a=h_at$. The contribution of the clock action to the metric block at order $v^2$ is
+
+$$
+B_{ab}=\tfrac18\tau_a\tau_b-\tfrac14\delta_{ab}
+-\tfrac14(\tau_a\ell_b+\tau_b\ell_a)+u_a\cdot u_b.
+$$
+
+The metric–clock block at momentum $k$ is $iv b_a(k)$ with $b_a(k)=k\cdot(\tau_a t/2-u_a)$. The scalar block is $k^2$. The code tests the off-shell Ward identity on three nonzero four-momenta and all four gauge directions. With orbit $(i(k_\mu\xi_\nu+k_\nu\xi_\mu),\,v\,t\cdot\xi)$, the bare Hessian acting on the orbit cancels the contraction of $J$ with the Lie derivative of the metric fluctuation. The scalar image vanishes separately. The pure gravitational and gauge-fixing parts obey the flat identities tested in the preceding section. This calculation uses a constant one-form, so the spectral derivatives in the Hessian and the tested Ward identity act mode by mode.
+
+Upon normalizing the metric Gaussian to the flat principal symbol, the congruence matrix obeys $CC^{\mathsf T}=2P$, where $P$ is trace reversal. The single-insertion weight is $\mathrm{tr}(2PB)=0$. The two-insertion weight summed over the four momentum directions is $8$. Cubic symmetry makes their contributions equal after the momentum sum. Expand the heat trace to order $v^2$ around the common flat symbol. The surviving weight is $s^2 k^2 e^{-sk^2}$ after the lattice momentum sum, and the one-loop action uses $-\tfrac12\int ds/s$ as before. In particular, keeping the diagonal metric vertex alone would miss the divergence.
+
+At fixed band $[\sigma,2\sigma]$ and box $L=1.8$, the $65^4$ and $129^4$ differentiated traces agree within relative tolerance $2\times10^{-6}$ at all tested quadrature nodes. At $\sigma=0.00125$, the scaled action coefficient $\sigma c_X$ on $N=17,33,65,129$ is $-0.001493325$, $-0.003109179$, $-0.003166287$, and $-0.003166287$. Integrating the continuum moment $\int d^4k\, k^2e^{-sk^2}/(2\pi)^4=2(4\pi s)^{-2}/s$ gives
+
+$$
+\lim_{\sigma\to0}\sigma c_X=-\frac{1}{32\pi^2}.
+$$
+
+This is a power-divergent coefficient in the chosen proper-time regulator, field split and off-shell gauge, per unit four-volume and in $A=1$ units. The clock-dependent part has no constant-mode contribution at this order. The matching was done from the smooth determinant without a ball fit. [Context for the covariant metric–scalar Hessian](https://www.numdam.org/item/?id=AIHPA_1974__20_1_69_0).
+
+The counterterm $-c_X\int\sqrt g\,X$ renormalizes the clock kinetic coupling. For smooth clock sewing it has no explicit curvature derivative and no direct conical entropy term. In the Einstein truncation it does not change the curvature-derived generalized volume. It does change the clock stress tensor used in the constraint and can affect the entropy balance through the state and background solution. A zero direct surface term therefore leaves the finite coupled $r^4$ test open.
+
+🟠 [Next] Implement the curvature-only and simultaneous curvature–clock backgrounds for the dynamical graviton, clock and ghost determinant, and verify fixed-band Ward and trace convergence there. Match the curvature and mixed counterterms, derive their geometric and state contributions from the same action, and take the continuum limit of the subtracted canonical ball at fixed generalized volume before extracting $r^4$.
+
+### Four-dimensional curved Einstein–clock Ward test
+
+🟢 [Done] Implemented matrix-free applications of the metric–clock Hessian and the de Donder ghost on time-dependent curved four-dimensional backgrounds, with and without an independent clock gradient. Reproduce the grid sequence with [curved_clock_ward_4d.py](experiments/curved_clock_ward_4d.py).
+
+Use an odd periodic spectral grid in all four coordinates. Form the Euclidean action $-R+X/2$ with $X=g^{\mu\nu}T_\mu T_\nu$ using the periodic first-derivative Einstein density. The metric is unconstrained in the fluctuation Hessian, with the ten symmetric variations represented by a symmetrized array. The background is $g=e^{2w}\delta$ with $w=0.08\cos(2\pi(t+x)/L)+0.025\cos(2\pi(y-z)/L)$. The clock is $T=v[t+0.015\sin(2\pi(t-x+y)/L)]$ with winding in $t$. The values $v=0$ and $v=0.35$ give the curvature-only and combined paths at identical metric. The winding derivative is supplied analytically and the fluctuation $\delta T$ is periodic.
+
+Differentiate the same action density for the Hessian and the off-shell tadpole. Apply the discrete vector variation $R_\xi=(\mathcal L_\xi g,\xi\cdot dT)$ and independently form the differentiated tadpole term $(\partial R_\xi)^{\mathsf T} S_{,\phi}$. Construct $F_\mu=\nabla^\nu h_{\nu\mu}-\nabla_\mu h/2$ at fixed background and the positive-symbol ghost application $M=-F R$. With adjoint taken using the background vector norm, automatic differentiation verifies $(H_{\rm fixed}-H)R=-F^\dagger M$ to relative tolerance $10^{-10}$. The full classical Ward residual $\|HR+(\partial R)^{\mathsf T}S_{,\phi}\|/(\|HR\|+\|(\partial R)^{\mathsf T}S_{,\phi}\|)$ for the tested smooth vector is:
+
+| Points per axis | Curvature only | Curvature with clock gradient |
+|---:|---:|---:|
+| 5 | 0.142332 | 0.142238 |
+| 7 | 0.0113223 | 0.0113141 |
+| 9 | 0.000508360 | 0.000507991 |
+| 11 | 0.0000153655 | 0.0000153543 |
+
+These are Hessian and ghost applications before contour rotation or projection of residual gauge modes on the curved background. Their convergence is for the selected smooth gauge vector. The fixed-band heat-trace convergence has yet to be checked.
+
+For a future independent fit of the two curvature–clock invariants $RX$ and $R_{\mu\nu}T^\mu T^\nu$, take $T=vt$ and use separate conformal waves $w=\epsilon\cos(qt)$ and $w=\epsilon\cos(qx)$. After periodic integration by parts, their integrated densities reduce to $-6v^2\int|\partial w|^2$ and $2v^2\int[(\partial_t w)^2-|\partial w|^2]$. The first responds equally to the two probes, while the second responds only to the spatial probe. These two columns are linearly independent at order $v^2\epsilon^2$. The clock Hessian invariant $(\nabla^2 T)^2$ also has to be included or eliminated in a specified basis. Its integrated leading response is $4v^2\int(\partial_t w)^2$, making these two probes insufficient for all three invariants. Independent clock waves at fixed flat metric provide a third direction, with zero curvature entries and nonzero $(\nabla^2 T)^2$. Likewise, separate pure metric profiles beyond conformal waves are required to distinguish curvature-squared terms that coincide or are related by total derivatives on the conformal family.
+
+🟠 [Next] Specify the conformal contour, kinetic normalization and residual-mode prescription for this curved Hessian, then check the weighted metric–clock and ghost heat traces on the same bands through spatial and temporal refinement. Use the independent probes to isolate the curvature and mixed coefficients, and derive the boundary and generalized-volume terms from the resulting action prior to the canonical sphere test. The smooth Ward convergence does not determine those coefficients or the subtracted finite $r^4$ response. [Reference for the generalized-volume identity and its assumptions](https://arxiv.org/abs/1612.04374).
+
+### Curved heat trace with conformal rotation and projected low modes
+
+🟢 [Done] Defined and checked a perturbative curved-space Gaussian contour and a low-mode prescription. Evaluated the metric–clock and ghost heat traces at fixed positive proper time on a static conformal family with and without a clock gradient. Reproduce the calculations with [curved_clock_heat_blocks.py](experiments/curved_clock_heat_blocks.py).
+
+Use $g=e^{2w(x)}\delta$, $w=0.015\cos(2\pi x/L)$, $T=vt$, $v=0$ or $0.1$, and $L=1.8$. The action, gauge term, and ghost application come from the four-dimensional lattice Hessian in the previous section. The background is constant along the other three coordinates. Resolve every retained transverse momentum by a real sine–cosine pair and diagonalize the small remaining $x$-dependent blocks. One auxiliary phase grid with three points suffices for evaluating the quadratic form on this pair: the background is phase independent and all terms in the quadratic form have at most two phase factors. Reflections and interchange of the two transverse spatial momenta reduce the number of distinct blocks without dropping their multiplicities.
+
+Use the background norms for symmetric metric tensors, scalars, and contravariant ghosts. For the conformal background, metric norm half-density factors cancel in covariant metric components, the scalar fluctuation is $e^{-2w}$ times its normalized component, and the ghost vector is $e^{-3w}$ times its normalized component. Multiply the metric components by $\sqrt2$ for the Einstein kinetic normalization in action units $A=1$. Then rotate the normalized unit trace direction $\delta_{\mu\nu}/2$ by $i$. The quadratic Hessian transforms by complex congruence, not by Hermitian conjugation. In the tested blocks its rotated real part is strictly positive, including with metric–clock mixing, and the heat traces are real to numerical precision. The phase of the Gaussian is fixed by continuation from the flat prescription. This check is specific to the weak backgrounds tested. [Euclidean conformal rotation](https://www.sciencedirect.com/science/article/pii/055032137890161X).
+
+At zero transverse momentum remove the normalized profiles of the three constant coordinate vectors along Killing directions, with the companion scalar shift when the translation changes the winding clock by a constant. The code also projects out the constant coordinate vector in the $x$ direction as a continuation of the flat infrared convention. That fourth profile is fixed by prescription on this curved family and is not identified as an exact Killing zero mode. In the bosonic block fix the mean values of the normalized fields, continuing the flat moduli and scalar infrared prescription. The finite torus traces depend on this choice. The flat calibration on several blocks reproduces $11$ boson and $4$ complex ghost channels before the one-loop weighting $K_{\rm boson}-2K_{\rm ghost}$.
+
+For the zero and first transverse momentum blocks and samples $s=0.025,0.0375,0.05$, refinement from $N_x=13$ to $17$ agrees at relative tolerance $2\times10^{-5}$ for both traces. Separately sum the full retained transverse box with mode integers between $-3$ and $3$ in each direction. Across $s=0.07,0.085,0.10$, refinement from $N_x=9$ to $13$ changes the traces by about $2\times10^{-7}$ for the curvature-only background. Including the last transverse shell changes the traces by at most about $1.6\times10^{-3}$. At $s=0.085$ the curvature-only traces are $90.361080122$ for metric plus clock and $32.879605218$ for the ghost. The analogous clock-gradient sequence is tested with the same tolerances. The two resolution checks address different grid directions. The shell change is a measured sensitivity and is not an error bound on an extrapolation.
+
+🟠 [Next] Tighten transverse tail control as the proper-time cutoff is reduced. Use all independent background profiles from the preceding section, including temporal curvature and a clock wave at flat metric, and extrapolate the response derivatives before fitting the local coefficients. Fixed-band trace agreement for this one spatial profile leaves the ultraviolet curvature and mixed coefficients undetermined. The full generalized volume and the subtracted fixed-volume $r^4$ result remain open.
+
+### Temporal curvature and flat clock wave
+
+🟢 [Done] Added the temporal conformal and flat clock-wave probes under the same spectral and conformal-contour prescriptions. Run [clock_wave_uv.py](experiments/clock_wave_uv.py).
+
+In the curved Fourier blocks move the winding direction onto the coordinate along which the metric varies. Relabeling that coordinate as Euclidean time gives the temporal curvature profile. With zero winding, this is a permutation of the spatial curvature probe. At nonzero winding the two profiles differ. Compare 9 and 13 points along the inhomogeneous direction and compare transverse mode bounds 2 and 3 at fixed samples $s=0.07,0.085,0.10$. In the temporal probe the maximum relative changes are $2.002×10^{-7}$ under longitudinal refinement and $1.593×10^{-3}$ from the last transverse shell. These measure finite-time trace resolution.
+
+For the independent clock probe use a flat metric and a periodic clock-gradient wave of external momentum $q$. At quadratic order in the wave amplitude the diagonal metric insertion has zero rotated trace, and the ghost is independent of the clock. The norm of the metric–clock vertex in the rotated normalization is the scalar momentum squared times the gradient amplitude squared. Subtract the homogeneous clock-gradient response with the same integrated $X$. The continuum two-insertion momentum integral, divided by the unperturbed heat density, has form factor
+
+$$
+\int_0^1du\, e^{-s u(1-u)q^2}\left(\frac{2}{s}+u^2q^2\right).
+$$
+
+The $q^2$ coefficient is $\int_0^1[u^2-2u(1-u)]du=0$. Consequently the logarithmic shell coefficient of the flat integrated $(\Box T)^2$ term is zero in this field split and gauge. This statement treats integrated clock Hessian squared and integrated $(\Box T)^2$ as the same flat operator; curvature lifts that equivalence.
+
+The numerical check sums the exact spectral weights with both internal global zero modes excluded when applicable. After dividing by the integrated $(\Box T)^2$, the finite shell estimates on the $129$-point grid are $3.60119\times10^{-5}$, $4.87756\times10^{-6}$ and $9.11458\times10^{-7}$ at lower proper times $0.02000$, $0.00500$ and $0.00125$. The $65$- and $129$-point sums agree within the specified fixed-band tolerance. At the smallest cutoff the $17$-point estimate is $-2.02415\times10^{-4}$. The nonzero finite-shell response includes higher-momentum and finite-box contributions.
+
+🟠 [Next] Resolve the amplitude derivatives of the temporal and spatial curved traces, including transverse refinement at each lowered band and subtraction of lower-dimensional terms. Use a nonconformal metric probe for pure curvature-squared operators. The flat clock wave fixes one coefficient but leaves $RX$ and $R_{\mu\nu}T^\mu T^\nu$ unmeasured. Their boundary and generalized-volume contributions and the subtracted finite $r^4$ coefficient remain open.
+
+### Mixed heat-response resolution and nonconformal curvature probe
+
+🟢 [Done] Evaluated finite-amplitude mixed heat differences for temporal and spatial curvature, tested their cutoff sensitivity, and implemented a nonconformal shear probe. Reproduce with [mixed_curvature_response.py](experiments/mixed_curvature_response.py).
+
+For metric amplitude $b$ and clock winding $v$, form $K(b,v)-K(b,0)-f_b[K(0,v)-K(0,0)]$, where $f_b=\langle e^{2b\cos(qx)}\rangle$ is the ratio of integrated $X$ at fixed winding. The ghost cancels within each clock difference. Integrate the result over $[\sigma,2\sigma]$ and divide by $b^2v^2 L^4$. Denote the resulting responses by $D_t$ and $D_x$, for curvature parallel and orthogonal to the winding. The independent geometric responses of $RX$ and $R_{\mu\nu}T^\mu T^\nu$ give the projections $-D_t/(3q^2)$ and $(D_t-D_x)/q^2$, respectively. These are finite-shell estimates, with finite amplitudes and higher derivatives still present. The flat clock-wave logarithm determined in the previous section is zero in the chosen operator basis.
+
+At $b=0.025$, $v=0.3$, the estimates are:
+
+| Lower proper time | Longitudinal points | Transverse integer bound | $RX$ projection | Ricci–clock projection |
+|---:|---:|---:|---:|---:|
+| 0.0700 | 9 | 2 | 0.00117027 | -0.00036292 |
+| 0.0700 | 9 | 3 | 0.00128573 | -0.00039320 |
+| 0.0700 | 13 | 3 | 0.00128511 | -0.00039337 |
+| 0.0350 | 13 | 2 | -0.00108493 | -0.00030360 |
+| 0.0350 | 13 | 3 | 0.00081937 | -0.00063305 |
+| 0.0175 | 9 | 3 | -0.00157493 | 0.00027104 |
+| 0.0175 | 13 | 3 | -0.00346501 | -0.00016067 |
+
+Halving $b$ at the coarse transverse bound moves the Ricci–clock projection at $\sigma=0.035$ from $-0.00027877$ to $+0.00061883$. Thus even the finite-amplitude extrapolation is unresolved at that resolution. At the lower bands the lattice changes are of the same order as the projected coefficients or reverse their sign. The trace convergence tested at larger positive proper times does not carry over to these differences. No row is used as a counterterm.
+
+For a nonconformal probe take $g=\mathrm{diag}(1,1,e^{2w},e^{-2w})$ with $w=b\cos(qx)$, where $x$ is the second coordinate. The metric, scalar and ghost normalization uses the diagonal background frame and volume density. The same constant coordinate ghost profiles are removed using their frame-weighted representations. In the zero transverse sector the $13$- and $17$-point traces agree to relative tolerance $2\times10^{-5}$ at $s=0.035,0.07,0.14$. At $s=0.07$ the traces are $10.10901861$ for metric plus clock and $3.67529200$ for the ghost. On the torus, modulo the Euler term, the conformal and shear rows for integrated $(R^2,R_{\mu\nu}R^{\mu\nu})/(b^2q^4L^4)$ are $(18,6)$ and $(0,1)$ at quadratic order. The two probes therefore separate the invariants geometrically. The summed shear heat derivative needed to fit their coefficients is still open.
+
+For the candidate Lorentzian local action $A R+\lambda RX+\beta R_{\mu\nu}T^\mu T^\nu$, use the curvature-derivative Wald entropy and the curvature-derivative volume functional with Einstein reference normalization $E_0=A/2$. For a clock-aligned slice and a perturbative comparison about the Einstein reference, writing $c=\lambda+\beta/2$, the mixed terms add $4\pi c\int_{\partial B} X\,dA$ to the entropy and $3c/(2A)\int_B X\,dV$ to the volume functional. This follows because the Ricci coupling $\beta T^\mu T^\nu$ contributes half its normal-plane trace to the Wald area coefficient, and contributes $3\beta X/4$ to $E^{abcd}u_a h_{bc}u_d$ in four dimensions. This is the curvature-derivative part, with no replica-dependent boundary completion assigned. [Generalized-volume prescription and reference assumptions](https://arxiv.org/html/1612.04374).
+
+Holding this volume functional fixed for a variation of $X$ on a reference flat ball gives the local entropy response $4\pi c\,4\pi r^2(\langle\delta X\rangle_{\partial B}-\langle\delta X\rangle_B)$ at first order in the mixed couplings. For a smooth $\delta X$ this is $(16\pi^2/15)c\,r^4\Delta\delta X(0)+O(r^6)$. Thus the boundary and volume terms alone cancel a constant response but can leave a derivative response of precisely the requested order. This conditional local expression has no state or constraint response included.
+
+🟠 [Next] Evaluate amplitude insertions directly or extrapolate both amplitudes after resolving the transverse and longitudinal tails of the mixed difference at each band. Fit the pure curvature coefficients with the summed conformal and shear derivatives. Until those coefficients and the matching canonical state and constraint responses are fixed, the subtracted coupled $r^4$ cancellation remains undetermined.
+
+### Direct lattice heat-trace derivatives
+
+🟢 [Done] Implemented direct second curvature derivatives and direct fourth mixed curvature–clock derivatives of the regulated heat traces. Reproduce with [direct_curvature_insertion.py](experiments/direct_curvature_insertion.py) using NumPy, PyTorch and SciPy.
+
+The differentiated operators include the background normalization, conformal rotation, and ghost projection. The zero-sector ghost basis uses an explicit differentiable Householder map onto the orthogonal complement of the removed background profile. Its projector is the same as in the finite-amplitude calculation. For the curvature derivative, differentiate the operator to obtain $D_1$ and $D_2$. For each reference eigenvalue pair, the two-insertion term uses the divided difference of the exponent:
+
+$$
+K_{bb}
+=-s\,\mathrm{Tr}(e^{-sD_0}D_2)
++s^2\sum_{ij}\frac{e^{-s\lambda_j}-e^{-s\lambda_i}}{s(\lambda_i-\lambda_j)}
+(D_1)_{ij}(D_1)_{ji}.
+$$
+
+The coincidence limit is $e^{-s\lambda_i}$. In particular the product is not a squared modulus after the complex contour rotation. The implementation checks both curvature probes against centered differences on the same grid and keeps the differentiation result independent of the finite-difference step.
+
+For $K_{bbvv}$ the boson operator is exactly quadratic in winding $v$ at fixed metric. Extract the three winding coefficients of each directly differentiated curvature insertion. Represent multiplication by the resulting operator polynomial on the nine Taylor coefficients of bidegrees $(i,j)$ with $0\le i,j\le2$. The exponential of this block triangular matrix gives the Taylor coefficient of $b^2v^2$ in its last block acting on the constant term. Multiplication by $2!2!$ gives the mixed derivative. The ghost has zero winding derivative. This construction includes all insertion orders and avoids subtraction of finite-amplitude heat traces. [Matrix exponential action algorithm](https://doi.org/10.1137/100788860).
+
+At zero transverse momentum and $s=0.07$, the direct pure curvature derivatives at $N_x=17$ are $(20.41451582,-25.47612885)$ for the conformal probe and $(-7.99977176,-5.19641869)$ for the shear, listing the boson and ghost traces before ghost weighting. The $13$- and $17$-point results meet the tested tolerance at all three sampled proper times for both probes. This is a longitudinal check in one sector.
+
+The raw mixed derivatives are:
+
+| Longitudinal points | Spatial curvature at $s=0.035$ | Temporal curvature at $s=0.035$ | Spatial curvature at $s=0.07$ | Temporal curvature at $s=0.07$ |
+|---:|---:|---:|---:|---:|
+| 9 | -0.110804 | 0.689496 | -0.473668 | 1.262641 |
+| 13 | -0.183925 | 0.647863 | -0.475744 | 1.261189 |
+
+These values are derivatives of a sector trace before the integrated $X$ subtraction, not counterterm coefficients. The smaller proper time shows significant longitudinal dependence even with exact amplitude derivatives. At $N_x=9$, the six first axial transverse momenta contribute $-0.157446$ (spatial curvature) and $+2.850612$ (temporal curvature) at $s=0.035$. At $s=0.07$ they contribute $-1.149659$ and $+1.692727$. These contributions are comparable to or larger than the zero transverse sector. This checks the sensitivity to including transverse momenta, while a sum with a controlled tail is still needed to fit the local invariants.
+
+🟠 [Next] Factor the momentum-space insertions by their finite Fourier transfers to accelerate and control the full transverse sums of the direct responses. Require both longitudinal and transverse tolerances on each subtracted band before lowering its cutoff. The curvature and mixed divergence coefficients and the constrained, state-inclusive $r^4$ cancellation remain undetermined.
+
+### Transverse sums of direct heat-trace insertions
+
+🟢 [Done] Factored and summed the transverse Fourier dependence of the direct mixed and pure-curvature trace derivatives. Reproduce with [transverse_insertion_sum.py](experiments/transverse_insertion_sum.py) and [pure_transverse_insertion_sum.py](experiments/pure_transverse_insertion_sum.py).
+
+For the flat reference inside the Taylor calculation the transverse part of the heat operator is $p_\perp^2 I$. Factor out $e^{-s p_\perp^2}$ before computing the block exponential. A curvature vertex is at most quadratic in transverse momentum. A first winding vertex is at most linear in momentum and a second winding vertex is independent of momentum. Thus the coefficient of $b^2v^2$ after factoring the Gaussian has degree at most six. With temporal curvature, rotation symmetry among the transverse coordinates makes it a polynomial of degree at most three in $p_\perp^2$. With spatial curvature it is a polynomial of total degree at most three in the squared transverse time momentum and squared transverse spatial momentum. For the pure second curvature derivative the degree is at most four in momentum. The shear probe uses all three squared transverse components. Independent off-axis evaluations check the polynomial identities. The projected zero-transverse sector replaces the unprojected zero-sector polynomial value. Longitudinal Fourier insertions in the unprojected mixed calculation shift mode indices by at most the curvature order. The implementation tests that entries outside this support are roundoff before removing them for the sparse exponential.
+
+For the mixed derivative subtract $4s^2\sum_k k^2e^{-sk^2}$ on the same momentum grid. This is the winding derivative of the flat $X$ response times the curvature derivative of the integrated $X$ volume factor. For the conformal pure derivative subtract the leading flat heat density times the second derivative of the volume factor, using the adopted finite-box projection. The shear has constant volume. The pure traces still contain the Einstein term. These operations do not fit any local coefficient to the sphere.
+
+At $N_x=9$, the subtracted spatial mixed response at $s=0.035$ is $1.723596$, $7.261759$, and $7.273777$ for transverse bounds 3, 5, and 12. At $s=0.07$ those values are $4.382605$, $4.413309$, and $4.413309$. The temporal projection at bound 12 gives $8.192987$ and $5.322469$ at the two respective times. The summation removes large transverse-cutoff shifts seen in the earlier finite-shell estimates. It is a check at fixed longitudinal resolution and sampling times.
+
+At $s=0.07,0.105,0.14$ the volume-subtracted pure responses on the two grids agree to better than $0.06\%$ between $N_x=9$ and 13 with transverse bound 8. At the shorter diagnostic time $s=0.035$ the shear result changes from $433.242729$ to $359.642382$ and the conformal result from $-1018.655926$ to $-935.767237$. At $N_x=13$, increasing the transverse bound from 5 to 8 changes the shorter-time shear result by about $0.022$ and the conformal result by about $0.027$. Longitudinal resolution is therefore the limiting error for these shorter-time pure probes. These are proper-time samples and are not a fit to logarithmic coefficients.
+
+🟠 [Next] Resolve the longitudinal short-time error and verify quadrature convergence on each full band before lowering the cutoff. Separate the Einstein term from the two curvature-squared responses with independent momentum or band scaling. Use the resulting ultraviolet coefficients, a matched physical state, and the same fixed generalized volume to test the coupled $r^4$ residual. No partial heat response has been used as a sphere counterterm. [Heat-kernel expansion and local counterterms](https://arxiv.org/abs/hep-th/0306138).
+
+### Proper-time quadrature and momentum separation of the Einstein term
+
+🟢 [Done] Added proper-time band integration and a distinct external-momentum check for the pure metric fit. Reproduce with [curvature_band_matching.py](experiments/curvature_band_matching.py) and [mixed_band_resolution.py](experiments/mixed_band_resolution.py).
+
+Write $b^2L^4$ times the band response at external momentum $q$ as the quadratic-in-amplitude part of the one-loop action after the volume subtraction. For the conformal and volume-preserving shear probes, the leading local predictions for the band response per $b^2L^4$ are
+
+$$
+C(q)=3q^2 c_R+q^4(18c_{R^2}+6c_{\rm Ric^2}),\qquad
+S(q)=-q^2c_R+q^4c_{\rm Ric^2}.
+$$
+
+The Einstein coefficients follow from the respective integrated spatial curvature variations. The periodic Einstein action for the conformal wave gives $6\int e^{2w}|\partial w|^2$, while the two opposite shear warps give $-2\int|\partial w|^2$. At fixed band fit the lowest two momenta for $c_R$ and the conformal quartic combination, then independently extract $c_{\rm Ric^2}$ from each shear momentum. Agreement is necessary before interpreting the quartic part as a local band coefficient. Higher-derivative form factors and finite-box effects can contribute to this comparison. [Curvature expansion and momentum-dependent form factors](https://arxiv.org/abs/1203.2034).
+
+The pure calculation compares longitudinal grids, transverse bounds 5 and 8, and 8- and 16-node Gauss–Legendre quadratures at fixed band. For the fundamental conformal wave at $[0.035,0.070]$, the volume-subtracted action responses per $b^2L^4$ at transverse bound 8 are $10.78569359$, $10.78555307$, and $10.78555306$ at longitudinal sizes 13, 17, and 21. At size 21 the transverse bound 5 gives $10.78559328$. The two quadratures agree to the displayed precision. This passes the selected 0.1% numerical criterion for that probe, before separating the Einstein term. For the mixed check, integrating the earlier samples with Simpson quadrature gives the following subtracted trace integrals $\int ds\,K_{\mathrm{sub}}/s$, before conversion to action and invariant normalization:
+
+| Band | Spatial, 9 points | Spatial, 13 points | Temporal, 9 points | Temporal, 13 points |
+|---|---:|---:|---:|---:|
+| $[0.035,0.070]$ | 3.531235 | 2.796268 | 4.216393 | 3.492674 |
+| $[0.070,0.140]$ | 3.476941 | 3.473303 | 3.879759 | 3.876409 |
+
+The short band changes by 17–21% under this longitudinal refinement. Even the longer band has a 2–3% Simpson–trapezoid discrepancy at 13 points with these three quadrature samples. The separate mixed band script uses additional samples for the longer band and higher longitudinal resolution. For the spatial mixed probe at size 13 the five-node Simpson integral on the longer band is $3.47771728$, and the difference with trapezoid quadrature on the same nodes is $-0.01634$. For the short band that difference is $-0.04182$ and extending the transverse bound from 8 to 12 changes the integral by about $1.1\times10^{-10}$. The limiting errors are longitudinal resolution and quadrature. These finite-band numbers do not determine ultraviolet coefficients.
+
+🟠 [Next] Require the lattice and quadrature checks on the short mixed band and test the local momentum expansion independently of quadrature. Use only the independently matched action coefficients in the subsequent physical-region entropy and constraint calculation. The subtracted, state-inclusive $r^4$ ball coefficient remains open.
+
+### Short-band refinement and a two-wave Einstein projection
+
+🟢 [Done] Verified two further pure-metric band responses under quadrature and lattice refinement, obtained an independent shear prediction from the two-wave fit, and implemented nested mixed-band quadrature. Reproduce with [curvature_band_matching.py](experiments/curvature_band_matching.py) and [short_mixed_quadrature.py](experiments/short_mixed_quadrature.py).
+
+For $\sigma=0.035$ the band responses per $b^2 L^4$ at transverse bound 8 are:
+
+| Probe | $N_x=13$ | $N_x=17$ | $N_x=21$ |
+|---|---:|---:|---:|
+| Fundamental conformal | 10.78569359 | 10.78555307 | 10.78555306 |
+| Fundamental shear | -4.31360285 | -4.31352211 | -4.31352211 |
+| Second conformal harmonic | 28.74525502 | 28.74121439 | 28.74121415 |
+| Second shear harmonic | -18.02980337 | -18.02549223 | -18.02549206 |
+
+For all four rows the band agrees under 8- to 16-node Gauss–Legendre refinement and under transverse bound 5 to 8 at the chosen 0.1% diagnostic tolerance. Solving the two conformal equations from the preceding section gives the finite-band projection $c_R=0.32788769$ and $18c_{R^2}+6c_{\rm Ric^2}=-0.00808317$. Applying the fundamental shear equation gives $c_{\rm Ric^2}=-0.00214398$ and predicts the second-harmonic shear response $S(2q)=-21.07380881$. The independently computed second-harmonic shear gives $-18.02549206$, a discrepancy of $3.04831675$, around 14.5% of the prediction. The extracted Ricci-squared projection changes from $-0.00214398$ to $-0.00086073$. The local $q^2+q^4$ truncation therefore fails its independent momentum test at the current band and box even though the heat integrals converge. The matching script now accepts an independent longitudinal box length, keeping the transverse regulator and proper-time band fixed. The flat metric–clock and ghost spectra at double longitudinal length reproduce the analytically rescaled Fourier eigenvalues. This validates the new momentum control at the flat reference; the longer-box curved fit is still open. In particular $sq^2$ reaches 3.41 for the second harmonic at the top of the band, allowing appreciable higher-derivative form-factor contributions.
+
+The spatial mixed short-band integral estimated on three Simpson nodes is $2.796268301$ at $N_x=13$ and $2.794929099$ at $N_x=17$. This apparent integrated stability is insufficient: the pointwise change reaches $0.008008$ and the $N_x=17$ trapezoid–Simpson discrepancy is $0.04115$. At 21 points the three-node integral is $2.794929048$, and the maximum change from 17 points across the three sampled subtracted traces is $3.011\times10^{-7}$. The new mixed script compares nested Simpson quadratures at 3, 5 and 9 nodes without moving either end of the band. For the spatial probe at 17 points the integrals are $2.794929099$, $2.790639481$, and $2.790300621$. The last quadrature comparison changes the integral by $0.0122\%$, and the transverse bound change from 8 to 12 at nine nodes is $2.82\times10^{-11}$. This resolves the spatial probe to the numerical diagnostic tolerance on the tested refinements. The temporal orientation still requires the same check. In the direct insertion code the winding-dependent Hessian is now constructed separately from the metric-independent-winding operator. In an orthonormal frame it is the quadratic Taylor coefficient of $\sqrt g\,g^{ab}T_aT_b/2$, keeping the $h^2 T^2$ and $h\,T\,d\chi$ terms. The separate computation reproduces the difference of the full operator jets to $6\times10^{-14}$ in the tested nonzero transverse block for both winding orientations. This reduces repeated gravitational differentiation without changing the winding or curvature insertion orders.
+
+🟠 [Next] Complete the dense quadrature and longitudinal checks for the temporal mixed orientation and reduce external momentum at fixed band and independently controlled finite-box errors. Use the shear response to validate the local momentum projection before accepting the fitted coefficients. Keep smaller cutoffs out of the coefficient fit until these independent checks pass. The fitted finite-band projections have not been used for a generalized-volume sphere subtraction. The state- and constraint-inclusive $r^4$ response remains open.
+
+### Longer longitudinal box and clock-aligned constraint check
+
+🟢 [Done] Resolved the short-band temporal mixed quadrature on the 17-point grid. At fixed band $[0.035,0.070]$ and transverse bound 12 the nested 3-, 5-, and 9-node Simpson integrals are $3.491366826$, $3.486887287$, and $3.486540709$. The last change is $0.00994\%$. Changing the transverse bound from 8 to 12 at nine nodes changes the result by $2.85\times10^{-11}$. [Nested mixed quadrature](experiments/short_mixed_quadrature.py).
+
+For the pure metric fit, double $L_x$ from $1.8$ to $3.6$ with transverse length and proper-time band fixed. The two probe momenta become $q/2$ and $q$, where $q=2\pi/1.8$. The shared momentum $q$ provides a control for the changed box and infrared mode prescription. The maximum value of $s q_{\rm probe}^2$ across the band and the two waves falls from about $3.41$ to $0.85$. Use both the independent shear prediction and the direct combination $(C+3S)/q^4$ to test the extraction. This combination removes the Einstein term algebraically at each momentum and would equal $18c_{R^2}+9c_{\rm Ric^2}$ in the local truncation. For the previous box its two measured values are $-0.01451512$ and $-0.01066537$, showing the discrepancy even before fitting $c_R$. On the long box the fundamental conformal band response is $2.83247869$, $2.82674677$, and $2.82666877$ at 21, 25, and 29 longitudinal points, respectively. At 29 points the transverse bound 5 gives $2.82672474$, compared with $2.82666877$ at bound 8. The 8- and 16-node integrations agree to the displayed precision. The long-box fundamental conformal result passes the fixed-band numerical tolerance. This alone cannot test the local curvature decomposition. [Longitudinal-box matching](experiments/curvature_band_matching.py).
+
+The leading constraints also give a check on how the mixed local term enters the ball response. In uniform clock gauge the Lorentzian invariant is $X=-\dot{\bar T}^{\,2}/N^2$. Its linear variation is $\delta X=-2\bar X\,\alpha$, where the leading lapse constraint gives $\alpha=\dot\zeta/H$. Substitution into the preceding fixed-$W$ formula yields the mixed local $r^4$ term
+
+$$
+(\delta S_{\rm mixed})_{r^4}
+=-\frac{32\pi^2}{15}
+\left(\lambda+\frac{\beta}{2}\right)\frac{\bar X}{H}\,
+r^4\Delta_h\dot\zeta(0)
+$$
+
+to first order in the mixed couplings. Correcting $\alpha$ in this particular term would affect it at higher order in the couplings. The term vanishes for the previous zero-velocity profile, but the leading constraint alone does not force it to vanish for other initial data. For a Fourier mode, the surface and volume averages can be checked from $\sin(qr)/(qr)$ and $3[\sin(qr)-qr\cos(qr)]/(qr)^3$. Their difference divided by $r^2$ approaches $-q^2/15$. The check concerns the explicit mixed surface and volume corrections. It leaves the correction to the constraint in the Einstein and matter sectors and the change of the quantum state to be computed.
+
+🟠 [Next] Complete the longitudinal refinement of the temporal mixed response and the two-wave shear check at the longer box. Keep the cutoff fixed until the short-band and momentum checks pass. Then use a resolved cutoff sequence to determine the counterterms and compute the full entropy and state response at fixed generalized volume.
+
+### Resumable longitudinal-band matching
+
+🟢 [Done] Reduced the transverse shear reconstruction from ten to seven operator samples using exchange symmetry of the two shear axes. At second order in the shear amplitude the polynomial is symmetric in $y^2,z^2$ and can be reconstructed using their sum and product. An independent off-axis sample still checks the reconstructed polynomial. On the previous nine-point grid the optimized response agrees with the recorded reference at both tested proper times to relative tolerance $10^{-8}$.
+
+🟢 [Done] Added an optional JSON checkpoint to the longitudinal-band driver. Each completed grid, harmonic, and probe is saved before starting the next calculation. The stored key includes box length and lower proper time. A resume test confirmed that a completed row is reused and a different harmonic is recomputed.
+
+    python3 -B experiments/curvature_band_matching.py --length-x 3.6 --sizes 21 25 29 --checkpoint /tmp/gravity-long-box.json
+
+At fixed band $[0.035,0.070]$ on the 21-point long box, the conformal and shear responses were $(2.83247869,-1.05409106)$ for the fundamental and $(10.86620566,-4.34241678)$ for the second harmonic. The two conformal values and fundamental shear predict $-5.38097252$ for the second shear in the local truncation, about 19.3% away when measured relative to that prediction. The four-response pilot uses a single longitudinal grid. It does not distinguish longitudinal discretization, finite-box terms and momentum dependence. Keep the proper-time band fixed while refining this check.
+
+🟠 [Next] Use the checkpointed long-box driver to test both shear harmonics and repeat the temporal mixed longitudinal convergence check. The independent momentum and cutoff checks still precede counterterm matching and the fixed-generalized-volume subtraction.
+
+### Temporal mixed convergence and checkpointed long-box refinement
+
+🟢 [Done] Completed the short-band temporal mixed integral checks. At $[0.035,0.070]$ the 21-point 3-, 5-, and 9-node Simpson integrals are $3.491366778$, $3.486887262$, and $3.486540695$. The 17-point nine-node result was $3.486540709$, a change of $1.40	imes10^{-8}$. At 21 points, changing the transverse bound from 8 to 12 shifts the nine-node integral by $2.85	imes10^{-11}$. The last quadrature change is approximately $0.010\%$. These comparisons establish convergence of this band integral to the selected numerical diagnostic tolerance. [Nested mixed quadrature](experiments/short_mixed_quadrature.py).
+
+The mixed driver now persists the full sampled response through the same checkpoint mechanism as the pure driver, so the longitudinal check can compare individual quadrature samples as well as the integral. The long-box driver accepts any increasing sequence of at least two supported grids and evaluates the shear probes first. At $L_x=3.6$ the fundamental shear band response is $-1.051188791$ at 25 points and $-1.051153422$ at 29 points. Their relative difference is $3.36\times10^{-5}$. At 29 points the transverse bounds 5 and 8 agree to about $3.08\times10^{-5}$ relative, and the change between the 8- and 16-node proper-time integrals is $2.92\times10^{-11}$ in absolute units. The second-harmonic shear moves from $-4.322094709$ to $-4.321766559$ between the same grids, a relative change of $7.59\times10^{-5}$. Both shear probes pass all three numerical checks at the fixed band.
+
+The completed 29-point checkpoint gives conformal responses $2.826668773$ and $10.837045453$ at the two momenta. All four probes pass the longitudinal, transverse, and quadrature checks at the fixed band. The Einstein-free projections $(C+3S)/q^4$ are $-0.03521772$ and $-0.01433488$. Fitting the conformal pair and the fundamental shear predicts $-5.355236445$ for the second shear, versus the direct $-4.321766559$. The 19.3% mismatch persists after numerical refinement, so these projections cannot be used as ultraviolet coefficients.
+
+As an infrared diagnostic, restoring the global zero sector in the heat trace and using the corresponding unprojected volume subtraction changes the Einstein-free projections to $-0.01532208$ and $-0.01415452$. The zero-sector convention therefore accounts for most of the discrepancy in this particular difference of projections. A momentum dependence of about 7.6% relative to the fundamental remains. This comparison does not change the prescription for the physical clock state or certify either projection as an ultraviolet coefficient. The checkpointed driver can repeat it with `--compare-zero-projection`.
+
+After the fixed-band numerical checks, lower the proper-time band to $[0.028,0.056]$ for a fundamental shear pilot. At transverse bound 8 and 16 quadrature nodes the 29- and 33-point responses are $-1.308558118$ and $-1.308544829$. At 33 points the transverse bound 5 gives $-1.307783109$ and the eight-node result at bound 8 agrees within $3.0$ times $10^{-11}$. This pilot passes the same 0.1% numerical criteria. It does not separately determine the Einstein and Ricci-squared coefficients.
+
+🟠 [Next] Complete the shorter-band probe family and distinguish finite-volume and finite-momentum contributions before fitting a divergence. The long-box driver exposes the lower proper-time cutoff as a checkpoint key. The bulk coefficients and the state-inclusive fixed-generalized-volume entropy residual have yet to be determined.
+
+### Common volume reference for the curvature fit
+
+🟢 [Done] Corrected the volume reference in [curvature_band_matching.py](experiments/curvature_band_matching.py). Earlier conformal checkpoint rows subtracted 24 times the primed flat heat trace. The two curvature probes should use a common flat volume subtraction when comparing the projected and unprojected quadratic traces. The missing flat unit is independent of momentum and proper time. Restoring it subtracts 24 from the conformal heat derivative and adds $6\log 2/(L_x L_\perp^3)$ to each dyadic conformal band, since the action response per amplitude squared integrates the second derivative with weight $-1/4$. The shear probe has no quadratic volume change. The conversion is applied during matching, so the raw checkpoint data remain reusable.
+
+For $L_x=3.6$, $L_\perp=1.8$, and the resolved band $[0.035,0.070]$, the common-reference shift is $+0.198087329$. The Einstein-free momentum projections change from $(-0.03521772,-0.01433488)$ to $(-0.01387021,-0.01300066)$. In the unprojected trace with the same volume subtraction they are $(-0.01532208,-0.01415452)$. The common reference removes the constant subtraction artifact; neither comparison meets the existing momentum consistency tolerance. The individual Ricci-squared projections with the common reference are $-0.00143858$ and $-0.00114873$. A synthetic local action check independently recovers its Einstein, scalar-squared and Ricci-squared inputs through the new extraction routine.
+
+At $[0.028,0.056]$ the temporal mixed nine-node band integrals are $3.33146513156331$ and $3.33146513153210$ at 21 and 25 points. On the 25-point grid the five-node integral is $3.33178746622918$ and the transverse bound change from 8 to 12 is $1.79\times10^{-8}$. Longitudinal, transverse, and quadrature checks pass. This is one orientation of the mixed probe. The dyadic mixed driver now accepts the lower cutoff as a parameter and keeps it in the checkpoint key.
+
+Both harmonics of both pure probes pass the numerical checks at $[0.028,0.056]$ on the 29- and 33-point grids. With the common reference, the Einstein-free projections are $(-0.01403405,-0.01354088)$, a difference of 3.51% relative to the fundamental, down from 6.27% at $sigma=0.035$. The scaled finite-band Einstein projection $sigma c_R$ changes from $0.01192419$ to $0.01190774$. The two Ricci-squared projections remain distinct at $-0.00140942$ and $-0.00124503$. These are converged band responses and a scaling diagnostic. They do not establish independent ultraviolet coefficients.
+
+🟠 [Next] Complete the spatial mixed probe on the shorter band and extend the resolved cutoff and momentum sequence with the common reference. Use agreement of the local curvature projections to determine which coefficients can be used for a sphere subtraction. The finite $r^4$ balance including the constraint and state responses remains open.
+
 ### Punctured cone and the canonical tip condition
 
 🟢 [Done] Matched the punctured-cone boundary to the finite-energy canonical gluing and exhibited an alternative tip prescription with a surviving entropy shift. Reproduce the most slowly converging radial sector with [punctured_cone.py](experiments/punctured_cone.py).
