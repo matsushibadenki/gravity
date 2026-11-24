@@ -226,9 +226,115 @@ $$
 
 It is nonzero for generic nonzero $\beta g k^2\rho_k$. In the small-ball coefficient, a constant change of $\eta_0$ can compensate it at one chosen wave number, but cannot compensate the different $k$ dependence across the source family. The result is for the assumed entropy functional $\eta_0 A+S_b+S_{\rm matter}$. It does not determine additional geometry-dependent vacuum or regulator terms of a microscopic model. The numerical check independently integrates the modular weight and the shell angular profile, and tests both matched and mismatched area coefficients.
 
+### Curvature compensation across static wavelengths
+
+🟢 [Done] Derived the curvature term that cancels the leading long-wavelength residual, and determined the obstruction to exact matching with a finite local curvature expansion. Reproduce the coefficient checks with [curvature_compensation.py](experiments/curvature_compensation.py).
+
+Keep the matched normalization $4\eta_0G_0=1$. On the specified static slice let $\mathcal R_{ij}$ be the trace-free linearized spatial Ricci tensor. A boundary term proportional to $n^i n^j\mathcal R_{ij}$ is well defined at first order on the tracked sphere. The background curvature is zero, so the first-order integrand may be evaluated on the reference sphere. The massive-shell equation is $(M^2-v^2\nabla^2)b_{ij}=-g\mathcal R_{ij}$. Hence for a single source wave number the remaining entropy, after the matter-area cancellation, is
+
+$$
+\delta S_b=-\frac{\beta g}{M^2+v^2 k^2}\, I_{\mathcal R},
+\qquad
+I_{\mathcal R}=\int_{\partial B_r}n^i n^j\mathcal R_{ij}\,dA_0.
+$$
+
+For the cosine density mode, $I_{\mathcal R}$ is of order $k^2\rho_k r^4$ at fixed $k$ and small $kr$. Add a candidate geometric entropy term $\alpha I_{\mathcal R}$. A unique constant $\alpha=\beta g/M^2$ cancels the leading long-wavelength coefficient when $\beta g\ne0$. The remaining response is
+
+$$
+\delta S_{\rm gen}|_V
+=\frac{\beta g\,v^2 k^2}{M^2(M^2+v^2 k^2)}\,I_{\mathcal R}.
+$$
+
+It is of order $k^4\rho_k r^4$ at long wavelength. It remains at order $r^4$ if the small-ball limit is taken at fixed nonzero $k$. A second geometric term proportional to the spatial Laplacian of $\mathcal R_{ij}$ can remove the next power of $k^2$. These are distinct derivative and small-ball expansions.
+
+Within the static metric-only class of boundary terms obtained by applying a finite polynomial $P(-\nabla^2)$ to this trace-free Ricci tensor before contraction with the normal, exact matching on a continuum of wave numbers requires $(M^2+v^2 k^2)P(k^2)=\beta g$. For $v\ne0$ and $\beta g\ne0$ no finite polynomial satisfies this identity. Exact cancellation in this channel instead has kernel $\beta g(M^2-v^2\nabla^2)^{-1}$, with the same spatial boundary conditions as the massive field. This static metric response can be represented using a local expression while retaining the massive field explicitly. It corresponds on shell to a contribution $-\beta\int n^i n^j b_{ij}\,dA_0$. The calculation specifies the required contribution but gives no microscopic reason for its coefficient. It does not classify all independent boundary invariants or all possible microscopic entropy functionals.
+
+### Wald curvature test for two action completions
+
+🟢 [Done] Computed the binormal curvature response of two covariant interactions. The one that preserves the previous static response gives zero explicit Wald correction. The one with a nonzero correction changes the static equations. Reproduce the contractions with [wald_shell_response.py](experiments/wald_shell_response.py).
+
+Introduce a scalar clock with timelike gradient and unit slice normal $u$. Take $b^{\mu\nu}$ to be spatial and trace free. The intrinsic interaction is $-g b^{ij} R^{(3)}_{ij}$ in the action, with the intrinsic Ricci tensor of the clock slice. It reproduces the static energy mixing $+g b^{ij}R^{(1)}_{ij}[h]$ of the comparison model.
+
+In an orthonormal frame with $u=e_0$ and outward normal $n=e_1$, vary $t=R_{0101}$ and its symmetry-related components while keeping the other independent components and fields fixed. The explicit Wald density of a curvature-dependent Lagrangian scalar is $-2\pi\,\partial\mathcal L/\partial t$ in these conventions. The Einstein term gives $4\pi A_E=1/(4G_0)$ because $\partial R/\partial t=-2$. The intrinsic Ricci interaction gives zero: its Gauss expression projects the Riemann tensor entirely into the slice, and its extrinsic-curvature terms contribute nothing to this explicit curvature derivative. This interaction therefore supplies no term $-\beta b_{nn}$ through the tested curvature derivative. [Wald, Noether-charge entropy](https://arxiv.org/abs/gr-qc/9307038)
+
+Replacing the interaction by $-g b^{\mu\nu}R_{\mu\nu}$ with the spacetime Ricci tensor produces a nonzero result. The curvature variation gives $\partial R_{00}/\partial t=1$ and $\partial R_{11}/\partial t=-1$. Since $b$ is spatial, the Wald density becomes $-2\pi g b_{nn}$. Its coefficient equals the previously required $-\beta$ precisely if $\beta=2\pi g$. Neither covariance nor the area matching fixes this equality.
+
+The replacement also changes the static shell source because $R^{(1)}_{ij}=R^{(3,1)}_{ij}-\partial_i\partial_j\Phi$. The shell now responds to the trace-free Hessian of $\Psi-\Phi$ instead of that of $\Psi$. The lapse dependence adds a term proportional to $\partial_i\partial_j b^{ij}$ to the Hamiltonian constraint. The previous CFT matter-area cancellation used the original constraint and cannot be carried over. In the two-operator interpolation between intrinsic and spacetime Ricci, retaining the original off-shell static interaction for arbitrary $\Phi,\Psi,b$ requires the coefficient of the spacetime term to vanish. Its explicit Wald correction then vanishes as well.
+
+This calculation isolates the explicit curvature derivative. A preferred clock need not be regular and invariant at a bifurcation surface, and a fixed-volume ball is not such a horizon. Clock, boundary, replica, and generalized-volume contributions are outside this test. [Bueno et al., generalized volume in causal-diamond equilibrium](https://arxiv.org/abs/1612.04374)
+
+### Static equilibrium with spacetime Ricci mixing
+
+🟢 [Done] Recomputed the static equations and the fixed-volume CFT entropy balance with the same spacetime-Ricci interaction. The explicit Wald contribution cancels the change in the matter-area balance produced by that interaction. An independent shell entropy remains. Run [spacetime_ricci_balance.py](experiments/spacetime_ricci_balance.py) to check the field equations and the sphere integrals.
+
+Use the static scalar sector on the clock slice with $g_{00}=-1-2\Phi$, $h_{ij}=-2\Psi\delta_{ij}$, and the action interaction $-g b^{ij}R_{ij}^{(1)}$. The shell is spatial and traceless, has static stiffness $M^2-v^2\nabla^2$, and vanishes on the reference background. Let $A_E=1/(16\pi G_0)$ and denote the spatial stress trace by $P=\delta\langle T^i{}_i\rangle$. Varying lapse and spatial trace, respectively, gives
+
+$$
+4A_E\nabla^2\Psi+g\,\partial_i\partial_j b^{ij}=\rho,\qquad
+4A_E\nabla^2(\Phi-\Psi)-g\,\partial_i\partial_j b^{ij}=P.
+$$
+
+The first equation contains the lapse term missing from the intrinsic-Ricci comparison. Their sum gives $4A_E\nabla^2\Phi=\rho+P$. For the static Weyl state in the previous test, the stress tensor is traceless at this order, so $P_k=\rho_k$. The coefficient of $\rho+P$ is the usual Einstein coefficient. Inferring a force coupling from $\rho$ alone for this relativistic source would introduce a factor of two from its pressure. A pressureless external perturbation has $P=0$, $\Phi=\Psi$, and no induced shell in this sector.
+
+For the cosine scalar mode, write $b_{ij}=b_k(\hat z_i\hat z_j-\delta_{ij}/3)\cos(kz)$, $D=M^2+v^2k^2$, and $\sigma_k=\Phi_k-\Psi_k$. The static shell equation and the trace equation give
+
+$$
+b_k=-\frac{g k^2\sigma_k}{D},\qquad
+\sigma_k=-\frac{P_k}{4A_E k^2+2g^2 k^4/(3D)}.
+$$
+
+Fix the physical volume of the ball in the matter metric $g_{\mu\nu}$. Use the same vacuum-subtracted CFT state contribution and the same boundary tracking as before. With $w=(r^2-|x|^2)/(2r)$ and $I_b=\int_{\partial B_r} n_i n_j b^{ij}dA_0$, integration by parts gives
+
+$$
+\int_{B_r} w\,\partial_i\partial_j b^{ij}dV_0=I_b.
+$$
+
+Here $w=0$ and $\partial_n w=-1$ on the sphere, and the bulk Hessian of $w$ is pure trace, so its contraction with $b$ vanishes. Applying the modified lapse constraint to the modular response yields the exact first-order identity
+
+$$
+\delta S_{\rm matter}=-4\pi A_E\,\delta A|_V+2\pi g I_b.
+$$
+
+The explicit Wald entropy from this same action is $-2\pi g I_b$. In the comparison functional with area coefficient $\eta_0$, matter entropy, explicit Wald entropy, and independent shell contribution $\beta I_b$, the balance is therefore
+
+$$
+\delta S_{\rm gen}|_V=(\eta_0-4\pi A_E)\,\delta A|_V+\beta I_b.
+$$
+
+The cancellation holds before the small-ball expansion and for any smooth $b$ in this static scalar calculation. Choosing $\beta=2\pi g$ does not remove the full residual when the equations of motion and Wald entropy are changed together. At $\eta_0=4\pi A_E$, nonzero $\beta g P_k k^2$ gives a remaining small-ball term $-(8\pi/45)\beta b_k k^2r^4+O(r^6)$. The numerical experiment checks the scalar equations exactly and integrates the entropy terms at three wave numbers.
+
+A separate check follows from the linear metric shift $h^{E}_{ij}=h_{ij}+(g/A_E)b_{ij}$. The first variation of the Einstein action generates $-g b^{ij}R_{ij}^{(1)}$ with this shift, up to boundary terms and terms quadratic in $b$ needed in the transformed shell action. The volume shift vanishes at first order by tracelessness. The area shift is $-(g/2A_E)I_b$, so the Einstein area density evaluated on the shifted metric gives precisely the explicit Wald correction. This check does not change the metric to which the matter CFT is coupled.
+
+The result applies to the stipulated linear static sector and entropy functional. It does not calculate possible additional clock, boundary, or regulator contributions on the sphere, and $\beta$ is still independent of the action coefficients.
+
+### Microscopic entropy of a linearly driven Gaussian shell
+
+🟢 [Done] Quantized the massive sector with a spatial oscillator regulator and evaluated its independent state entropy. For a positive quadratic Hamiltonian with a linear static drive, its boundary entropy has no source-dependent contribution. Separately checked that the classical curvature term survives shell elimination once. Run [gaussian_shell_entropy.py](experiments/gaussian_shell_entropy.py).
+
+Use independent spatially local canonical variables for the massive shell on a fixed clock slice. At fixed background metric and cut, regulate the theory as a tensor product of oscillator Hilbert spaces. On this regulated space the stable Hamiltonian is
+
+$$
+H[J]=\tfrac12 p^{\mathsf T}p+\tfrac12 b^{\mathsf T}K b+J^{\mathsf T}b,
+\qquad K>0.
+$$
+
+The static force represents the curvature source, and the mean is $\bar b=-K^{-1}J$. Completing the square, the ground state is $|\Omega_J\rangle=D(\bar b)|\Omega_0\rangle$, with $D(\bar b)=\exp(-i\bar b^{\mathsf T}p)$. Since the generator is a sum of local momenta on disjoint oscillator sites, $D=D_B\otimes D_{\bar B}$ for every regulated region $B$. This factorization holds even when the stiffness couples across the cut and $K^{-1}J$ has support on both sides. Partial trace then gives
+
+$$
+\rho_B(J)=D_B\rho_B(0)D_B^\dagger,\qquad S_B(J)=S_B(0).
+$$
+
+The equality holds at finite regulator and to all orders in the linear force for a fixed stiffness and cut. Consequently the coefficient of an independent state-entropy term $\beta\int_{\partial B}n_i n_j\bar b^{ij}dA$ is zero in this microscopic realization of the shell sector. The same source-only result holds if the background or cut is varied in both the forced and unforced comparisons using the same geometry and stiffness at each step. It leaves the vacuum entropy variation due to changing the geometry, stiffness, or cut undetermined. [Katsinis et al., entanglement in harmonic coherent states](https://arxiv.org/abs/2206.05781)
+
+The two-site verification has nonzero vacuum entanglement because the symmetric and antisymmetric normal modes have different stiffnesses. It checks that the entropy is constant for three different means. Varying a stiffness at zero mean gives a nonzero entropy derivative in the same regulator. Thus a covariance-changing response can carry independent entropy that cannot be inferred from the mean alone. The earlier bond-qubit perturbation changes Schmidt coefficients and is outside the displacement calculation. Imposing a gravitational constraint that changes the regional algebra is also outside this proof.
+
+For the action comparison, eliminate the shell at its classical stationary point, keeping the metric and any prescribed linear source as independent variables before variation. In a presentation where the shell operator is $K$ and its linear source is $J$, the saddle action contains the quadratic response in $J$ obtained by completing the square. The chain rule at the saddle gives $\partial_t S_{\rm eff}=(\partial_t S)|_{\bar b}$ for an independent variation of the normal-plane curvature $t$, since the shell equation removes the term proportional to $\partial_t\bar b$. Applied to the explicit spacetime-Ricci vertex of the preceding section, this reproduces the same $-2\pi g\bar b_{nn}$ curvature contribution, with $\bar b$ now expressed using its Green function. This is a check on that vertex, not a local Wald formula for a nonlocal action. It also follows from the preceding linear metric shift. Adding both versions of the vertex contribution would count it twice. The Gaussian fluctuation determinant and changes in the vacuum entropy with geometry require their own calculation.
+
+With $\beta=0$ for the source-dependent shell entropy in this regulator and $\eta_0=4\pi A_E$, the previously calculated matter, area, and explicit curvature terms cancel at first order in the static comparison. This does not derive $\eta_0=4\pi A_E$ from the same microscopic vacuum. Nor does it settle the geometry-dependent contribution or the definition of regions in the coupled constrained system.
+
 ### Highest-priority follow-up
 
-🟠 [Next] Derive geometry-dependent vacuum entropy and the fixed-region prescription from a microscopic model or a specified covariant effective action. Test whether they supply the compensating derivative contribution across multiple wave numbers with a single normalization. Require an independent determination of $\eta_0$ and $G_0$ before treating their agreement as a prediction.
+🟠 [Next] Compute the geometry-dependent change of the Gaussian shell vacuum entropy and compare it with the renormalization of the gravitational action in the same regulator. Fix the regional algebra and matching prescription before comparing their coefficients. Then test whether interactions that change the shell covariance generate an additional state contribution that survives this matching.
 
 ## 3. Joint gravitational response in a single model
 
