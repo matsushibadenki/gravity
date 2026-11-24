@@ -7,9 +7,10 @@ import numpy as np
 from clock_tensor_slab import covariance_symbols, regional_entropy
 
 
-def mutual_information(spacing, shape, width, separations, coupling, stencil):
+def mutual_information(spacing, shape, width, separations, coupling, stencil, transverse_rule=None):
     _, ny, nz = shape
-    position, momentum = covariance_symbols(shape, spacing, 2, coupling, stencil)
+    angles, weights = transverse_rule if transverse_rule is not None else (None, None)
+    position, momentum = covariance_symbols(shape, spacing, 2, coupling, stencil, angles)
     sites = np.arange(round(width / spacing))
     unions = [
         np.concatenate((sites, sites + len(sites) + round(separation / spacing)))
@@ -19,11 +20,12 @@ def mutual_information(spacing, shape, width, separations, coupling, stencil):
     for ky in range(ny):
         for kz in range(nz):
             x, p = position[:, ky, kz], momentum[:, ky, kz]
+            weight = weights[0][ky] * weights[1][kz] if weights is not None else 1 / (ny * nz)
             for sector, components in enumerate((5, 6)):
                 single = regional_entropy(x, p, sites, components)
                 for index, union in enumerate(unions):
-                    information[index, sector] += 2 * single - regional_entropy(x, p, union, components)
-    return information / (ny * nz * spacing**2)
+                    information[index, sector] += weight * (2 * single - regional_entropy(x, p, union, components))
+    return information / spacing**2
 
 
 def main():

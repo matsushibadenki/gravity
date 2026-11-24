@@ -12,9 +12,13 @@ def tensor_basis():
     return basis
 
 
-def covariance_symbols(shape, spacing, gap, coupling, stencil="centered"):
-    angles = np.stack(np.meshgrid(*(2 * np.pi * np.fft.fftfreq(n) for n in shape),
-                                  indexing="ij"), axis=-1)
+def covariance_symbols(shape, spacing, gap, coupling, stencil="centered", transverse_angles=None, normal_angles=None):
+    axes = [2 * np.pi * np.fft.fftfreq(n) for n in shape]
+    if normal_angles is not None:
+        axes[0] = normal_angles
+    if transverse_angles is not None:
+        axes[1:] = transverse_angles
+    angles = np.stack(np.meshgrid(*axes, indexing="ij"), axis=-1)
     laplacian = np.sum(4 * np.sin(angles / 2)**2, axis=-1) / spacing**2
     derivative = np.sin(angles) / spacing
     if stencil == "improved":
@@ -51,6 +55,10 @@ def regional_covariance(symbol, sites, components):
 def regional_entropy(position, momentum, sites, components):
     position = regional_covariance(position, sites, components)
     momentum = regional_covariance(momentum, sites, components)
+    return gaussian_entropy(position, momentum)
+
+
+def gaussian_entropy(position, momentum):
     values, vectors = np.linalg.eigh(position)
     root = (vectors * np.sqrt(values)) @ vectors.conj().T
     return oscillator_entropy(np.sqrt(np.linalg.eigvalsh(root @ momentum @ root)))
