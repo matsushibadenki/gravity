@@ -489,9 +489,105 @@ The experiment uses the nearest-neighbor symbol for $k^2$ in the reduced mixed b
 
 The whole-species trace supplies a bulk reference before extracting an entropy associated with the spatial cut. The calculation leaves the area coefficient and its comparison with a renormalized gravity coupling open.
 
+### Spatial slabs after whole-species subtraction
+
+🟢 [Done] Implemented shell-only and joint slab traces with all local tensor components. The finite-lattice results show a nonzero difference between the two regional algebras after the bulk subtraction, consistent with a regulator-dependent area divergence. Run [clock_tensor_slab.py](experiments/clock_tensor_slab.py) with Python and NumPy.
+
+Use a periodic cubic lattice with five components in a local real orthonormal traceless tensor basis $E^A_{ij}$ and one clock offset per site. Use the nearest-neighbor Laplacian $\widehat k^2=4\sum_i\sin^2(k_i a/2)/a^2$ in the diagonal stiffness and set $d_i=\sin(k_i a)/a$. The mixing with component $A$ is $g E^A_{ij}d_i d_j$, the symbol of a local centered-difference Hessian followed by trace removal. Since $|d|^2\le\widehat k^2$, the same sufficient stability bound applies. This local discretization differs near the lattice band edge from the simplified longitudinal symbol used for the previous whole-species experiment. The bulk subtraction here is recomputed with the actual slab regulator.
+
+Fourier transform only the two directions along the cut. Invert the remaining one-dimensional Fourier transform in each block to obtain the slab covariance in the local tensor components, then take the symplectic spectrum. The region $B$ is half the periodic box, so there are two planar interfaces. Translation symmetry gives equal entropies for the two halves. The exact bulk-subtracted shell quantity is
+
+$$
+S_b(B)-\tfrac12 S_b(\mathrm{all})
+=\tfrac12 I(b_B:b_{\bar B}).
+$$
+
+For the joint algebra the analogous quantity is simply $S_{b\chi}(B)$ since the full joint state is pure. It equals half the joint mutual information across the cut and is at least as large as the shell-only quantity by data processing. This gives a regulator-level interpretation of the subtraction and a consistency check independent of a fitted volume coefficient.
+
+In a fixed physical box of size $3.2\times1.6\times1.6$ and fixed clock gap $\Omega=2$, with $\sqrt{2/3}|g|=0.45$, the experiment gives:
+
+| Spacing $a$ | Shell excess per interface site | Joint entropy per interface site |
+|---:|---:|---:|
+| 0.40 | 0.123045 | 0.146787 |
+| 0.20 | 0.119249 | 0.150005 |
+| 0.10 | 0.119559 | 0.153384 |
+
+The physical area per interface site is $a^2$. From $a=0.20$ to $a=0.10$, the corresponding entropy densities per physical area grow by factors of approximately $4.01$ and $4.09$. These refinements are consistent with a leading area divergence. At fixed spacing, additional boxes show measurable finite-size effects, so the table does not establish a precise asymptotic coefficient. In the tested finite lattices with $\Omega=100/a$, the shell excess is within $6\times10^{-7}$ nats per interface site of the uncoupled shell. This comparison concerns the shell area observable, not the physical volume density of traced-clock entropy.
+
+The difference between the two traces shows that the spatial-cut response depends on which physical variables are retained. The calculated difference includes ordinary correlations across the cut. It does not identify an extra fundamental tip interaction or a finite universal surface term.
+
+### Equal-area subtraction across stencils and slab widths
+
+🟢 [Done] Compared two spatial derivative stencils at fixed physical box size and three slab widths. An equal-area subtraction leaves a nonzero width-dependent signal consistent across the two regulators at the tested resolutions. Run [slab_finite_entropy.py](experiments/slab_finite_entropy.py) with Python and NumPy.
+
+Keep the diagonal nearest-neighbor Laplacian and vary the derivative used in the mixed Hessian. The centered stencil has $d_i=\sin(k_i a)/a$. The improved stencil multiplies it by $(4-\cos(k_i a))/3$, preserving the same continuum coupling and changing its ultraviolet behavior. Both calculations use all five local shell components. Their stiffness matrices are positive at every sampled momentum. In fact the improved derivative satisfies $|d|^2\le(250/243)\widehat k^2$, so the mixing strength used here remains below the stability bound throughout the lattice band.
+
+In a periodic box of fixed physical size $2.4\times1.2\times1.2$, compare slabs of widths $L_x/4,L_x/2,3L_x/4$. Each slab has the same two parallel boundaries, of total area $A=2L_yL_z$. For either regional algebra define
+
+$$
+F(a)=\frac{1}{A}\left[S(L_x/2)-\tfrac12\{S(L_x/4)+S(3L_x/4)\}\right].
+$$
+
+A volume term cancels because the mean of the quarter and three-quarter widths equals the half width. Every local term independent of slab width, including the regulator-dependent planar area term, cancels because all interfaces have the same area and orientation. Equivalently $F$ is the difference of the two spatial mutual informations divided by $2A$. This definition leaves the width-dependent correlation contribution, while also canceling any width-independent finite surface term.
+
+With fixed clock gap $\Omega=2$ and mixing $\sqrt{2/3}|g|=0.45$:
+
+| Spacing $a$ | Shell-only centered | Shell-only improved | Joint centered | Joint improved |
+|---:|---:|---:|---:|---:|
+| 0.300 | 0.06080700 | 0.06350775 | 0.06555267 | 0.06835596 |
+| 0.150 | 0.06069788 | 0.06199385 | 0.06331661 | 0.06359865 |
+| 0.075 | 0.05971476 | 0.05991272 | 0.06292929 | 0.06301482 |
+
+The entries are nats per unit physical area. The differences between stencils at the finest resolution are about $0.000198$ for the shell-only algebra and $0.000086$ for the joint algebra, while their raw half-slab entropy densities differ by about $23.69$ and $2.20$, respectively. The three refinements provide numerical evidence for a nonzero finite width-dependent term. They do not prove continuum convergence or determine an absolute finite entropy of an isolated boundary.
+
+The uncoupled reference at the finest resolution gives $0.05906079$ for the shell-only algebra and $0.06220620$ for the joint algebra. The interaction-dependent changes are positive in both stencil calculations, but their stencil differences are appreciable relative to those changes. Additional refinement is needed before assigning a continuum value to the interaction-only difference.
+
+### Width dependence and periodic-box effects
+
+🟢 [Done] Varied slab width, normal box length, and transverse box size independently. Recomputed the uncoupled baseline at each configuration. Run [slab_width_decay.py](experiments/slab_width_decay.py) with Python and NumPy.
+
+Use the improved Hessian stencil and the same shell and joint traces. For an axial length $L_x$ and slab width $w$, define the equal-area comparison
+
+$$
+F(w,L_x)=\frac{S(L_x/2)-[S(w)+S(L_x-w)]/2}{2L_yL_z}.
+$$
+
+The half slab is a reference within each box. This comparison cancels the volume term and every width-independent local contribution. Varying $L_x$ changes the reference width, so it helps diagnose periodic-box effects but does not by itself yield an isolated-interface decay law.
+
+At spacing $a=0.15$, clock gap $\Omega=2$, $\sqrt{2/3}|g|=0.45$, and $L_x=4.8$, $L_y=L_z=1.2$:
+
+| Physical width $w$ | Shell-only $F$ | Joint $F$ | Coupled minus uncoupled shell | Coupled minus uncoupled joint |
+|---:|---:|---:|---:|---:|
+| 0.6 | 0.08042905 | 0.08206923 | 0.00304353 | 0.00131363 |
+| 1.2 | 0.01523118 | 0.01546753 | 0.00010237 | 0.00013118 |
+| 1.8 | 0.00246901 | 0.00248994 | 0.00003086 | 0.00003791 |
+
+All entries are nats per unit physical area. The shell and joint differences decrease strictly with width in all four box and lattice configurations tested. Increasing $L_x$ from $4.8$ to $6.0$ at fixed transverse size changes the shell value by about $0.2\%$ at $w=0.6$, and by about $51\%$ at $w=1.8$. Increasing the transverse size from $1.2$ to $1.8$ instead gives shell values $0.042125$, $0.006998$, and $0.001109$ at the three widths. Thus the transverse momentum sampling and the distance to the complementary interface matter for quantitative decay rates.
+
+At fixed physical box size, halving the spacing from $0.30$ to $0.15$ changes the total equal-area differences by roughly $2\%$ to $6\%$. The interaction-only differences are positive in the tested configurations but are more sensitive to this refinement. For instance, at $w=1.2$ and $L_x=4.8$, the shell interaction difference changes from $0.000461$ to $0.000102$. The measurements support a decreasing width-dependent contribution and do not yet determine a continuum interaction-only amplitude or a decay exponent.
+
+### Mutual information of disjoint slabs
+
+🟢 [Done] Computed disjoint-slab mutual information at fixed widths and varying separation. Checked two lattice spacings, two Hessian stencils, and independent changes of the normal and transverse box sizes. Run [disjoint_slab_information.py](experiments/disjoint_slab_information.py) with Python and NumPy.
+
+Use two slabs $B_1,B_2$ of physical width $w=0.6$ with gaps $d$ and $L_x-2w-d$ along the periodic normal direction. All measurements take $d$ to be the shorter gap. For either algebra calculate $I(B_1:B_2)=S(B_1)+S(B_2)-S(B_1\cup B_2)$ directly from the local oscillator covariance of each region. The union uses a noncontiguous set of normal lattice sites. Both local surface and extensive terms cancel, without a half-box entropy reference. Divide by the transverse cross-sectional area $L_yL_z$. This normalization counts one cross section and does not divide out the contribution of the longer periodic gap.
+
+For $a=0.15$, $L_x=9.6$, $L_y=L_z=1.2$, and the improved stencil:
+
+| Shorter gap $d$ | Shell-only mutual information | Joint mutual information | Coupled minus uncoupled shell | Coupled minus uncoupled joint |
+|---:|---:|---:|---:|---:|
+| 0.6 | 0.12509867 | 0.13665624 | -0.00303628 | +0.00237081 |
+| 1.2 | 0.02335848 | 0.02474608 | -0.00084252 | +0.00019703 |
+| 1.8 | 0.00531886 | 0.00561929 | -0.00017221 | +0.00010414 |
+| 2.4 | 0.00132036 | 0.00139527 | -0.00003401 | +0.00003912 |
+
+All entries are nats per unit cross-sectional area. The total mutual information is positive and decreases with gap in all five configurations. The joint mutual information is at least the shell-only value, as required by data processing. Relative to matched uncoupled baselines, the interaction lowers shell-only mutual information and raises joint mutual information in the sampled configurations. This trend refers to separated slabs; the earlier equal-area differences compared distinct partitions and need not have the same interaction sign.
+
+For the improved stencil at $a=0.15$, increasing the normal box length from $7.2$ to $9.6$ changes the shell result by about $0.36\%$ at $d=0.6$ and $26\%$ at $d=2.4$. At fixed normal length $7.2$, increasing both transverse lengths from $1.2$ to $1.8$ changes the shell density from $0.125546$ to $0.063531$ at $d=0.6$. These comparisons show that the decay rate is not yet controlled by a converged large-box calculation. In particular, the last adjacent-gap logarithmic slope for the shell changes from $1.951$ to $2.322$ when increasing the normal length. These slopes summarize the sampled data and do not identify an asymptotic exponent.
+
 ### Highest-priority follow-up
 
-🟠 [Next] Compute spatial slab entropy using the full local tensor variables. Compare the shell-only and joint algebras, subtract the extensive contribution using the same regulated whole-species trace, and test the residual area scaling. Repeat at fixed clock gap and with the gap above the lattice band. Compare with a smooth-background determinant after the entropy of the cut has been isolated in this prescription.
+🟠 [Next] Control the transverse-volume limit using direct transverse-momentum integration or larger transverse tori at fixed physical cutoff and gap. Increase the second periodic gap independently before fitting any decay exponent. Keep the shell-only and joint baseline subtractions matched at every regulator. The disjoint-slab observable does not fix a width-independent surface counterterm for the gravitational action.
 
 ## 3. Joint gravitational response in a single model
 
