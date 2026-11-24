@@ -95,6 +95,44 @@ For the area check, a conformal perturbation $h=(1-\epsilon f)I$ gives $\delta A
 
 With $R_*=1/|k|$, the normalized curvature residual tends to $-4\pi/3$. A constant area coefficient fails on this state family if its tangent is admitted as a physical perturbation. The construction establishes a valid microscopic state variation and a nonzero geometric response. It does not show that a particular stable low-energy Hamiltonian admits the spatial profile in its physical sector. Accordingly, the dynamical candidate remains inconclusive unless its allowed perturbations are specified independently. In particular, removing only a homogeneous mode does not itself prove the required local entropy response on the remaining admissible profiles.
 
+### Dynamical admissibility of the nonuniform bond perturbation
+
+🟢 [Done] Constructed a positive local bond Hamiltonian, specified its low-energy window before the entropy test, and checked that the nonuniform tangent is admissible. The $r^4$ mismatch persists for this dynamical candidate. Run [low_energy_curved_ball.py](experiments/low_energy_curved_ball.py).
+
+Use the isotropic bond-product reference states from the preceding test. Each unoriented displacement type has one bond anchored at each cubic lattice site. Write its reference state as $|\phi\rangle=\cos\theta_a|00\rangle+\sin\theta_a|11\rangle$ and choose the orthogonal excitation $|\chi\rangle=\partial_\theta|\phi\rangle$. For bond $e$, set $b_e^\dagger=|\chi\rangle_e\langle\phi|$ and $Q_e=I-|\phi\rangle_e\langle\phi|$. In each displacement type connect anchor sites that differ by one lattice step. The resulting independent hopping graphs have degree six. Their couplings have physical diameter of order $L_{\rm bond}+a$, which vanishes in the continuum limit. On a periodic box define
+
+$$
+H_a=(m+6J_a)\sum_eQ_e
+-J_a\sum_{\langle e,e'\rangle}(b_e^\dagger b_{e'}+b_{e'}^\dagger b_e),
+\qquad J_a=\mathcal D/a^2,\quad m,\mathcal D>0.
+$$
+
+The two-site hopping bound gives $H_a\ge m\sum_eQ_e$. The reference state is a unique zero-energy ground state at finite volume, and there is no zero-mode degeneracy. The $\chi$ one-excitation sector is exactly invariant. For every bond type its dispersion is
+
+$$
+E_a(\mathbf q)=m+4\mathcal D a^{-2}\sum_i\sin^2(q_i a/2)
+\longrightarrow m+\mathcal D|\mathbf q|^2 .
+$$
+
+Define admissible first-order perturbations by the excited spectral subspace below a fixed physical energy $E_{\rm cut}$. Choose $E_{\rm cut}>m$ independently of the entropy calculation. The window may contain other excitations; the test tangent lies in the invariant one-excitation sector. Within this spectral window select $k$ so that $m+\mathcal D k^2<E_{\rm cut}$. Multiply the entropy at each bond midpoint by $1+\epsilon[\cos(kz)-1]$. The tangent is proportional to the sum of single $\chi$ excitations weighted by that profile. The bond midpoint only adds orientation-dependent phases to the two nonzero Fourier modes. The tangent therefore has spectral support exactly at $\mathbf q=0$ and $\mathbf q=\pm k\hat z$, below $E_{\rm cut}$ for all sufficiently fine lattices. This is an initial-state perturbation; it evolves under $H_a$ and is not a stationary source. A commensurate sequence of periodic boxes gives the thermodynamic limit of the profile. The spectral criterion is for the tangent of the state at the vacuum, the quantity used by the first-variation filter.
+
+To verify that this perturbation need not become singular as the bond regulator is removed, choose the continuum path $a=L_{\rm bond}\exp(-\ell_*/L_{\rm bond})$ for a fixed physical length $\ell_*>0$ and grow the number of direction types $m_a$ polynomially in $\ell_*/L_{\rm bond}$. The reference entropy per bond is $s_a=2\eta_0a^3/(m_aL_{\rm bond})$. For the small Schmidt probability $p_a=\sin^2\theta_a$, one has $s_a\sim p_a\log(1/p_a)$ and the squared angular derivative with respect to the fractional entropy change is $\theta_a'^2\sim s_a/[4\log(1/p_a)]$. Since $L_{\rm bond}\log(1/p_a)\to3\ell_*$,
+
+$$
+\frac{m_a}{a^3}\theta_a'^2\ \longrightarrow\ \frac{\eta_0}{6\ell_*}.
+$$
+
+Thus the tangent norm per physical volume is finite and nonzero for a nonzero spatial mean of $f^2$. The quadratic energy per volume is finite as well, by the spectral bound. At fixed small amplitude the product states also have bounded energy density on this path. To see this, let $\alpha_e$ be the relative rotation of bond $e$, $u_e=\sin\alpha_e$, and $w_e=u_e\cos\alpha_e$. The energy equals $m\sum_e u_e^2+J_a\sum_{\langle e,e'\rangle}(w_e-w_{e'})^2+6J_a\sum_e u_e^4$. The first sum per volume is bounded by the squared angular derivative density, the second by smoothness of the midpoint profile and $J_a a^2=\mathcal D$, and the last vanishes as $a/m_a$ at fixed amplitude. This path is a chosen regulator family, not a dynamically predicted scale relation.
+
+Take the continuum at fixed $r$ and small fixed $\epsilon$ and then take the first variation, as in the Section 1 protocol. For the matched physical ball centered at $z=0$, the previous area and entropy calculation applies because the Hamiltonian leaves the reference state and regional algebra unchanged. It yields
+
+$$
+\delta A_h|_V=\frac{4\pi}{15}k^2r^4+O(k^4r^6),\qquad
+R_{\rm UV}=-\frac{4\pi}{3}\eta_0 k^2r^4+O(\eta_0k^4r^6).
+$$
+
+With the independent spectral window, the model therefore fails the Einstein entropy-response filter. This rules out the specified positive-hopping realization, not all possible bond dynamics. The numerical check uses $m=0.25$, $\mathcal D=0.5$, $k=0.8$, and $E_{\rm cut}=0.65$. The limiting energies of the uniform and nonuniform tangent components are $0.25$ and $0.57$. It verifies the Fourier action, the regulator scaling of the tangent, and the fixed-volume coefficient separately. The thermodynamic and continuum arguments are analytic.
+
 ## 2. First variations of entropy and the diffusion metric
 
 ### Uniform entanglement perturbation
@@ -442,6 +480,192 @@ To test the missing geometric replica, use a transverse cap disk with smooth pol
 
 A second proof for an invariant clock scalar is local. At the fixed surface, the replica group rotates the normal plane by $2\pi/n$. Invariance forces the normal components of $dT$ to vanish there. If the clock also preserves translations along the planar surface, its tangential derivatives vanish too. The projector built from $u=dT/|dT|$ is then undefined at the tip. This proof assumes a real Euclidean clock and the stated replica and tangential symmetries. A clock that tilts along the surface and breaks that symmetry, or an extension whose norm may vanish, is outside the obstruction and needs its own operator and measure. [Lewkowycz and Maldacena, smooth replica covers](https://arxiv.org/abs/1304.4926)
 
+### Tensor vacuum determinant on non-ultrastatic backgrounds
+
+🟢 [Done] Specified a minimal smooth completion of the Gaussian tensor operator and extracted independent spatial-curvature and kinetic coefficients. Compared them with the canonical planar entropy from the same proper-time band and the same physical metric. Run [tensor_gravity_matching.py](experiments/tensor_gravity_matching.py).
+
+Fix a smooth reference foliation and use a positive constant shell speed $v$ in units where the matter limiting speed is one. The physical Lorentzian metric has lapse $N$, shift $N^i$, and spatial metric $h_{ij}$. Choose the shell effective metric $\widetilde g$ with the same lapse and shift and spatial metric $\widetilde h_{ij}=v^{-2}h_{ij}$. On the Euclidean continuation use a metric-compatible connection on the rank-five spatial traceless tensor bundle and a pure Bochner Laplacian of $\widetilde g$, with mass $M$ and no curvature endomorphism. This is an explicit extension of the ultrastatic operator. The foliation is a prescribed background in this calculation, and other choices of endomorphism or clock couplings can change the result.
+
+The smooth heat trace at linear curvature contains $5\widetilde R/6$. The connection curvature first affects higher heat coefficients in this minimal operator. The positive coefficient multiplying the induced Lorentzian Einstein term of $\widetilde g$ is therefore
+
+$$
+C=\frac{5}{192\pi^2}\int_{\epsilon^2}^{\infty}\frac{ds}{s^2}e^{-M^2s}.
+$$
+
+The same comparison can be made on a finite proper-time band. The zeroth-derivative term is assumed subtracted by matching the flat background. [Vassilevich, smooth Laplace-type heat coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+The spatial scalar curvature rescales as $\widetilde R^{(3)}=v^2R^{(3)}$, and $\sqrt{\widetilde h}=v^{-3}\sqrt h$. With $v$ constant, the mixed extrinsic curvature $\widetilde K^i{}_j$ equals $K^i{}_j$ because the lapse and shift are unchanged. Dropping the usual bulk total divergence in the ADM decomposition yields
+
+$$
+\Gamma_{\rm ind}^{(2)}
+=C\int dt\,d^3x\,N\sqrt h\left[
+v^{-1}R^{(3)}+v^{-3}(K_{ij}K^{ij}-K^2)\right].
+$$
+
+A curved ultrastatic background isolates the first coefficient. A spatially flat time-dependent background can isolate the second. This resolves the ambiguity in the earlier ultrastatic comparison for this chosen completion. [Arnowitt, Deser, and Misner, canonical Einstein action](https://arxiv.org/abs/gr-qc/0405109)
+
+Add a bare two-derivative Einstein term for the matter metric with positive coefficient $A_0$. In the sector with a flat reference, no additional clock terms, and minimal matter coupling to that metric, define
+
+$$
+A_R=A_0+C/v,\qquad A_K=A_0+C/v^3,\qquad
+\frac{\eta_{\rm can}}{4\pi}=A_0+C/v^2.
+$$
+
+The third expression combines the bare Einstein entropy with the canonical planar shell entropy evaluated using the physical area. In the static lapse equation, $K_{ij}=0$, so the linear spatial curvature response to a prescribed nonrelativistic source defines $G_{\rm static}=1/(16\pi A_R)$. The TT kinetic and gradient terms give $c_T^2=A_R/A_K$ relative to matter, and the entropy normalization predicts $4\eta_{\rm can}G_{\rm static}=(A_0+C/v^2)/(A_0+C/v)$. For $C>0$, both quantities equal one only at $v=1$ in this minimal completion. The pure induced limit gives $c_T=v$, as expected from the effective metric. The canonical area discrepancy is fixed in sign by $C(v^{-2}-v^{-1})$. If the only geometric entropy term kept is the area term, an additional area density $4\pi C(v^{-1}-v^{-2})$ would be required to match the static coefficient. The calculation does not derive such a term.
+
+This is a smooth determinant and canonical planar comparison, with the same shell operator on the flat slice. It does not use a smooth clock replica at the cone tip or calculate all curvature-dependent entropy terms on a ball. No finite Einstein coefficient is predicted, and no counterterm is set by the static response. For $v\ne1$ it identifies two necessary mismatches in the specified minimal completion, before a full entropy-response gate is attempted. At $v=1$ the leading coefficients agree in this calculation, while the nonuniform ball, replica prescription in curved geometry, and constraint closure of a dynamical clock remain open.
+
+### Curvature-squared benchmark for the luminal tensor completion
+
+🟢 [Done] Isolated the curvature-squared response fixed by the rank part of the smooth tensor heat coefficient. Evaluated its spherical entropy at fixed physical volume and tested the generalized-volume cancellation in the corresponding local $f(R)$ theory. Run [curvature_squared_ball.py](experiments/curvature_squared_ball.py).
+
+Set $v=1$ in the smooth minimal Bochner completion. In four dimensions the connection-independent part of the next heat coefficient, per component and up to a total derivative, is
+
+$$
+\frac{1}{180}(R_{\mu\nu\rho\sigma}^2-R_{\mu\nu}^2)+\frac{1}{72}R^2
+=\frac{1}{120}C_{\mu\nu\rho\sigma}^2-\frac{1}{360}E_4+\frac{1}{72}R^2 ,
+$$
+
+where $C_{\mu\nu\rho\sigma}$ is the Weyl tensor and $E_4$ is the Euler density. The full bundle coefficient also includes $\operatorname{tr}(\Omega_{\mu\nu}\Omega^{\mu\nu})/12$ for the projected connection curvature $\Omega_{\mu\nu}$. Isolate the $R^2$ term of the rank contribution. For a shared proper-time band $s\in[s_1,s_2]$ its Lorentzian coefficient is
+
+$$
+B_R=\frac{5}{2304\pi^2}\int_{s_1}^{s_2}\frac{ds}{s}\,e^{-M^2s}.
+$$
+
+This is an induced local coefficient in the band. It is not the finite renormalized $R^2$ coupling of an unspecified microscopic theory. For a local short-distance entropy comparison the band satisfies $\sqrt{s_2}\ll r$ and the curvature varies slowly on this scale. A small-ball extrapolation at fixed band cannot extend through $r\sim\sqrt{s_2}$. [Vassilevich, smooth heat-kernel coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+Use first an ultrastatic reference perturbed by constant spatial sectional curvature $\mathcal K$. The full scalar curvature is $6\mathcal K$, the spacetime Weyl tensor vanishes, and the geodesic sphere in its spatial slice is umbilic. For the metric-curvature part of the usual squashed-cone geometric entropy, the Weyl surface term therefore vanishes and the Euler term has zero first change at fixed sphere topology. The $R^2$ interaction gives $8\pi B_R\int_{\partial B_r}R\,dA$. At fixed physical volume its first change is $8\pi B_RA_0\,\delta R$, where $A_0=4\pi r^2$, so it is proportional to $r^2\delta R$. The area shift is $\delta A|_V=-4\pi r^4\delta\mathcal K/5$. Hence the metric $R^2$ contribution by itself is of lower order in ball radius than the Einstein area response. This statement concerns the indicated geometric entropy term and does not identify the full canonical entropy of the clock-tensor replica. [Fursaev, Patrushev, and Solodukhin, quadratic invariants on squashed cones](https://arxiv.org/abs/1306.4000)
+
+For a controlled comparison take the local action $A_E R+B_R R^2$ and a flat reference, with $A_E$ the matched Einstein coefficient. Its independently defined $f(R)$ generalized volume is $W=V+(3B_R/A_E)\int_B R\,dV$ to first order. At fixed $W$, the volume displacement changes the Einstein area entropy by $-(24\pi B_R/r)\int_B\delta R\,dV_0$. This removes the constant-curvature entropy term exactly and leaves
+
+$$
+8\pi B_R\left(\int_{\partial B_r}\delta R\,dA_0
+-\frac3r\int_{B_r}\delta R\,dV_0\right)
+=\frac{32\pi^2B_R}{15}r^4\Delta\delta R(0)+O(r^6)
+$$
+
+for a smooth profile. This is a change of the fixed geometric quantity in a specified higher-derivative model, not a correction obtained by fitting the original area test. [Bueno et al., generalized volume for $f(R)$, Appendix B](https://arxiv.org/abs/1612.04374)
+
+For the isolated static scalar sector of this $f(R)$ comparison, the linear lapse equation is $2A_E\delta G_{00}-4B_R\Delta\delta R=\delta\langle T_{00}\rangle$. The same CFT modular weight $w=(r^2-|x|^2)/(2r)$ takes the $B_R$ part of the source to minus the displayed surface-minus-volume term, by integration by parts. Thus the curvature correction and its matter modular response cancel at fixed $W$ in this static comparison, including nonconstant $\delta R$. The numerical check uses a cosine curvature profile, tests the constant part separately, and reproduces the $r^4$ term at four radii.
+
+The projected-connection test below supplies a canonical comparison on the same regulated cut. Testing the complete tensor determinant still requires the remaining base-metric response and a regional prescription for a dynamical clock.
+
+### Projected connection entropy on the two ball prescriptions
+
+🟢 [Done] Computed the smooth projected-connection coefficient and the first variation of its canonical replica contribution with the same proper-time band. Checked both fixed physical volume and the previously specified $f(R)$ generalized volume. Run [projected_connection_entropy.py](experiments/projected_connection_entropy.py) and [curvature_squared_ball.py](experiments/curvature_squared_ball.py).
+
+Use the luminal minimal Bochner operator and compare it with the same base metric, cut, and regulator but a trivial connection on five internal components. The reference is a flat slice with a constant clock, trivial internal frame, and cyclic gluing by the identity on the fiber. The connection on an ultrastatic curved background is the spatial Levi-Civita connection acting on symmetric traceless tensors. For an orthonormal spatial rotation generator $J$ of unit angle, the generator $J_{(2)}$ on the five tensor components has weights $-2,-1,0,1,2$, and $\operatorname{tr}J_{(2)}^2=-10=5\operatorname{tr}J^2$. Rotational invariance fixes the trace of the product for arbitrary spatial generators. In particular, on an ultrastatic slice,
+
+$$
+\operatorname{tr}(\Omega_{\mu\nu}\Omega^{\mu\nu})
+=-5\,R^{(3)}_{ijkl}R^{(3)ijkl}.
+$$
+
+The smooth one-loop coefficient of this spatial Riemann-square term in the Lorentzian effective action is $-5J/(384\pi^2)$, where $J=\int_{s_1}^{s_2}e^{-M^2s}\,ds/s$. This follows from the bundle heat coefficient $\operatorname{tr}\Omega^2/12$ in the same band as the preceding rank calculation. The term can affect the spatial field equations even though its contribution to the static linear lapse equation about flat space vanishes. On static slices with zero shift the spatial connection curvature is independent of the lapse, and the lapse multiplies an expression already quadratic in the perturbation. [Vassilevich, Laplace-type heat coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+For the canonical replica use the pulled-back spatial connection on every sheet and no separate rotation at the seam. At the flat reference the replicated operator is $D_{n,0}=D^{\rm scalar}_{n,0}\otimes I_5$. The variation due only to the connection is a sum of scalar differential operators times traceless internal generators. The fiber trace of each such term vanishes, so the first variation of the heat trace at each proper time is
+
+$$
+\delta_\Omega\operatorname{Tr}e^{-sD_n}
+=-s\,\operatorname{Tr}\!\left(e^{-sD_{n,0}}\delta_\Omega D_n\right)=0.
+$$
+
+This holds before the proper-time integral, on each regulated replica, for an arbitrary cut and a smooth metric perturbation about the flat trivial connection. It can also be obtained directly for the von Neumann entropy: the reference state and the component-blind regional algebra are invariant under simultaneous constant internal rotations. The only first-order entropy functional of the connection perturbation is its group average, and the average of each rotation generator is zero. This check does not require analytic continuation of the integer identities alone. Variations of the base metric and displacement of the cut enter both comparison operators equally at first order; the response isolated here is their difference. A finite Gaussian replica graph verifies the linear cancellation for one through four sheets and exhibits a nonzero change at quadratic order.
+
+For the same static sector the explicit geometric Wald test also gives zero for the projected-connection term. Its curvature derivative is fully spatial when the clock and its projections are held fixed, so contraction with the normal-plane binormal vanishes. Likewise its explicit contraction with $u_a u_d h_{bc}$ in the metric curvature generalized-volume formula vanishes. These are checks of the spatial operator, not a derivation of a full generalized volume for a dynamical clock. A geometric cap that rotates the fiber already on the flat replicas, or that changes the regional algebra, is a different prescription and is not covered by the canonical trace argument. [Wald, curvature entropy](https://arxiv.org/abs/gr-qc/9307038) · [Bueno et al., generalized volume](https://arxiv.org/abs/1612.04374)
+
+The first-order difference due to the connection is consequently zero through $r^4$ at both fixed $V$ and the independently specified $f(R)$ fixed $W$ of the previous benchmark, because the identity holds cut by cut. For the sum of the isolated $R^2$ term and the projected-connection response, the fixed-volume entropy still has the $8\pi B_R A_0\delta R(0)$ term at $r^2$. With $W$ held fixed it loses that leading term and retains the $r^4\Delta\delta R$ term for a nonuniform profile. The latter cancels the matter modular contribution in the tested static $f(R)$ comparison; the projected connection adds no new term or linear lapse source to that check. Constant curvature gives no such term at fixed $W$. This comparison keeps a finite proper-time band within its local curvature regime.
+
+🟠 [Next] Match any tip prescription beyond identity gluing on nonuniform curved backgrounds. The following section tests the Weyl term in the static metric-sector comparison. A covariant generalized volume for the complete clock theory and the full tensor entropy filter remain open.
+
+### Weyl entropy and the nonuniform static ball balance
+
+🟢 [Done] Computed the Weyl-squared entropy from the same finite proper-time band as the scalar curvature term. Tested the geometric and CFT modular terms against the lapse constraint on nonuniform balls. Run [weyl_ball_balance.py](experiments/weyl_ball_balance.py).
+
+Keep the luminal minimal Bochner operator. For the rank part of the smooth heat coefficient, the $C_{\mu\nu\rho\sigma}C^{\mu\nu\rho\sigma}$ term in the Lorentzian action has coefficient
+
+$$
+B_C=\frac{5}{3840\pi^2}\int_{s_1}^{s_2}\frac{ds}{s}\,e^{-M^2s}.
+$$
+
+The same band and scale separation $\sqrt{s_2}\ll r$ apply on the ball. Use the local comparison action $A_E R+B_R R^2+B_C C^2$ and keep the Euler term as a separate topological entropy constant for spheres, with its topological completion. The generalized volume below is the one for the displayed dynamical action. The previous identity-glued connection test gives no additional linear entropy term. This calculation isolates the metric-curvature sector and does not define an alternative clock-cap or tip prescription. [Vassilevich, heat coefficients](https://arxiv.org/abs/hep-th/0306138)
+
+Let $E_{ij}=\delta C_{0i0j}$ in the orthonormal rest frame of the reference ball. It is symmetric and traceless. The metric squashed-cone entropy contains an extrinsic term quadratic in the trace-free extrinsic curvatures. Both trace-free parts vanish on a round sphere in the flat reference, so that term has no first variation even when the perturbed sphere is not umbilic. The first-order Weyl contribution is therefore the binormal curvature term
+
+$$
+\delta S_C=-16\pi B_C\int_{\partial B_r} n^i n^j E_{ij}\,dA_0.
+$$
+
+The normalization uses the Lorentzian binormal with squared norm $-2$. A spatially constant $E_{ij}$ averages to zero; odd angular terms also vanish. For a smooth nonuniform profile,
+
+$$
+\delta S_C=-\frac{64\pi^2B_C}{15}r^4\,\partial_i\partial_jE_{ij}(0)+O(r^6).
+$$
+
+The geometric sphere displacement gives no additional Weyl term at first order because the reference Weyl tensor is zero. [Fursaev, Patrushev, and Solodukhin, Weyl term on a squashed cone](https://arxiv.org/abs/1306.4000)
+
+For a static scalar perturbation with $g_{00}=-1-2\Phi$ and $h_{ij}=-2\Psi\delta_{ij}$, one finds $E_{ij}=\tfrac12\operatorname{ST}(\partial_i\partial_j(\Phi+\Psi))$ and $\delta R=4\nabla^2\Psi-2\nabla^2\Phi$. Here $\operatorname{ST}$ removes the spatial trace. Take $\Psi=\psi_k\cos(kz)$ and $\Phi=2\Psi$. Then $\delta R=0$ and $E_{ij}$ is nonuniform and nonzero. The static linear stress tensor inferred from the covariant metric action is conserved and traceless in this scalar mode; its transverse pressures add to its density and its modulated longitudinal pressure vanishes. The previously constructed rotationally averaged Weyl-fermion density mode has this stress structure and may be normalized to the source amplitude.
+
+Using the same action, the flat-reference linear lapse equation in this sector is
+
+$$
+2A_E\delta G_{00}-4B_R\nabla^2\delta R
+  +8B_C\,\partial_i\partial_jE_{ij}
+=\delta\langle T_{00}\rangle .
+$$
+
+For the CFT vacuum modular weight $w=(r^2-|x|^2)/(2r)$, two integrations by parts give
+$\int_{B_r}w\,\partial_i\partial_jE_{ij}\,dV_0
+=\int_{\partial B_r}n^i n^jE_{ij}\,dA_0$.
+The interior term is zero because the Hessian of $w$ is pure trace. The Weyl part of $\delta S_{\rm matter}=2\pi\int w\,\delta\langle T_{00}\rangle$ cancels $\delta S_C$ exactly at this order, before the small-radius expansion. The Weyl term in the generalized volume vanishes since its curvature derivative is trace free and $h_{bc}=g_{bc}+u_bu_c$. Thus the pure-Weyl example has no residual at either fixed physical volume or fixed generalized volume. [Casini, Huerta, and Myers, ball modular flow](https://arxiv.org/abs/1102.0440) · [Bueno et al., generalized volume and linear constraints](https://arxiv.org/abs/1612.04374)
+
+When the scalar-curvature sector is also varied, the constraint-level comparison gives
+
+$$
+\left.\delta S_{\rm gen}\right|_V=\frac{24\pi B_R}{r}\int_{B_r}\delta R\,dV_0,\qquad
+\left.\delta S_{\rm gen}\right|_W=0,\quad
+W=V+\frac{3B_R}{A_E}\int_B R\,dV .
+$$
+
+The formulas use the matched Einstein density $4\pi A_E$, the metric entropy of the displayed action, and the state modular response. At fixed $V$ there is generally an $r^2$ term. Even when $\delta R(0)=0$, a nonzero $\Delta\delta R(0)$ leaves $(16\pi^2 B_R/5)r^4\Delta\delta R(0)$ at fixed $V$. This residual is from $R^2$, while the Weyl contribution has already canceled. Holding $W$ removes the scalar term through the Einstein area change. The mixed numerical profile $\delta R=q(\cos(kz)-1)$ is a test of the lapse and entropy identities, not a claim that this scalar mode solves all field equations with a traceless CFT source. The numerical test integrates the surface terms and modular response separately at four radii.
+
+🟠 [Next] The next section extends the linear constraint identity to time-dependent geometry for an aligned clock. A full regulated variational identity still requires the clock regional algebra and its boundary terms.
+
+### Time-dependent metric response and clock energy on the ball
+
+🟢 [Done] Extended the linear constraint comparison to time-dependent metric perturbations on a clock-aligned slice. Identified the missing modular term for a specified classical clock action and checked that the lapse argument depends on observer alignment. Run [clock_aligned_ball.py](experiments/clock_aligned_ball.py).
+
+Let the clock scalar be $T=t+\chi$ around the flat reference. Take $u_\mu=-\partial_\mu T/\sqrt{-g^{\alpha\beta}\partial_\alpha T\partial_\beta T}$ and let $P$ project onto its spatial subspace. Extend the shell connection as the projected spacetime Levi-Civita connection on the spatial traceless tensor bundle. The curvature of the projected connection on the spatial vector bundle consists of the spacetime curvature projected on its two internal indices, plus a term quadratic in $\nabla P$. Since $R_{\mu\nu\rho\sigma}$ and $\nabla P$ are zero in the reference, the linear curvature is just the representation of $\delta R_{\mu\nu ij}$ with spatial internal indices in the unperturbed clock frame. A perturbation of the clock projector contributes only at higher order. This derivation uses the chosen projected connection and does not require a static metric.
+
+Through quadratic order in the perturbations the connection-induced action is proportional to $\delta R_{\mu\nu ij}\delta R^{\mu\nu ij}$. It includes time derivatives of the spatial metric and shift, but no linearized lapse field $h_{00}$ appears in $\delta R_{\mu\nu ij}$. Consequently this term makes no contribution to the linear lapse constraint in the clock frame, even when the metric evolves. The same first-order component-trace argument as for the static canonical replica gives zero connection entropy for the clock-aligned cut with a trivial reference fiber frame and identity sewing. The numerical check evaluates all projected curvature components of a lapse perturbation and exhibits a nonzero time-dependent curvature component from a spatial metric perturbation.
+
+On the clock-aligned round reference ball the linear Gauss relation is $\delta G_{uu}=\delta R^{(3)}/2$ because the reference extrinsic curvature is zero. In the metric part of the linear lapse equation the $R^2$ derivative term reduces to a spatial Laplacian and the Weyl term to the spatial double divergence of $\delta C_{uiuj}$. Antisymmetry removes temporal derivatives in the contracted Weyl term. Thus the previous integrations by parts apply at each reference time, with the same flat reference ball modular weight. At fixed $W=V+(3B_R/A_E)\int_B R\,dV$, the geometric entropy variation is
+
+$$
+\delta S_{\rm geom}|_W
+=-2\pi\int_{B_r}w\,\delta\rho_{\rm total}\,dV_0,\qquad
+w=\frac{r^2-|x|^2}{2r},
+$$
+
+when the aligned linear lapse constraint holds for the displayed effective metric theory. Here $\delta\rho_{\rm total}$ includes any independent clock stress in that constraint. This identity refers to each reference slice and does not assume time independence of the metric profiles. [Arnowitt, Deser, and Misner, constraint decomposition](https://arxiv.org/abs/gr-qc/0405109) · [Bueno et al., ball variational identity](https://arxiv.org/abs/1612.04374)
+
+As an explicit classical clock convention, use an irrotational dust action
+$S_T=\tfrac12\int\sqrt{-g}\,\lambda(X-1)$ with $X=-g^{\mu\nu}\partial_\mu T\partial_\nu T$. Its multiplier fixes $X=1$, and its stress tensor on that constraint is $\lambda\,\partial_\mu T\partial_\nu T$. Around $T=t$, $\lambda=0$, the clock energy variation is $\delta\rho_T=\delta\lambda$. The norm constraint gives $\dot\chi=\Phi$ for $h_{00}=-2\Phi$, and the linear clock equation gives $\partial_t\delta\lambda=0$. The clock can therefore carry a spatially varying density in the linear lapse constraint. This is a classical stress and synchronization prescription, not a quantum clock vacuum or regional algebra. [Husain and Pawlowski, dust time and the gravitational Hamiltonian](https://arxiv.org/abs/1108.1145)
+
+If only the CFT modular response is included, the difference at fixed $W$ is
+
+$$
+\delta S_{\rm geom}|_W+\delta S_{\rm CFT}
+=-2\pi\int_{B_r} w\,\delta\rho_T\,dV_0
+=-\frac{8\pi^2}{15}\delta\rho_T(0)r^4+O(r^6).
+$$
+
+This is the response missing from a CFT-only entropy accounting, not a derivation of the dust entropy. A smooth static density Fourier component verifies the coefficient by direct quadrature. It may be treated as the modulated part of a nonnegative density profile if that restriction is imposed on the classical dust. Whether quantum clock entropy or a change in the physical regional prescription supplies the required contribution remains undecided.
+
+The alignment restriction is essential to the lapse argument. In an observer frame tilted relative to the clock, a clock-spatial basis vector can have a nonzero observer-time component. A lapse perturbation of the tilted observer can then enter the projected curvature. The script gives an explicit nonzero component for such a boost. Therefore the aligned cancellation does not establish an observer-independent variational identity for this clock theory.
+
+🟠 [Next] Define a quantized clock sector and its regional algebra with an independently calculable modular response. Test whether it supplies the aligned clock-energy contribution, and compute the projected terms and boundary prescription for at least one tilted observer. Do not apply the full tensor gate until these clock and observer tests are controlled.
+
 ### Punctured cone and the canonical tip condition
 
 🟢 [Done] Matched the punctured-cone boundary to the finite-energy canonical gluing and exhibited an alternative tip prescription with a surviving entropy shift. Reproduce the most slowly converging radial sector with [punctured_cone.py](experiments/punctured_cone.py).
@@ -773,9 +997,9 @@ This filter tests whether a candidate's microscopic entropy can be matched to it
 
 | Candidate or comparison | Result under the stated prescription |
 |---|---|
-| Isotropic bond family with unrestricted smooth Schmidt perturbations | **Fail** as an unrestricted response law. The nonuniform ball test in Section 1 leaves a nonzero $r^4$ term with a nonzero area response. Whether a specific low-energy generator removes that perturbation is **inconclusive**. |
+| Isotropic bond family with the Section 1 positive-hopping generator | **Fail**. The independently defined energy window contains the nonuniform tangent, and its fixed-volume response leaves a controlled nonzero $r^4$ residual. Other generators require their own admissibility test. |
 | Static shell comparison with an independent nonzero shell entropy and the Einstein area target | **Fail** for the admitted conserved source in the comparison. The integrated shell term survives at order $r^4$ for generic nonzero coupling and Fourier amplitude. This classifies the stated entropy functional, not a completed microscopic candidate. |
-| Linearly driven Gaussian shell with synchronized clock | **Inconclusive**. The independent source-dependent shell entropy vanishes at fixed geometry, but the geometry-dependent tensor vacuum entropy, independently matched curvature coefficient, and nonuniform ball response are still open. |
+| Linearly driven Gaussian shell with synchronized clock | **Inconclusive** for the full gate. The independent source-dependent shell entropy vanishes at fixed geometry. The minimal smooth effective-metric completion has mismatched leading Einstein coefficients for $v\ne1$. At $v=1$ the leading coefficients match and the isolated metric $R^2$ response is known; the projected connection has zero linear canonical response about the trivial flat frame. The full curved-ball trace and dynamical-clock tests remain open. |
 | Clock-tensor slab models | **Inconclusive** for the gravitational entropy filter. Spatial mutual information removes local area terms and therefore does not test the required fixed-volume ball coefficient. |
 
 No microscopic candidate has passed the full gate. Prioritize a model whose regional entropy and geometric vacuum response can be computed in the same regulator before extending the joint gravity comparison.
