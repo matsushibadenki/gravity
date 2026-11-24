@@ -332,9 +332,166 @@ For the action comparison, eliminate the shell at its classical stationary point
 
 With $\beta=0$ for the source-dependent shell entropy in this regulator and $\eta_0=4\pi A_E$, the previously calculated matter, area, and explicit curvature terms cancel at first order in the static comparison. This does not derive $\eta_0=4\pi A_E$ from the same microscopic vacuum. Nor does it settle the geometry-dependent contribution or the definition of regions in the coupled constrained system.
 
+### One-loop vacuum entropy and Newton coupling in the same regulator
+
+🟢 [Done] Matched the leading vacuum area term and the Einstein-action renormalization for a massive Gaussian scalar in four dimensions. This is a regulator benchmark for the shell calculation. Reproduce the coefficient and quadrature checks with [heat_kernel_matching.py](experiments/heat_kernel_matching.py).
+
+Use a real scalar with Euclidean operator $\mathcal D=-\nabla^2+M^2+\xi R$ and the same proper-time lower bound $\epsilon^2$ in the smooth determinant and replica calculations. Define
+
+$$
+I(M,\epsilon)=\int_{\epsilon^2}^{\infty}\frac{ds}{s^2}e^{-M^2s}.
+$$
+
+On a smooth background the heat trace has the linear curvature coefficient $(1/6-\xi)sR$ multiplying $(4\pi s)^{-2}$ and the mass factor. In the one-loop effective action $W=-\frac12\int ds\,\operatorname{Tr}(e^{-s\mathcal D})/s$, this gives
+$-\frac{1/6-\xi}{32\pi^2}I\int\sqrt g\,R$. The Einstein action in Euclidean signature is $-(16\pi G)^{-1}\int\sqrt g\,R$ in these conventions. Therefore,
+
+$$
+\Delta(1/G)=\frac{1-6\xi}{12\pi}I(M,\epsilon).
+$$
+
+For minimal coupling, use the planar replica cone of opening angle $2\pi n$ times the flat surface. The portion of the heat trace beyond $n$ copies of the smooth trace is $(n^{-1}-n)A e^{-M^2s}/(48\pi s)$. Applying $(n\partial_n-1)W_n$ at $n=1$ gives
+
+$$
+S_{\rm plane}=\frac{A}{48\pi}I(M,\epsilon)
+=\frac{A}{4}\Delta(1/G)\quad(\xi=0).
+$$
+
+The area term is local, so its variation for a tracked smooth surface at fixed proper cutoff and mass is $I\,\delta A/(48\pi)$. A locally planar short-distance expansion suffices for this term. Curvature-dependent logarithms and finite entropy terms on a ball are separate. In the generalized entropy one may use the bare Einstein area coefficient and include the scalar contribution explicitly, or absorb this same area term into the renormalized coefficient. The equality also holds for any common finite proper-time band, by linearity in $I$. [Solodukhin, conical heat kernel and entropy renormalization](https://arxiv.org/abs/1104.3712)
+
+Nonminimal coupling is a diagnostic for the regional prescription. The flat-space canonical plane entropy is unchanged because $R=0$ in the unreplicated Hamiltonian. A regulated geometric cone that includes the curvature at its tip instead adds
+$S_{\rm contact}=-2\pi\xi A\langle\phi^2\rangle_\epsilon$, where the flat coincident function is $\langle\phi^2\rangle_\epsilon=I/(16\pi^2)$. With that addition, $S_{\rm plane}+S_{\rm contact}=A\Delta(1/G)/4$ also for $\xi\ne0$. For example, at $\xi=1/6$ the smooth Einstein coefficient has zero shift in this regulator even though the canonical plane entropy is positive. The contact term is part of the gravitational replica response; it is not a change of the flat reduced density matrix. [Solodukhin, nonminimal one-loop renormalization](https://arxiv.org/abs/hep-th/9504022)
+
+The shell in the earlier model is a spatial traceless tensor with a preferred clock, not a minimally coupled covariant scalar. This benchmark does not justify multiplying the scalar result by five. It also does not fix the finite Einstein coefficient or predict $G_0$. Its operational consequence is that the shell comparison must use the same quadratic operator and regularization on smooth and replicated geometries, with any contact terms included once.
+
+### Clock regularity and the planar tensor replica
+
+🟢 [Done] Identified an obstruction to smoothing the replicated clock in the normal plane. Computed the flat canonical Rényi trace and the smooth ultrastatic curvature coefficient for a specified spatial tensor operator. Run [clock_replica.py](experiments/clock_replica.py) for the winding and normalization checks.
+
+On the flat slice take a real unconstrained spatial symmetric traceless tensor with five components. For an ultrastatic Euclidean metric $d\tau^2+h_{ij}dx^idx^j$ and clock $T=\tau$, use the positive quadratic operator
+$\mathcal D_b=-\partial_\tau^2+v^2\nabla_h^*\nabla_h+M^2$ on the spatial symmetric traceless bundle. Here $\nabla_h^*\nabla_h$ is the nonnegative Bochner Laplacian and $v>0$. There is no curvature endomorphism in this comparison. The regional algebra on the flat slice is the tensor product of the five oscillator components at each regulated site. This specifies the massive shell sector, with no gravitational constraint or fluctuating clock included in its regional algebra.
+
+For the canonical replica trace, cyclically glue the flat components across the cut in their original Cartesian frame. With $x'=x/v$ this is five scalar Gaussian planar replicas. The physical surface has area $A$ and the rescaled surface area is $A/v^2$. Using the same operator proper-time bound $\epsilon^2$ as in the smooth determinant, the area coefficient is
+
+$$
+\frac{S_{\rm can}}{A}=\frac{5}{48\pi v^2}\,I(M,\epsilon).
+$$
+
+This canonical gluing computes the specified regional trace without constructing a smooth geometric replica of the clock. The smooth ultrastatic heat trace has volume prefactor $v^{-3}(4\pi s)^{-2}$ and curvature term $5s v^2R[h]/6$ inside that prefactor. The one-loop curvature term in the Euclidean action is
+
+$$
+W_R=-\frac{5I(M,\epsilon)}{192\pi^2 v}\int d\tau\,d^3x\,\sqrt h\,R[h].
+$$
+
+An ultrastatic calculation only fixes the displayed combination: the spacetime and spatial Ricci scalars agree there. Treating this coefficient as an Einstein coefficient of the original metric would yield an area density $5I/(48\pi v)$, which differs from the canonical density when $v\ne1$. This comparison does not identify a Newton coupling. Both factors are consistent with the effective metric $d\tau^2+v^{-2}h_{ij}dx^idx^j$ on this background: its integrated curvature is $v^{-1}$ times the displayed integral and its area is $A/v^2$. The comparison at $v=1$ alone cannot distinguish geometric completions.
+
+To test the missing geometric replica, use a transverse cap disk with smooth polar angle $\theta$ of period $2\pi$. On its outer circle the angular coordinate of the copied plane is $n\theta$ for integer replica index $n$. Take the pullback of the same flat Euclidean Cartesian clock direction on every sheet, and require the clock to stay in the normal two-plane. Relative to a Cartesian frame on the cap, the polar basis rotates by $\theta$ while the copied clock components in that basis have angle $\pi/2-n\theta$. The clock winding is $1-n$. A continuous nowhere-zero planar vector on a disk restricts to a degree-zero boundary map into the circle. Hence this clock cannot extend smoothly with nonzero norm for $n>1$ under the stated boundary condition.
+
+A second proof for an invariant clock scalar is local. At the fixed surface, the replica group rotates the normal plane by $2\pi/n$. Invariance forces the normal components of $dT$ to vanish there. If the clock also preserves translations along the planar surface, its tangential derivatives vanish too. The projector built from $u=dT/|dT|$ is then undefined at the tip. This proof assumes a real Euclidean clock and the stated replica and tangential symmetries. A clock that tilts along the surface and breaks that symmetry, or an extension whose norm may vanish, is outside the obstruction and needs its own operator and measure. [Lewkowycz and Maldacena, smooth replica covers](https://arxiv.org/abs/1304.4926)
+
+### Punctured cone and the canonical tip condition
+
+🟢 [Done] Matched the punctured-cone boundary to the finite-energy canonical gluing and exhibited an alternative tip prescription with a surviving entropy shift. Reproduce the most slowly converging radial sector with [punctured_cone.py](experiments/punctured_cone.py).
+
+Use the five Cartesian components of the flat shell and rescale spatial coordinates as in the preceding section. The effective cone metric is $dr^2+r^2d\varphi^2$ with period $2\pi n$ for $\varphi$. Remove the disk $r<a$ in these rescaled coordinates. For a Fourier mode $e^{im\varphi/n}$ let $\nu=|m|/n$. For fixed tangential momentum and positive resolvent parameter, write $p>0$ for the resulting radial mass parameter. Homogeneous radial solutions are $I_\nu(pr)$ and $K_\nu(pr)$.
+
+Canonical gluing has no added tip interaction. Its domain is the finite-gradient-energy (Friedrichs) domain: retain the regular $r^\nu$ branch for $\nu>0$ and exclude the logarithmic branch for $\nu=0$. The singular branches have infinite gradient energy even in angular sectors where they are square integrable. On the punctured exterior the exact regular-interior Dirichlet-to-Neumann condition for this resolvent is
+
+$$
+a f_m'(a)=pa\,\frac{I_\nu'(pa)}{I_\nu(pa)}f_m(a),
+$$
+
+where the derivative points toward increasing $r$. Eliminating the interior in the Gaussian path integral also produces its fixed-boundary determinant. The boundary map alone matches the exterior Green function, and the determinant must be included for a finite-radius partition function. With both factors, this construction is the canonical cone calculation cut at an arbitrary radius. Its tip heat-trace term per rescaled area is the usual $(n^{-1}-n)/(48\pi s)$ times the mass factor per component. It reproduces the canonical entropy density $5I/(48\pi v^2)$ per physical area. [Solodukhin, conical heat kernel](https://arxiv.org/abs/1104.3712)
+
+For comparison, write an exterior radial solution as $I_\nu(pr)+c_aK_\nu(pr)$. At fixed $p$ and $n$, both Dirichlet and Neumann holes suppress $c_a$ as $a\to0$. For $\nu>0$ the suppression is $O((pa)^{2\nu})$. In the zero mode it is only $O(1/|\log(pa)|)$ for Dirichlet and $O((pa)^2)$ for Neumann. This is convergence of individual resolvent modes, rather than an estimate uniform in ultraviolet momenta or replica index. The determinant matching above sets the canonical entropy without an interchange of the hole-radius and proper-time limits.
+
+A tuned Robin condition can retain a different tip. In the zero mode impose $a f'(a)=f(a)/\log(a/\ell)$ at small $a$ for a fixed length $\ell>0$. The limiting domain permits $f(r)\propto\log(r/\ell)$ and has a nonzero resolvent admixture
+
+$$
+c_a\longrightarrow \frac{1}{\log(p/\kappa)},\qquad
+\kappa=2e^{-\gamma_{\rm E}}/\ell.
+$$
+
+The pole is the transverse bound state with eigenvalue $-\kappa^2$. If this extension is used for the massive shell, $M>\kappa$ keeps the full operator positive when the other angular sectors are regular. It changes the spectrum even after the hole has disappeared. A fixed noncanonical extension for every $n$, including one, would already change the unreplicated flat theory, so its determinant is not the canonical entropy. [Kay and Studer, logarithmic core boundary conditions](https://arxiv.org/abs/gr-qc/9510058) · [Kirsten, Loya, and Park, conic self-adjoint extensions](https://arxiv.org/abs/math-ph/0511002)
+
+To test entropy dependence while keeping the unreplicated operator fixed, consider a separate regulated replica prescription. Add a nonnegative tip potential for $n\ge1$ with integral $(n-1)\lambda$ in the transverse plane, spread on a shrinking annulus, where $\lambda\ge0$. Take the replica derivative at one at fixed proper-time cutoff before shrinking the annulus. It contributes $\frac{\lambda}{2}$ times the flat regulated coincident Green function integrated over the surface for each component. Thus the added entropy density per physical area is $5\lambda I/(32\pi^2v^2)$. The one-sheet operator is unchanged, but the replica trace is changed by design. This regulated first-derivative example does not assert the existence of a fixed nonzero point potential in the unregulated continuum. It isolates why agreement of flat operators alone does not fix the tip entropy. The canonical cyclic gluing fixes this freedom by setting the added defect to zero.
+
+### Synchronized microscopic clock and replica gluing
+
+🟢 [Done] Defined a clock on the regulated spatial lattice and derived the canonical replica trace from its physical Hilbert space. Exact synchronization and conditioning give ordinary cyclic gluing without an extra clock-induced tip interaction. Reproduce the constraint and replica-wiring checks with [synchronized_clock_replica.py](experiments/synchronized_clock_replica.py).
+
+Put an ideal canonical clock pair $(T_x,P_x)$ at each site of a finite lattice, with $T_x$ acting by multiplication and $P_x=-i\partial_{T_x}$ on $L^2(\mathbb R)$. Let $H_b$ be the positive finite-lattice oscillator Hamiltonian of the five shell components, independent of these clock coordinates. Choose a reference site $0$ and impose
+
+$$
+D_x=T_x-T_0=0\quad(x\ne0),\qquad
+C=\sum_x P_x+H_b=0.
+$$
+
+All constraint brackets vanish. In particular, the clock momentum sum translates every reading by the same amount, leaving every $D_x$ unchanged. The independent $D_x$ constraints generate shifts of the relative momenta. The gauge $P_x=0$ for $x\ne0$ has an identity bracket matrix with the $D_x$. Equivalently, the canonical one-form on the synchronized slice is $\sum_x P_x\,dT_x=(\sum_x P_x)\,dT$. Reduction leaves one ideal clock $(T,P_T)$ and the constraint $P_T+H_b=0$. The unitary solution is $\psi(t)=e^{-itH_b}\psi(0)$, with the physical norm evaluated on any common clock reading. The remaining gauge condition $T=t$ has unit bracket with $C$. This is a synchronized realization of relational time; exact synchronization and the preferred spatial lattice are inputs. [Page and Wootters, relational clock time](https://doi.org/10.1103/PhysRevD.27.2885)
+
+Define the region algebra after reduction, at the chosen common reading. It acts on the shell oscillators at the sites in $B$. For the reduced state $\rho$ on the full shell lattice the identity
+
+$$
+\operatorname{Tr}_B\!\left[(\operatorname{Tr}_{\bar B}\rho)^n\right]
+=\operatorname{Tr}\!\left[\rho^{\otimes n}\mathsf{Cycle}_B\right]
+$$
+
+holds at integer $n$, where the cyclic permutation acts on the shell sites in $B$ and as the identity elsewhere. The left side is already the normalized conditional trace. Synchronization and the common time fix the clock on each copy; there are no relative clock states to sew at the branch surface and no relative clock Jacobian there. The ground-state Euclidean transfer representation of the reduced shell gives ordinary cyclic gluing. In the flat continuum limit of the specified free shell this selects the finite-energy tip prescription of the preceding section. No extra interaction of the form $(n-1)\lambda b^2$ supported at the tip occurs in this derived conditional trace. The standard cone entropy remains. The numerical check enumerates the two traces through five replicas for an entangled finite-dimensional example. The constraint and trace identities apply to the oscillator model independently of this example.
+
+This microscopic clock is a synchronized reference system. It leaves no propagating local clock fluctuations and does not define a smooth Euclidean unit clock on the replica cap. All relabeling occurs on the regulated time slice, so the winding obstruction for a geometric clock is not used in constructing this trace. The result fixes the canonical entropy for this regional algebra and does not fix the relation between that entropy and a geometric determinant in a dynamical clock theory. A different choice that includes physical clocks in the regional algebra would require a new trace calculation.
+
+### Physical relative clocks at finite synchronization strength
+
+🟢 [Done] Retained physical clock offsets, coupled them to a shell oscillator, and compared two regional algebras under the same reference-clock conditioning. Run [relative_clock_entropy.py](experiments/relative_clock_entropy.py).
+
+Use one ideal reference clock with constraint $P_T+H=0$. At each regulated site, define its local reading as $T+\chi_x$, where $\chi_x$ is a physical oscillator offset with its own conjugate momentum. Condition only on $T=t$, as in the common-reference construction. No measurement of the offsets is made. For one shell component $b$ the comparison Hamiltonian is
+
+$$
+H=\tfrac12(p_b^{\mathsf T}p_b+p_\chi^{\mathsf T}p_\chi)
++\tfrac12 b^{\mathsf T}K_b b
++\tfrac12\chi^{\mathsf T}(\Omega^2 I+K_\chi)\chi
++g b^{\mathsf T}\chi.
+$$
+
+Take $K_b>0$, $K_\chi\ge0$ and $\Omega>0$. The full stiffness $K$ is positive if $K_b-g^2(\Omega^2 I+K_\chi)^{-1}>0$. This is a regulated one-component model with a chosen shell polarization. It does not assume a rotationally invariant linear coupling between a scalar clock and the full trace-free tensor.
+
+On the ground state of this positive quadratic model, the centered position and momentum covariances are $X=K^{-1/2}/2$ and $P=K^{1/2}/2$. For each regional algebra, restrict $X,P$ to its variables and use the square roots of the eigenvalues of $XP$ as symplectic eigenvalues. The two-site experiment uses symmetric and antisymmetric shell stiffnesses $3,7$ and clock stiffnesses $\Omega^2,\Omega^2+2$. Both tested algebras use one of the two sites:
+
+- For the shell-only algebra, trace all clocks and the shell outside the region. In replicas, sew only the regional shell variables cyclically. The clock fields close on the same sheet everywhere.
+- For the joint algebra, sew both clock and shell variables inside the region cyclically. The corresponding entropy is $S_{b\chi}=S_b+S_\chi-I(b:\chi)$ in that region, so treating clock and shell entropy as additive would count their correlations incorrectly.
+
+At zero coupling, $S_b$ agrees with the synchronized shell benchmark, and the joint entropy is additive. At $g=1$ and $\Omega=2$, the shell-only entropy exceeds the benchmark by about $0.019637$ nats at the tested cut, and the clock-shell mutual information is about $0.032382$ nats. At $\Omega=32$ the corresponding values are about $0.0000364$ and $0.0000575$ nats. Reversing the sign of $g$ is a local clock parity transformation and leaves the regional entropies invariant, as checked numerically.
+
+Integrating out the clock on a fixed replica geometry gives a clock determinant and the shell operator $\mathcal D_b-g^2\mathcal D_\chi^{-1}$ with the clock Green function taken in the prescribed sewing domain. In the shell-only trace, the clock determinant is a product of one-sheet determinants and cancels against trace normalization. The shell term persists because the regional shell is sewn differently. In the joint trace the clock determinant itself uses the sewn geometry and need not cancel. These operations follow from the density matrix with no independently added tip potential. A localized continuum contribution could still emerge from the induced kernel; the finite-lattice calculation does not establish one.
+
+At fixed lattice and fixed $g$, letting $\Omega\to\infty$ decouples the clock covariance from the shell and recovers the synchronized shell entropy. This follows directly from the positive stiffness blocks, and the two-site calculation verifies convergence. The result does not justify taking the continuum limit first, since the lattice frequencies can grow with the cutoff.
+
+### Rotationally invariant coupling and noncommuting synchronization limits
+
+🟢 [Done] Built a rotationally invariant Gaussian clock-tensor interaction. Found cutoff-dependent whole-shell entropy before introducing any spatial cut, and established that the continuum and infinite-clock-gap limits of its entropy per site do not commute. Run [clock_tensor_limits.py](experiments/clock_tensor_limits.py).
+
+For a scalar clock offset $\chi$ and spatial symmetric traceless tensor $b_{ij}$, take the local potential mixing
+
+$$
+g\int d^3x\,b^{ij}\left(\partial_i\partial_j-\tfrac13\delta_{ij}\nabla^2\right)\chi .
+$$
+
+Use unit kinetic terms and diagonal stiffnesses $m_b^2+v_b^2 k^2$ and $\Omega^2+v_\chi^2 k^2$. Only the normalized tensor component along $\sqrt{3/2}(\hat k_i\hat k_j-\delta_{ij}/3)$ couples to the clock at nonzero momentum. Its mixed stiffness has off-diagonal magnitude $|\gamma| k^2$, where $|\gamma|=\sqrt{2/3}|g|$. The condition $\gamma^2<v_b^2v_\chi^2$, with positive masses and speeds, guarantees a positive stiffness. The other four components do not contribute to the whole-species trace. The mixed component belongs to the massive shell field.
+
+At fixed momentum the clock decouples as $\Omega\to\infty$. At fixed $\Omega$ the mixing is of the same order as the diagonal gradient terms at arbitrarily high momentum. For $v_b=v_\chi=1$ and $0<|\gamma|<1$, the two frequencies approach $|k|c_\pm$ with $c_\pm=\sqrt{1\pm|\gamma|}$. The shell-only symplectic eigenvalue of the mixed mode tends to
+
+$$
+\nu_\infty=\tfrac14\sqrt{(c_++c_-)(c_+^{-1}+c_-^{-1})}>\tfrac12 .
+$$
+
+Thus the oscillator entropy $f(\nu_\infty)$ is strictly positive. This trace retains the shell on the whole periodic lattice and traces every clock, with no spatial boundary. The joint ground state is pure, so this entropy measures correlations with the clocks. For lattice spacing $a$, the entropy per site tends to $f(\nu_\infty)$ if the continuum limit is taken at fixed $\Omega$. Bounded convergence applies to the stable lattice symbol, since almost every dimensionless lattice momentum corresponds to diverging physical momentum. The entropy per physical volume then grows as $a^{-3}$. Taking $\Omega\to\infty$ first at fixed lattice instead gives zero entropy per site.
+
+The experiment uses the nearest-neighbor symbol for $k^2$ in the reduced mixed block. It checks the whole-species entropy and the limiting eigenvalue, while a spatial cut requires the full local tensor variables. For $|\gamma|=0.45$ the limiting entropy is $0.077075$ nats per mixed mode. The numerical lattice at $a=0.025$ gives $0.076977$ nats per site at fixed gap. Taking the gap far above the lattice band suppresses the site value. A fixed ratio of gap to cutoff does not by itself demonstrate that entropy per physical volume vanishes.
+
+The whole-species trace supplies a bulk reference before extracting an entropy associated with the spatial cut. The calculation leaves the area coefficient and its comparison with a renormalized gravity coupling open.
+
 ### Highest-priority follow-up
 
-🟠 [Next] Compute the geometry-dependent change of the Gaussian shell vacuum entropy and compare it with the renormalization of the gravitational action in the same regulator. Fix the regional algebra and matching prescription before comparing their coefficients. Then test whether interactions that change the shell covariance generate an additional state contribution that survives this matching.
+🟠 [Next] Compute spatial slab entropy using the full local tensor variables. Compare the shell-only and joint algebras, subtract the extensive contribution using the same regulated whole-species trace, and test the residual area scaling. Repeat at fixed clock gap and with the gap above the lattice band. Compare with a smooth-background determinant after the entropy of the cut has been isolated in this prescription.
 
 ## 3. Joint gravitational response in a single model
 
