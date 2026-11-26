@@ -76,6 +76,48 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Common flat volume subtraction.** Reusing the full flat reference removes the constant introduced by the primed subtraction. The two curvature-squared projections move closer together but remain momentum dependent.
 
+- **Spatial mixed convergence.** Both mixed orientations pass the numerical checks on the shorter band. The independent matching gives finite-band estimates with residual cutoff dependence. The longer-box pure fit requires a tighter transverse check.
+
+- **Tight transverse cutoff.** All four pure probes pass numerical refinement on the longer box at the shorter band. The Einstein intercept is stable across the two diagnostic fits, while higher-curvature intercepts retain substantial uncertainty.
+
+- **Third-wave curvature test.** The third harmonic passes refinement at fixed geometry and proper-time band. The held-out trace is consistent with a $q^6$ correction at the tested precision, and independent Einstein fits reproduce one another within the observed numerical shifts. A same-box cutoff comparison supports the Einstein scaling but leaves the higher-curvature intercepts uncertain.
+
+- **Fixed-box multi-band sweep.** Finer fundamental grids reduce the low-wave numerical shifts. The third harmonic detects omitted momentum terms at the two longer bands. Both mixed orientations converge at the shorter band, but their ultraviolet extrapolations still depend on the selected bands.
+
+- **Fourth-wave and mixed checks.** At fixed box length, the fourth-wave test supports a $q^8$ fit within the observed shifts on the shorter bands. Neither the higher-curvature nor the clock-mixed cutoff extrapolation has stabilized enough for the full entropy subtraction.
+
+- **Lower-momentum boxes.** The longer pure box adds independent smaller-momentum probes in both short bands. The mixed response passes numerical refinement at lower momentum but differs significantly between boxes even when the global zero sector is restored for diagnosis.
+
+- **Matched physical momentum.** Pure-curvature and clock-mixed projections exhibit resolvable longitudinal-box dependence at the same external momentum. Range and refinement checks still leave the higher-curvature and mixed ultraviolet coefficients open.
+
+- **Matched-band zero-sector diagnostic.** Restoring the global sector removes the resolved same-momentum pure box difference within numerical precision. The restored low-wave Einstein projections agree across boxes. The two-band mixed differences likewise fall below observed numerical shifts when restoring the global sector. Ultraviolet extrapolation and the physical entropy subtraction remain open.
+
+- **Restored short-cutoff checks.** The low-momentum clock-mixed responses converge at the new shortest band. The joint momentum and cutoff diagnostic gives a stable scale for the $RX$ projection and a Ricci–clock projection compatible with zero within the observed shifts. A third low momentum and the matched entropy calculation remain open.
+
+- **Restored shortest band.** The pure and mixed responses pass numerical refinement at the new shortest band. The restored Einstein scale is stable, and the mixed Ricci–clock projection is compatible with zero. Higher-curvature uncertainty and the independent low-momentum checks still prevent the full entropy subtraction.
+
+- **Paired numerical refinement.** Tracking signed grid changes across both pure response families reduces the observed variation of the curvature-squared fits. The restored third-wave Ricci–clock response departs from the two-wave prediction in both proper-time bands. At matched momentum the short-band difference between the original and doubled box falls below observed numerical refinement. The cutoff intercept remains sensitive to the momentum fit.
+
+- **Independent cutoff and momentum tests.** At all three fixed momenta the Ricci–clock response in the third band departs from the two-band linear prediction by more than the paired refinement variations. The fourth wave passes refinement in all three bands and shows same-sign Ricci–clock residuals against the three-wave fit. The inferred divergence depends on the momentum and cutoff fit, and the corresponding fixed-generalized-volume entropy balance remains open.
+
+- **Fourth-wave box control and cutoff refinement.** At fixed fourth-wave momentum and $[0.024,0.048]$, the restored Ricci–clock difference between the original and doubled boxes is smaller than the paired variation and the fourth-wave holdout residual. Transverse refinement produces the largest observed simultaneous change in the four-wave quadratic cutoff estimate. Factorized transverse Gaussian sums support tighter cap comparisons.
+
+- **Production transverse convergence and fourth cutoff band.** Cap 12 to 16 passes at all four physical momenta on production grids. The new shortest proper-time band passes longitudinal and quadrature refinement. The Ricci–clock ultraviolet intercept still changes sign with cutoff fit degree, and the fixed-generalized-volume entropy balance remains open.
+
+- **Separate time and grid refinement.** Romberg integration reduces observed quadrature sensitivity. Independent 17-node and 53-point checks at the lowest momentum change the quadratic Ricci–clock cutoff intercept by $3.33\times10^{-10}$. The cutoff fit degree still determines the sign of the estimated intercept.
+
+- **Refined cutoff fit and ultraviolet audit.** Targeted grid and quadrature refinements reduce the four-band quadratic Ricci–clock intercept's observed variation to $3.46\times10^{-8}$. The intercept still changes sign with fit degree. The roadmap prioritizes an independent short-time expansion, an invariant-basis rank check, and physical-volume controls before applying counterterms to the fixed-generalized-volume sphere.
+
+- **Pointwise heat kernel and mixed basis.** The momentum sensitivity persists before time integration. The flat clock wave completes the rank of the three-invariant bulk probe basis. At fixed longitudinal momentum, increasing the transverse physical period changes the long-time Ricci–clock endpoint by $3.35\times10^{-7}$ despite cap convergence in both boxes.
+
+- **Transverse infinite-volume comparison.** Analytic transverse Gaussian integrals agree with two large periodic boxes across all four waves and bands. The Ricci–clock cutoff extrapolation is much smaller in the transverse continuum and still changes sign with fit degree. The fixed-generalized-volume entropy balance remains open.
+
+- **Matched longitudinal boxes.** At the same physical momentum and with the transverse continuum in place, doubling the longitudinal box resolves a small finite-volume effect at the highest wave in the longest band. At the lowest wave the observed grid variation exceeds the box difference. Substituting both matched waves leaves the curvature-clock cutoff coefficient unresolved.
+
+- **Independent mixed local expansion.** The gauge-fixed operator gives an $RX$ constant consistent with $1/(96\pi^2)$ and a Ricci–clock constant consistent with zero in the Euclidean kernel normalization. The calculated finite-momentum terms through $(sq^2)^5$ reproduce the four-wave, four-band data. The 97-point refinement reduces the shortest-band longitudinal variation in the doubled box.
+
+- **Independent pure-curvature matching and sphere control.** The conformal and shear expansions with ghosts give logarithmic coefficients consistent with $-1/(1280\pi^2)$ for $R^2$ and $-43/(1920\pi^2)$ for Ricci squared. Two wave numbers and four bands verify the expansion against transverse-continuum traces. The matched local flat CFT sphere cancels through $r^4$ at fixed generalized volume. The active-clock replica and state calculation remains open.
+
 ## Open problems
 
 - Derive the allowed low-energy states, physical regional algebra, and regulator matching in a single microscopic model that passes the entropy-response filter.

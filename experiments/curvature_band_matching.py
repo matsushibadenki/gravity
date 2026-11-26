@@ -13,10 +13,10 @@ LENGTH = 1.8
 TOLERANCE = 1e-3
 
 
-def band_response(size, shear, cutoff, harmonic, length_x=LENGTH):
+def band_response(size, shear, cutoff, harmonic, length_x=LENGTH, caps=(3, 5, 8)):
     quadratures = [np.polynomial.legendre.leggauss(order) for order in (8, 16)]
     times = np.concatenate([cutoff * (nodes + 3) / 2 for nodes, _ in quadratures])
-    traces = response(size, shear, times, harmonic, length_x)
+    traces = response(size, shear, times, harmonic, length_x, caps)
     integrated = {}
     for cap, trace in traces.items():
         integrated[cap] = [
@@ -43,10 +43,25 @@ def checkpointed_result(path, key, compute):
     return cache[encoded]
 
 
-def checkpointed_band(path, length_x, cutoff, harmonic, shear, size):
+def checkpointed_band(path, length_x, cutoff, harmonic, shear, size, caps=(3, 5, 8)):
     key = [1, length_x, cutoff, harmonic, shear, size]
-    cache = checkpointed_result(path, key, lambda: band_response(size, shear, cutoff, harmonic, length_x))
+    if caps != (3, 5, 8):
+        key.append(caps)
+    cache = checkpointed_result(path, key, lambda: band_response(size, shear, cutoff, harmonic, length_x, caps))
     return {int(cap): pair for cap, pair in cache.items()}
+
+
+def band_refinement_directions(values, lower, upper):
+    """Signed changes from longitudinal, transverse, and quadrature refinement."""
+    coarse, fine = values[-2:]
+    return np.array([fine[upper][1] - coarse[upper][1],
+                     fine[upper][1] - fine[lower][1],
+                     fine[upper][1] - fine[upper][0]])
+
+
+def band_resolution(values, lower, upper):
+    """Sum the magnitudes of the three observed refinement shifts."""
+    return np.abs(band_refinement_directions(values, lower, upper)).sum()
 
 
 def common_volume_shift(length_x):
@@ -78,7 +93,12 @@ def main():
     parser.add_argument("--compare-zero-projection", action="store_true",
                         help="Diagnose the change caused by dropping the zero-mode projection.")
     parser.add_argument("--checkpoint", type=Path, help="Save each completed band and resume from it.")
+    parser.add_argument("--transverse-bounds", type=int, nargs=2, default=(5, 8))
     args = parser.parse_args()
+    lower, upper = args.transverse_bounds
+    if not 0 < lower < upper:
+        parser.error("--transverse-bounds requires increasing positive limits")
+    caps = (3, 5, 8) if (lower, upper) == (5, 8) else (lower, upper)
     if not np.isfinite(args.length_x) or args.length_x <= 0:
         parser.error("--length-x must be positive and finite")
     if not np.isfinite(args.cutoff) or args.cutoff <= 0:
@@ -89,22 +109,24 @@ def main():
         parser.error("--sizes must contain odd grid sizes of at least 5 points")
     cutoff, sizes = args.cutoff, args.sizes
     responses = {}
+    resolution = {}
     for shear in (True, False):
         for harmonic in (1, 2):
             values = []
             for n in sizes:
-                value = checkpointed_band(args.checkpoint, args.length_x, cutoff, harmonic, shear, n)
+                value = checkpointed_band(args.checkpoint, args.length_x, cutoff, harmonic, shear, n, caps)
                 values.append(value)
                 print(f"Lx={args.length_x:g}, harmonic={harmonic}, shear={shear}, "
-                      f"N={n}: band={value[8][1]:.12g}", flush=True)
-            stable = (settled(values[-2][8][1], values[-1][8][1])
-                      and settled(values[-1][5][1], values[-1][8][1])
-                      and settled(*values[-1][8]))
-            responses[harmonic, shear] = values[-1][8][1], stable
+                      f"N={n}: band={value[upper][1]:.12g}", flush=True)
+            stable = (settled(values[-2][upper][1], values[-1][upper][1])
+                      and settled(values[-1][lower][1], values[-1][upper][1])
+                      and settled(*values[-1][upper]))
+            responses[harmonic, shear] = values[-1][upper][1], stable
+            resolution[harmonic, shear] = band_resolution(values, lower, upper)
             print(f"s={cutoff:g}, harmonic={harmonic}, shear={shear}: "
-                  f"longitudinal={[v[8][1] for v in values]}, "
-                  f"transverse={values[-1][5][1]:.10g}, "
-                  f"quadrature={values[-1][8][0]:.10g}, {stable=}", flush=True)
+                  f"longitudinal={[v[upper][1] for v in values]}, "
+                  f"transverse={values[-1][lower][1]:.10g}, "
+                  f"quadrature={values[-1][upper][0]:.10g}, {stable=}", flush=True)
     if not all(stable for _, stable in responses.values()):
         print("Resolution gate failed. Keeping the same lower proper-time cutoff.", flush=True)
         return
@@ -115,7 +137,10 @@ def main():
           flush=True)
     square = (2 * np.pi / args.length_x)**2 * np.array([1, 4])
     shear = np.array([responses[harmonic, True][0] for harmonic in (1, 2)])
-    print("Einstein-free quartic projections:", (conformal + 3 * shear) / square**2, flush=True)
+    quartic = (conformal + 3 * shear) / square**2
+    shifts = np.array([resolution[h, False] + 3 * resolution[h, True] for h in (1, 2)]) / square**2
+    print("Einstein-free quartic projections:", quartic, flush=True)
+    print("Observed refinement shifts propagated to those projections:", shifts, flush=True)
     einstein, scalar_square, ricci_square = momentum_projections(conformal, shear, square)
     print(f"Finite-band two-momentum projections: {einstein=}, {scalar_square=}, "
           f"{ricci_square=}", flush=True)

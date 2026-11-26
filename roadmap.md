@@ -1,6 +1,6 @@
 # Quantum Information Emergent Gravity (QIEG) Research Roadmap
 
-Updated 24 November 2026
+Updated 26 November 2026
 
 ## Research objective and current scope
 
@@ -14,6 +14,33 @@ At low energies, a smooth Lorentzian metric, a local conformal vacuum, an orient
 - 🟠 [Next] High-priority unfinished work
 - 🔴 [Later] Planned work after the nearest milestones
 - ⭕️ [Pending] On hold because it cannot be tested in the development environment
+
+## Research priority after comparison with null-cone quantization
+
+Retain the microscopic emergence objective and the fixed-generalized-volume entropy test. Give the definition and gluing of the physical regional algebra priority over further smooth-background coefficient fits. Chandrasekaran starts from four-dimensional vacuum Einstein gravity with a specified Newton coupling. The paper's affine null clock, selected diamond states and corner trace supply a comparison for our vacuum Einstein limit. Our scalar clock carries stress and our ball moves at fixed generalized volume. Equivalence of the two region and state prescriptions would require a separate derivation. In particular, Eq. (5.50) includes a trace normalization in addition to the mean area term, and the horizon application imposes the null-expansion conditions of Eq. (5.51). [Chandrasekaran, Sections 3.6 and 5.3, v1](https://arxiv.org/html/2611.34924v1)
+
+- 🟢 [Done] Reproduced the existing flat CFT control at four radii. The maximum absolute total entropy variation divided by the fourth power of the radius was below $5\times10^{-12}$ in the benchmark units. The physical clock calculation remains open. [Local sphere calculation](experiments/matched_pure_ball.py)
+### Implementation order and decision criteria
+
+The first implementation is a vacuum Einstein cut-and-glue calculation on a round two-sphere in a flat reference geometry. Use one weak, nonconstant boundary source as well as the source-free amplitude. The outer preparation and regulator must agree on both sides of every comparison. The steps below set the project-wide priority for the clock–gravity candidate.
+
+1. 🟠 [Next] **Derive the boundary data and test composition at one replica.** Obtain the corner symplectic potential from the regulated Einstein action. Identify the induced two-metric, the identification of points across the cut and the relative boost of the two normal frames. With the two faces given opposite orientations, the common frame shift must have zero total charge and the relative boost must be conjugate to the area density divided by $8\pi G_{\rm N}$. Use the Newton coupling from the action for this calibration. Integrate the shared data once with the induced measure and treat the common gauge freedom and its zero modes consistently. Compute the glued and uncut amplitudes independently. Compare their ratio at zero source and their logarithmic source derivatives for a nonzero probe with the same geometric support on both descriptions. Repeat after a common frame change and under refinement. Advance when the ratio approaches one and the source and frame differences approach zero within controlled errors. A persistent discrepancy reopens the measure, matching conditions and boundary action. [Chandrasekaran, Eqs. (3.60)–(3.66) and Sec. 4](https://arxiv.org/html/2611.34924v1#S3.SS6)
+2. 🟠 [Next] **Construct the trace for the physical clock region.** Restore the dynamical scalar clock and the matched curvature terms, including $R(\nabla T)^2$. Derive which boundary data are held fixed, which are integrated, and which transformations are gauge. Compare sewing before constraint reduction with the transported sewing and Jacobian in reduced variables. Recheck one-sheet composition in this coupled model. For the same prepared state and region define $F(n)=\log Z_n-n\log Z_1$ and evaluate $S=-F'(1)$ from a physical density operator or a derived replica family. Determine finite surface terms independently of the sphere response. The identity $F(1)=0$ alone has no sensitivity to a surface insertion proportional to $n-1$. An unresolved surface coefficient or choice of trace leaves the physical entropy undetermined. [Reduced-clock seam](experiments/reduced_clock_ball_seam.py) · [Canonical transfer calculation](experiments/reduced_clock_transfer.py)
+3. 🔴 [Later] **Decide the fixed-generalized-volume sphere response.** Derive the generalized volume $W$ from the same action and move the clock-defined boundary with $\delta W=0$. On independently prepared, constraint-satisfying perturbations, report the signed renormalized $\delta S_{\rm total}|_W$, including the state response and counting each local term once. Resolve the $r^2$ term before extracting the $r^4$ coefficient. Use multiple profiles, at least one nonzero geometric $r^4$ signal and the established order of limits. A controlled nonzero residual rejects the tested equilibrium prescription. A vanishing residual within a bound that resolves the signal supports the tested class. Insufficient resolution or an undetermined finite term leaves the question open. Record the microscopic entropy–geometry residual separately under the [Section 3 filter](#entropy-response-filter). [Order of limits](#order-of-limits-for-a-curvature-measurement)
+
+Keep the completed bulk coefficient and flat-sphere calculations as controls. Resume bulk coefficient fits when a specific subtraction uncertainty limits the sphere measurement. The paper's finite-dimensional diamond Hilbert space and horizon trace are results for its own state selection. Establishing analogous results here would require a map of states, observables and boundary conditions between the two constructions. [Chandrasekaran, Sec. 5](https://arxiv.org/html/2611.34924v1#S5)
+
+### Vacuum corner charge and radial composition control
+
+- 🟢 [Done] Calibrated the classical corner charge by rounding the joint in the normal plane. For the Einstein boundary action with coefficient $1/(8\pi G_{\rm N})$, the singular part of the rounded cap's extrinsic curvature is the rate of rotation of its normal with respect to cap arc length. Integrating that part and continuing the normal-plane rotation to an oriented Lorentzian boost $\Gamma$ gives the joint action $\int_\Sigma \sqrt q\,\Gamma/(8\pi G_{\rm N})$. The angle–area symplectic pair is represented by $\sqrt q\,\delta\Gamma/(8\pi G_{\rm N})$, up to an exact variation for the alternative choice of corner polarization. For a matched two-metric, the oriented sum is $\sqrt q\,\delta(\Gamma_R-\Gamma_L)/(8\pi G_{\rm N})$. A common boost is therefore null in this corner sector. For smooth $X=(\nabla T)^2$ with a common limiting value at the cap, the $RX$ term with coefficient $\lambda$ adds $2\lambda\sqrt q$ times $X$ to the boost charge density via the $2\lambda X K$ boundary term in the metric variation at fixed $X$. This only calibrates the local angle term. The scalar variation and coupled sewing measure still require a derivation. [Null-cone comparison, Eqs. (3.63)–(3.66)](https://arxiv.org/html/2611.34924v1#S3.SS6)
+- 🟢 [Done] Tested one-sheet amplitude composition of a canonically normalized static linearized Einstein master field in the $\ell=2$ sector. The source $j\,u(1)$ couples to the gauge-invariant master variable with quadrupolar angular dependence. Cut at radius one and fix regularity at zero and Dirichlet data at radius two. Independently assemble the full radial action and the two open interval actions. Integrate the latter using the Gaussian measure $du/\sqrt{2\pi}$ per node and one integral over the common seam variable. For $j=0,0.2$ the maximum absolute log amplitude mismatch was $5.69\times10^{-14}$ and the maximum absolute source-response mismatch was $2.09\times10^{-16}$. Doubling the cells per side from 16 to 128 reduced the error against the continuum seam Green function $31/160$ from $5.51\times10^{-4}$ to $8.65\times10^{-6}$, consistent with second-order convergence. [Reproduction script](experiments/einstein_radial_gluing.py) · [Kodama and Ishibashi, vacuum master equations](https://academic.oup.com/ptp/article/110/4/701/1875052)
+- 🟠 [Next] Derive the induced seam measure in metric variables, including the relation between the master source and geometric boundary data, frame matching, the constraint determinant and residual gauge modes. The radial control assumes the canonical reduced measure. Its determinant equality follows from Gaussian composition and provides a reference for testing that independent metric calculation. The full vacuum gate remains open.
+
+### Linearized ADM measure before spherical cutting
+
+- 🟢 [Done] Calibrated the bulk constraint measure in the original canonical metric and momentum components. For a nonzero spatial Fourier mode the linearized lapse and shift impose $C_0=k^2\operatorname{tr}h-k_i k_j h_{ij}$ and $C_i=2k_j\pi^{ij}$, with Fourier phases absorbed into the shift multipliers. Integrating the multipliers with the Fourier delta normalization gives $\delta(C)$. A linear gauge $\chi$ supplies $\delta(\chi)|\det\{\chi,C\}|$. In canonical coordinates $x=(h,\pi)$ the change of variables to $(C,\chi,Px)$, where $P$ projects onto an orthonormal TT phase-space basis, has determinant magnitude $|\det\{\chi,C\}|$ for the checked gauges. The two factors cancel, leaving the canonical measure of two graviton pairs. Numerically the maximum absolute log measure error is $3.56\times10^{-15}$ across three wave vectors and two gauges, including a slice tilted by physical data. A TT source gives the same response on both gauge slices. The zero Fourier mode has rank zero and requires its own boundary or global treatment. [ADM measure check](experiments/einstein_adm_measure.py)
+
+- 🟠 [Next] Extend this calculation to the spherical boundary. Integrations by parts in the lapse and shift constraints change the generator when smearing functions have nonzero boundary values. Derive those surface terms, evaluate the constraint and gauge Jacobians with the same allowed boundary data on each side, and compare the induced seam measure with the radial master-field control. The Fourier calculation fixes the bulk normalization. The boundary charge measure and the source map to the induced two-metric remain open.
 
 ## Established results
 
@@ -1649,6 +1676,376 @@ Both harmonics of both pure probes pass the numerical checks at $[0.028,0.056]$ 
 
 🟠 [Next] Complete the spatial mixed probe on the shorter band and extend the resolved cutoff and momentum sequence with the common reference. Use agreement of the local curvature projections to determine which coefficients can be used for a sphere subtraction. The finite $r^4$ balance including the constraint and state responses remains open.
 
+### Spatial mixed convergence and longer-box scaling checks
+
+🟢 [Done] Added joint orientation matching and independent longitudinal length to [short_mixed_quadrature.py](experiments/short_mixed_quadrature.py). The integrated fourth derivative is converted to an action density with factor $-1/(8 L_\perp^3 L_x)$, including the two factorials and the determinant factor. The temporal and spatial curvature responses then give the separate $RX$ and $R_{\mu\nu}T^\mu T^\nu$ projections. A synthetic local action check recovers both inputs, and a nondefault box test checks factorized against unfactorized mixed traces. The flat-gradient subtraction uses the distinct longitudinal and transverse momenta. The driver reports projections only after both orientation checks pass.
+
+At $[0.028,0.056]$ the spatial mixed nine-node integrals at 21 and 25 points are $2.655051033989727$ and $2.655051033957530$. The five-node result at 25 points is $2.655370888723786$, and the transverse bound 8 to 12 changes the integral by about $1.77$ times $10^{-8}$. The joint checkpoint replay passes the longitudinal, quadrature, and transverse criteria for both orientations. The two finite-band mixed projections are $c_{RX}=0.001085223735$ and $c_{\mathrm{RicTT}}=-0.000661025048$. The corresponding nine-node estimates in the previous band are $0.001135739551$ and $-0.000680399965$. The propagated shifts from the tested numerical refinements are $1.05$ times $10^{-7}$ and $6.28$ times $10^{-7}$ on the shorter band. The differences from the previous band, approximately 4.45% and 2.85%, exceed those shorter-band shifts and show remaining cutoff dependence at fixed external momentum. No coefficient from either band is used in a ball subtraction.
+
+🟢 [Done] Added configurable transverse bounds and propagated the observed refinement shifts into the Einstein-free quartic projection. For the completed band $[0.028,0.056]$ at $L_x=3.6$, the observed shifts from the three numerical refinement directions sum to $4.04\times10^{-4}$ for the fundamental and $2.61\times10^{-5}$ for the second harmonic after propagation through $(C+3S)/q^4$. The two projections differ by $4.93\times10^{-4}$. This is close to the propagated shifts. They are numerical diagnostics and do not bound the true remainder. Tightening the transverse check is particularly important once division by the small momentum to the fourth power amplifies the response error.
+
+The first shear response at $L_x=4.2$ and $[0.024,0.048]$ is $-1.116853828$ at 33 points and $-1.116625954$ at 37 points. The 37-point transverse bound 5 gives $-1.111951449$. Longitudinal refinement and quadrature pass, while transverse bounds 5 and 8 fail the 0.1% response-level comparison. On the 33-point grid the tighter transverse comparison moves from $-1.1168538280$ at bound 8 to $-1.1168538502$ at bound 12, a change of $2.22$ times $10^{-8}$. The larger bound resolves this response at fixed longitudinal size. The complete tightly controlled two-wave fit remains pending.
+
+🟠 [Next] Complete the refined pure-curvature family at $[0.024,0.048]$ and $L_x=4.2$ and repeat with tighter transverse bounds if needed. Then test the momentum and cutoff extrapolations before using any coefficient in the fixed-generalized-volume entropy. The state and constraint contributions to the renormalized $r^4$ term remain open.
+
+### Tight transverse cutoff and curvature extrapolation
+
+🟢 [Done] Verified both long-box shear harmonics at transverse bounds 8 and 12 on 33- and 37-point longitudinal grids. At $L_x=4.2$ and $[0.024,0.048]$ the 37-point, bound-12 values are $-1.1166259767$ and $-4.5458330012$. Raising the transverse bound changes each by approximately $2.22\times10^{-8}$. The longitudinal and quadrature checks pass for both shear harmonics.
+
+🟢 [Done] Implemented common-reference cutoff diagnostics in [curvature_cutoff_extrapolation.py](experiments/curvature_cutoff_extrapolation.py). For each numerically resolved band, use the two harmonic projections to form a linear $q^2$ intercept of the scalar- and Ricci-squared terms and scale the Einstein projection by $\sigma$. Compare a three-band linear intercept in $\sigma$ with the two-shortest-band intercept. Propagate the observed refinement shifts through the linear weights. A synthetic test recovers the inputs after both extrapolations and the volume correction.
+
+Both conformal harmonics also pass the longitudinal, transverse and quadrature checks. At 37 points and bound 12 their stored band responses are $3.1078970213$ and $12.3394231103$, and the respective changes from bound 8 are about $3.79$ and $3.40$ times $10^{-8}$. With the common volume reference, the Einstein-free projections are $-0.01441336$ and $-0.01407917$. Their difference $3.34$ times $10^{-4}$ is comparable to the sum of the observed refinement shifts, $3.17$ times $10^{-4}$. The requirement of a momentum-independent local projection is not resolved at this precision.
+
+| Cutoff extrapolation | Scaled Einstein | Scalar squared | Ricci squared |
+|---|---:|---:|---:|
+| Three bands | 0.01183473 | -0.00014299 | -0.00139905 |
+| Two shortest bands | 0.01182302 | -0.00003901 | -0.00175339 |
+| Propagated observed shifts for three bands | 0.00001565 | 0.00021162 | 0.00058958 |
+
+The Einstein intercept is consistent across the two fits on this diagnostic. The higher-curvature intercepts vary substantially. Two momenta leave the next momentum power untested, and changing $L_x$ on the shortest band confounds the cutoff comparison. These are finite-data extrapolations and no coefficient is used to subtract the physical entropy.
+
+🟠 [Next] Compare bands at fixed box and add a momentum to test the higher-power remainder. Continue independent clock matching and the matched state and constraint calculation before inferring a renormalized held-volume $r^4$ coefficient.
+
+### Fixed-box cutoff comparison and third-wave holdout
+
+🟢 [Done] Implemented [curvature_momentum_validation.py](experiments/curvature_momentum_validation.py). At fixed $L_x=4.2$, the same two momenta can be compared between $\sigma=0.028$ and $0.024$ without changing the volume reference. A separate test removes the Einstein term through $(C+3S)/q^4$, fits a line in $q^2$ at the first two waves, and evaluates its prediction on the third wave. The line retains a $q^6$ term in the original response. The code propagates observed numerical refinement shifts through this prediction. A synthetic local action with an additional $q^6$ term gives a zero holdout residual.
+
+The operator jet now obtains the value and both derivatives from one nested JVP. The earlier direct trace derivative at five points is reproduced to relative tolerance $10^{-8}$. The temporary checkpoints from the earlier run are unavailable. The previously recorded 37-point reference and observed grid shifts are included explicitly in the diagnostic. The new fixed-box and third-wave rows are saved in [experiments/checkpoints](experiments/checkpoints/) as they complete.
+
+At the third harmonic, 37-point, bound-12 conformal and shear responses are $25.762006601$ and $-10.476547731$. They pass the longitudinal, transverse, and quadrature checks. The common-reference Einstein-free projections for all three waves are $(-0.01441336,-0.01407917,-0.01355144)$. The third-wave holdout residual is $-2.92$ times $10^{-5}$, compared with $6.60$ times $10^{-4}$ from the propagated observed refinement shifts. The residual is unresolved at this resolution and consistent with the tested $q^6$ term. Fitting the two response families independently through $q^6$ gives Einstein projections $0.49572092$ and $0.49574055$, with observed shifts $0.00018262$ and $0.00026028$ respectively. Their agreement is a finite-band diagnostic.
+
+The two shear harmonics on the same box also pass numerical refinement at $[0.028,0.056]$, with 37-point band responses $-0.95869174$ and $-3.91058036$. The shear-only two-wave projection gives scaled Einstein values $0.01191528$ at $\sigma=0.028$ and $0.01190362$ at $\sigma=0.024$. Its corresponding Ricci-squared projections are $-0.00126137$ and $-0.00131986$. This comparison holds external momentum and box size fixed. It remains a two-wave approximation with no separate conformal constraint.
+
+🟢 [Done] Completed the fixed-box comparison at $L_x=4.2$. All four $[0.028,0.056]$ probes pass the longitudinal, transverse and quadrature gates. The common-reference conformal and shear data give $sigma c_R=0.0119033520$ at $sigma=0.028$ and $0.0118956412$ at $sigma=0.024$. The two-band linear intercept and propagated observed shifts are:
+
+| Projection | Intercept | Observed shift propagated through fit |
+|---|---:|---:|
+| Scaled Einstein | 0.01184938 | 0.00002470 |
+| Scalar squared | -0.00007951 | 0.00038625 |
+| Ricci squared | -0.00154240 | 0.00106509 |
+
+The Einstein scaling is consistent with the earlier varying-box diagnostic. The higher-curvature extrapolation remains sensitive to the short cutoff lever arm and propagated numerical error. The three-wave test covers one band only and constrains a combination of higher-curvature operators. No band estimate is used to subtract physical entropy.
+
+🟠 [Next] Increase the cutoff lever arm at fixed geometry, refine the cancellation-sensitive low-wave projections, and repeat the higher-power momentum check across bands. Complete independent mixed matching before applying coefficients to the held-volume constraint and state comparison.
+
+### Fixed-box multi-band and low-wave refinement
+
+🟢 [Done] Implemented [curvature_band_batch.py](experiments/curvature_band_batch.py) to evaluate several proper-time bands from the same operator samples. The batch calculation uses the same 8- and 16-node quadratures and writes the existing individual checkpoint records. A seven-point numerical run reproduces the separate integrations to relative tolerance $10^{-10}$.
+
+🟢 [Done] Extended [curvature_momentum_validation.py](experiments/curvature_momentum_validation.py) to run the third-wave holdout at each available fixed-box band and substitute a finer fundamental only after checking it against the 37-point result. The three-wave projections allow distinct $q^6$ terms for the conformal and shear families. Reconstruct their $q^2$ and $q^4$ coefficients and propagate the observed refinement shifts through the linear fit. A synthetic check with independent $q^6$ terms verifies the lower-order projections. The state and constraint terms are not included in this smooth-action diagnostic.
+
+At $L_x=4.2$ and $sigma=0.024$, refining only the fundamental from 37 to 41 points changes the conformal and shear actions by $-1.7690$ times $10^{-5}$ and $+7.2047$ times $10^{-6}$. In the third-wave comparison the propagated observed variation drops from $6.60$ times $10^{-4}$ to $2.69$ times $10^{-4}$. The held-out residual stays at $-2.79$ times $10^{-5}$, still below the variation. The refined three-wave diagnostic gives $(sigma c_R,c_{R^2},c_{mathrm{Ric}^2})=(0.0118974323,-0.00007678386,-0.0014566861)$ with corresponding observed shifts $(0.000002168,0.000024136,0.000055733)$. These are finite-band values.
+
+🟢 [Done] Completed both mixed orientations at $[0.024,0.048]$ on the separate $L_x=1.8$ mixed-probe box. At 25 points, the nine-node spatial and temporal integrals are $2.580284846529$ and $3.219399454039$. Both pass against 21 points, transverse bounds 8 and 12, and five-node quadrature. The finite-band mixed projections are $c_{RX}=0.001048718375$ and $c_{mathrm{RicTT}}=-0.000624574156$. The propagated observed shifts are $1.04$ times $10^{-7}$ and $6.26$ times $10^{-7}$. Relative to $sigma=0.028$ the magnitudes change by roughly 3.36% and 5.51%. With the two previous bands included, a linear cutoff extrapolation gives approximately $(0.00086275,-0.00051571)$, while the two shortest bands give $(0.00082969,-0.00040587)$. The different intercepts motivate more cutoff and momentum checks before matching a divergence.
+
+The held-out third wave distinguishes the momentum truncation from the discretization at fixed $L_x=4.2$. At $sigma=0.035$ its residual is $-0.00121317$, against an observed propagated shift of $7.50$ times $10^{-7}$. At $sigma=0.028$ the residual is $-0.000135237$, against $3.07$ times $10^{-5}$. Both exceed the tested shifts, while the $0.024$ residual does not. This rejects use of the $q^6$ truncation as an accurate description across the full interval of bands.
+
+For comparison, separate three-wave fits followed by a linear cutoff extrapolation give:
+
+| Cutoff fit | Scaled Einstein | Scalar squared | Ricci squared |
+|---|---:|---:|---:|
+| 0.035, 0.028, 0.024 | 0.01182197 | 0.00002639 | -0.00191153 |
+| 0.028, 0.024 | 0.01184242 | -0.00001773 | -0.00174217 |
+
+These values are diagnostic. In particular the scalar-squared projection changes sign, the mixed two-band and three-band fits disagree, and the momentum holdout detects truncation error. No extrapolated value is used as a counterterm in the ball.
+
+🟢 [Done] All six pure responses at the shortest band, $sigma=0.021$, pass the 37-to-41-point, transverse, and quadrature checks. The third-wave residual is $-1.42$ times $10^{-5}$ against a propagated shift of $2.01$ times $10^{-4}$. The three-wave projections are $(0.0118918218,-0.00007192219,-0.0014831267)$ with observed shifts $(0.000001417,0.000010575,0.000023594)$.
+
+With this band included, the four-band cutoff intercept is $(0.0118304322,0.00000849983,-0.0018435925)$, and the two-shortest-band intercept is $(0.0118525484,-0.00003789055,-0.0016682108)$. Their comparison still leaves the higher-curvature coefficients sensitive to the cutoff range. The broad fit also includes bands rejected by the third-wave test of the momentum truncation.
+
+🟠 [Next] Use a smaller third momentum or test additional momentum terms before treating the cutoff extrapolation as ultraviolet matching. Extend the independent mixed sequence to reduce its cutoff and momentum sensitivity. No extrapolated counterterm has been applied to the state- and constraint-inclusive fixed-generalized-volume entropy, so $r^4$ cancellation remains undetermined.
+
+### Fourth-wave curvature test and shorter mixed band
+
+🟢 [Done] Added the fourth harmonic to the batch driver and implemented [curvature_four_wave.py](experiments/curvature_four_wave.py). It fits each response family through $q^8$, compares the lower-order projections with the previous $q^6$ fit, and propagates the observed refinements through the fits. Independently, it fits the first three Einstein-free quartic projections as a quadratic in $q^2$ and predicts the fourth. A synthetic pair of responses verifies both the coefficient recovery and the fourth-wave holdout. The box and the common volume reference are fixed for all comparisons.
+
+The fourth conformal harmonic passes longitudinal refinement from 37 to 41 points in all four bands. At the shortest cutoff $\sigma=0.021$ its bound-12 action response changes from $48.063335599$ to $48.056043569$. The shear and mixed refinements complete the numerical checks.
+
+🟢 [Done] At the mixed band $[0.021,0.042]$ on the same $L_x=1.8$ probe box, both orientations pass the 21-to-25-point, transverse 8-to-12, and quadrature checks. The 25-point nine-node integrals are $2.527453745687$ (spatial) and $3.125669117002$ (temporal). They give $(c_{RX},c_{mathrm{RicTT}})=(0.001018185747,-0.000584605416)$ with propagated observed shifts $(1.08$ times $10^{-7},6.49$ times $10^{-7})$. The four-band linear intercept is $(0.00084716,-0.00046022)$ and the two-shortest-band intercept is $(0.00080446,-0.00030482)$. For the combination $c_{RX}+c_{mathrm{RicTT}}/2$ entering the earlier local sphere diagnostic, the finite-band value falls from $0.00073643$ to $0.00072588$ between the last two bands. These results do not supply a stable mixed ultraviolet counterterm.
+
+🟢 [Done] Both fourth-wave responses pass longitudinal, transverse, and quadrature checks in all four bands. The independent fourth-wave holdout gives:
+
+| Lower proper time | Fourth-wave residual | Propagated observed refinements |
+|---:|---:|---:|
+| 0.035 | 0.00249111 | 0.00000243 |
+| 0.028 | 0.00025259 | 0.00009511 |
+| 0.024 | 0.00002985 | 0.00080830 |
+| 0.021 | 0.00000185 | 0.00051280 |
+
+The residual exceeds observed refinements for the two longer bands. At the two shorter bands the test is compatible with $q^8$ at the current precision. After $q^8$ fits, the cutoff intercepts are:
+
+| Cutoff fit | Scaled Einstein | Scalar squared | Ricci squared |
+|---|---:|---:|---:|
+| Four bands | 0.01183060 | 0.00001426 | -0.00187211 |
+| Two shortest bands | 0.01185291 | -0.00003909 | -0.00166807 |
+
+Adding $q^8$ barely changes the two-shortest-band results from the previous $q^6$ fits. The scalar-squared coefficient still changes sign across fit ranges and its propagated shifts exceed its magnitude. The Ricci-squared shift is also substantial in the two-shortest extrapolation. Convergence of the band integrals therefore does not establish the ultraviolet counterterms.
+
+🟠 [Next] Extend the short-cutoff interval using independent lower-momentum probes and improve the low-wave curvature precision. Continue mixed momentum and cutoff matching. No extrapolated value in this section has been applied to the held-volume entropy, so the constraint- and state-inclusive $r^4$ cancellation remains undetermined.
+
+### Independent lower-momentum probes on longer boxes
+
+🟢 [Done] Made the longitudinal box length a parameter of the batched curvature driver and added [curvature_cross_box.py](experiments/curvature_cross_box.py). The new pure probe uses $L_x=5.6$ with unchanged transverse lengths. Its fundamental momentum is $3/4$ of the $L_x=4.2$ fundamental. The cutoff comparison uses $[0.024,0.048]$ and $[0.021,0.042]$ at each fixed box length. The longer box uses 49 and 53 longitudinal points and transverse bounds 8 and 12. Fundamental conformal results on the 53-point grid are $1.727715005$ and $1.994222202$ at the two respective cutoffs and pass all three numerical checks. The comparison also tests the Einstein-free combination at the two new momenta against a $q^6$ prediction from the shorter box. This change of momentum and box probes the combined sensitivity. An overlapping physical momentum would make an additional independent finite-volume check.
+
+The mixed probes use $L_x=2.4$ with unchanged transverse lengths and keep the same shortest band $[0.021,0.042]$ for a direct comparison with the previous $L_x=1.8$ data. Their fundamental momentum is also reduced by a factor of $3/4$. The temporal nine-node integrals at 29 and 33 points are $2.014610329765$ and $2.014610321681$. They pass longitudinal, transverse and quadrature refinement. The corresponding spatial orientation is evaluated independently.
+
+🟢 [Done] Both mixed orientations on the longer box pass the three numerical checks. At 33 points the spatial integral is $1.795785983417$, compared with $1.795785991451$ at 29 points. At the same band the projections change from $(0.001018185747,-0.000584605416)$ at $L_x=1.8$ to $(0.000875011584,-0.000285127842)$ at $L_x=2.4$. For the longer box the observed shifts are $1.10$ times $10^{-7}$ and $6.63$ times $10^{-7}$. The changes in magnitude, about 14.1% and 51.2%, are far larger than those numerical shifts. The comparison changes both the external momentum and the finite box. [Mixed cross-box diagnostic](experiments/mixed_cross_box.py).
+
+Restoring the global zero sector only as an infrared diagnostic gives mixed projections $(0.001092986652,-0.000836663029)$ at $L_x=1.8$ and $(0.000933589793,-0.000474171051)$ at $L_x=2.4$. The change remains large in both projections. Zero-sector exclusion alone therefore does not explain the cross-box dependence at this band.
+
+On the 53-point grid the fundamental shear responses at the two cutoffs are $-0.6260867423$ and $-0.7149672512$. With the common volume subtraction, the Einstein-free fundamental projections are $-0.0146414355$ and $-0.0147261980$. The shorter-box three-wave prediction at this momentum gives $-0.0144553051$ and $-0.0145997397$, respectively. The differences are about $1.86$ times $10^{-4}$ and $1.26$ times $10^{-4}$, compared with propagated refinement shifts $6.74$ times $10^{-5}$ and $2.40$ times $10^{-4}$. The longer band resolves a discrepancy, while the shorter band does not. The comparison alone does not separate the box dependence from higher momentum terms.
+
+🟢 [Done] Both harmonics and both pure probe families pass all numerical checks at both cutoffs in the longer box. Using the common volume reference, independent two-wave momentum fits followed by two-band cutoff extrapolation give:
+
+| Longitudinal box | Scaled Einstein | Scalar squared | Ricci squared |
+|---:|---:|---:|---:|
+| 4.2 | 0.01185337 | -0.00003687 | -0.00165919 |
+| 5.6 | 0.01185961 | -0.00007188 | -0.00155251 |
+| Observed shifts propagated for 5.6 | 0.00000983 | 0.00030197 | 0.00083533 |
+
+The scaled Einstein result is stable across this comparison. The observed higher-curvature shifts exceed the cross-box differences, so the lower momenta and narrower numerical errors do not resolve those ultraviolet coefficients. In the Einstein-free comparison the longer-box second harmonic differs from the shorter-box three-wave prediction by about $1.39$ times $10^{-4}$ at $sigma=0.024$ and $1.11$ times $10^{-4}$ at $sigma=0.021$. The observed variations are $3.89$ times $10^{-5}$ and $9.36$ times $10^{-5}$. This comparison still combines a changed box and momentum.
+
+🟠 [Next] Use a common physical momentum across boxes, for example harmonic 3 at $L_x=4.2$ and harmonic 4 at $L_x=5.6$. Increase the fixed-box cutoff lever arm and independently resolve the clock momentum dependence. No coefficient from this comparison is applied to the held-volume sphere, so cancellation of $r^4$ including the state and constraint variations remains unresolved.
+
+### Matched physical momentum across longitudinal boxes
+
+🟢 [Done] Added a physical-momentum comparison in [matched_wave_comparison.py](experiments/matched_wave_comparison.py). For the pure action, harmonic 3 on $L_x=4.2$ and harmonic 4 on $L_x=5.6$ have identical $q=2\pi\,3/4.2$. Both transverse lengths and proper-time bands stay fixed. The test compares the common-reference responses and their Einstein-free combination $(C+3S)/q^4$. At this matched momentum a difference between the two regulated responses measures longitudinal box dependence, including the finite-volume zero-sector prescription.
+
+🟢 [Done] Extended the mixed insertion to arbitrary resolved harmonics. At curvature order $j$ it retains the discrete Fourier transfers $0,\pm h,\ldots,\pm jh$ modulo the lattice size. At second order in curvature a closed contribution to the trace visits only the starting momentum and its neighbors displaced by $\pm h$. A factorized second-harmonic block agrees with the full block, and the normalization uses the physical momentum and four-volume. The mixed comparison matches harmonic 1 at $L_x=1.8$ to harmonic 2 at $L_x=3.6$ at fixed proper-time band $[0.021,0.042]$. Both orientations are required.
+
+For the matched conformal wave, both boxes pass all numerical checks at both bands. The longer-minus-shorter common-reference responses are $-0.03783116$ at $sigma=0.024$ and $-0.03083834$ at $sigma=0.021$. The corresponding combined observed refinement shifts are $0.00811461$ and $0.00522716$. Hence the conformal response has a resolvable longitudinal-box dependence at fixed momentum in the regulated calculation. This comparison has yet to combine the conformal and shear responses.
+
+🟢 [Done] Extended the fixed $L_x=1.8$ mixed sequence to $[0.018,0.036]$. Both orientations pass the 25-to-29-point, transverse 8-to-12, and quadrature checks. Their nine-node integrals are $2.477970861532$ and $3.024137303398$. The projections are approximately $(0.000985112,-0.000533741)$, with observed shifts $(1.57$ times $10^{-7},9.40$ times $10^{-7})$. Linear fits to all five bands and the shortest two give $(0.00083241,-0.00040480)$ and $(0.00078667,-0.00022855)$ respectively. The longer cutoff sequence does not remove the fit-range sensitivity.
+
+🟢 [Done] All matched-momentum pure probes pass numerical refinement. At $q=4.487989505$ the longer-minus-shorter Einstein-free differences are $-1.11215$ times $10^{-4}$ and $-8.95990$ times $10^{-5}$ at $sigma=0.024$ and $0.021$, respectively. Their combined observed shifts are $5.93854$ times $10^{-5}$ and $3.63384$ times $10^{-5}$. Consequently the box dependence survives in the curvature-sensitive combination with the Einstein term eliminated. This fixed-momentum result includes the zero-sector convention.
+
+🟢 [Done] Both matched-momentum mixed orientations on $L_x=3.6$ pass the 41-to-45-point, transverse 8-to-12 and quadrature checks. At $q=3.490658504$ and $sigma=0.021$, the longer-minus-shorter shifts in the two projections are $(3.74003$ times $10^{-5},-1.26029$ times $10^{-4})$. The corresponding propagated refinement shifts are $(2.16306$ times $10^{-7},1.29737$ times $10^{-6})$. This is longitudinal-box dependence at exactly the same external momentum in the regulated mixed calculation. It is independent of the earlier comparison in which both the box and the wave number changed.
+
+🟢 [Done] Extended the pure comparison to the same three lower cutoffs $0.028,0.024,0.021$ at each fixed box length. The new $L_x=5.6$ band passes on 41 and 45 points, transverse bounds 8 and 12, and the two quadratures. With the common volume reference and the two-wave momentum fit:
+
+| Longitudinal box | Cutoff fit | Scaled Einstein | Scalar squared | Ricci squared |
+|---:|---|---:|---:|---:|
+| 4.2 | Three bands | 0.01185119 | -0.00006021 | -0.00159527 |
+| 4.2 | Two shortest | 0.01185337 | -0.00003687 | -0.00165919 |
+| 5.6 | Three bands | 0.01185880 | -0.00016711 | -0.00127801 |
+| 5.6 | Two shortest | 0.01185961 | -0.00007188 | -0.00155251 |
+
+At $L_x=5.6$ the propagated observed shifts for the three-band fit are $(0.00001318,0.00034297,0.00094886)$. The Einstein projection is consistent across the fit ranges, while the higher-curvature projections are unresolved at that precision. The longer mixed box is matched at one cutoff only. The five-band mixed extrapolation for the short box remains fit-range dependent.
+
+🟠 [Next] Repeat the matched mixed comparison across cutoff bands on both boxes and independently control the residual box dependence of the pure coefficients. Determine the counterterm set before using it in the state- and constraint-inclusive fixed-generalized-volume entropy. The numerical matching reported here does not establish $r^4$ cancellation.
+
+### Matched-band zero-sector diagnostics
+
+🟢 [Done] Repeated the matched pure comparison after restoring the global zero sector in the differentiated traces. Both conventions use the same full flat volume reference. The original Einstein-free differences at $\sigma=0.024,0.021$ are $-1.11215$ and $-0.89599$, respectively, in units of $10^{-4}$. With the sector restored the differences are $+6.46$ times $10^{-7}$ and $-3.75$ times $10^{-7}$. These are below the coarse-to-fine shifts of $5.94$ and $3.63$ times $10^{-5}$ in the restored responses. Thus the zero-sector exclusion explains the resolved pure box dependence to the present precision. This is a diagnostic on heat traces and does not change the physical clock prescription. Reproduce using [matched_wave_comparison.py](experiments/matched_wave_comparison.py) with the pure comparison and zero-sector diagnostics.
+
+At fixed box length and fixed external harmonic, removing a finite-dimensional global sector changes the leading heat trace by a rank term. Its curvature and clock amplitude derivatives vanish at $s=0$ while the rank stays fixed. In the finite lattice calculation the remaining change is $O(s)$ at short proper time. At the derivative orders used here the changed zero-sector contributions transfer only finitely many multiples of the external momentum. The diagnostic removes a finite-band infrared effect without assigning a new prescription to the physical ball.
+
+The same infrared diagnostic on the two lower harmonics gives the following two-band cutoff intercepts with a common volume reference:
+
+| Longitudinal box | Restored scaled Einstein | Restored scalar squared | Restored Ricci squared |
+|---:|---:|---:|---:|
+| 4.2 | 0.01187579 | -0.00006698 | -0.00153792 |
+| 5.6 | 0.01187551 | -0.00009024 | -0.00146966 |
+
+The Einstein intercepts agree more closely than in the projected calculation. The higher-curvature differences are small relative to the previous numerical variation propagated through the same two-band fit. With two bands and two momenta neither the higher momentum remainder nor the short-time tail is controlled. [Restored-sector cutoff diagnostic](experiments/matched_wave_comparison.py).
+
+🟢 [Done] Completed the equal-momentum mixed comparison in both boxes at both cutoffs. The new $L_x=3.6$ band passes the 41-to-45-point, transverse, and quadrature checks. The two-projection results are:
+
+| Lower proper time | $L_x=1.8$: $RX$, Ricci–clock | $L_x=3.6$: $RX$, Ricci–clock |
+|---:|---:|---:|
+| 0.024 | $(0.00104872,-0.000624574)$ | $(0.00109699,-0.000789183)$ |
+| 0.021 | $(0.00101819,-0.000584605)$ | $(0.00105559,-0.000710634)$ |
+
+The raw same-momentum box differences exceed the propagated numerical shifts in both bands. The magnitude of the box difference falls at the shorter band. The projected two-band cutoff intercepts are approximately $(0.00080446,-0.00030482)$ and $(0.00076577,-0.00016079)$. Their difference is substantial for the Ricci–clock projection.
+
+🟢 [Done] Restored the zero sector in both mixed bands at matched momentum. The raw zero-sector changes of the integrated traces agree between the two boxes to roundoff for each orientation. After volume normalization and restoration, the largest remaining same-momentum difference in the two mixed projections is $1.67$ times $10^{-9}$ at $sigma=0.024$ and $1.90$ times $10^{-10}$ at $sigma=0.021$. Both are far below the numerical shifts observed in the primed responses. The restored two-band intercepts agree across boxes, approximately $(0.00072705,-0.00001676)$. This agreement tests finite volume at one momentum. It does not test the cutoff fit over a wider range or resolve the momentum dependence of either mixed coefficient. The projected-to-restored correction is diagnostic and does not insert a new clock state.
+
+🟠 [Next] Extend the restored common-reference comparison across cutoff and momentum ranges, especially at lower external momentum. The ultraviolet coefficients and the matched constraint and state variations remain to be fixed. None of these diagnostic coefficients has been applied to the held-volume sphere; $r^4$ cancellation remains undetermined.
+
+### Restored short-cutoff and lower-momentum comparison
+
+🟢 [Done] Implemented [restored_short_cutoff.py](experiments/restored_short_cutoff.py). It compares pure responses on the fixed $L_x=5.6$ box over the lower cutoffs $0.024,0.021,0.018$ using longitudinal points 53 and 57 for the shortest band. The corresponding restored mixed comparison uses $L_x=2.4$ at $0.021$ and $0.018$ and retains $L_x=1.8$ as a higher-momentum control. The two momenta differ by a factor of $3/4$. Both the projected band check and the independently checkpointed zero-sector correction are recorded. The reported numerical shifts are those of the raw grid test, propagated through the restored fit; they do not bound extrapolation error.
+
+At the higher-momentum reference $L_x=1.8$, the zero-sector-restored mixed coefficient pair at $sigma=0.018$ is approximately $(0.00104078,-0.00071893)$. Using $0.024,0.021,0.018$ gives a linear intercept $(0.000727333,-0.000014428)$, compared with $(0.000727563,-0.000012503)$ from the two shortest bands. The combination $c_{RX}+c_{mathrm{RicTT}}/2$ has intercepts $0.000720119$ and $0.000721312$, respectively. The low-momentum comparison is still needed before interpreting this apparent cutoff stability.
+
+For the fundamental conformal wave at $L_x=5.6$, the shortest-band responses are $2.34983411717$ at 53 points and $2.34969419803$ at 57 points before the common volume correction. On the finer grid the 8-to-12 transverse change is about $1.71$ times $10^{-5}$. The longitudinal, transverse and quadrature comparisons pass for this response.
+
+The zero-sector correction itself is numerically independent of the large longitudinal grids in the tested channels. The pure correction at $L_x=5.6$, $sigma=0.018$ reproduces the 57-point result on 17 points for both harmonics and both probes, to about $1.1$ times $10^{-15}$ absolute. The mixed correction at $L_x=2.4$, $sigma=0.021$ reproduces the 33-point result on 9 points in both orientations to $1.3$ times $10^{-15}$. This supports using the raw-grid refinement shifts as the dominant numerical contribution in those restored comparisons, without changing the grid needed for the full heat trace.
+
+🟢 [Done] Both low-momentum mixed orientations at $L_x=2.4$ and $[0.018,0.036]$ pass longitudinal, transverse and quadrature refinement. With the zero sector restored, linear extrapolations to zero momentum at the two cutoffs give $(0.000728651,-0.000008110)$ at $0.021$ and $(0.000729341,-0.000005898)$ at $0.018$. A subsequent two-cutoff linear intercept is $(0.000733479,+0.000007376)$ with corresponding propagated observed shifts $(0.000006937,0.000041572)$. The Ricci–clock estimate is compatible with zero at this precision. The momentum extrapolation uses two distinct boxes, assumes residual unprojected box effects are negligible, and has no third-momentum holdout.
+
+The fundamental pure Einstein-free projection, with the sector restored, is $-0.01510661$, $-0.01508339$, and $-0.01508823$ in the three bands. The differences are smaller than the propagated grid shifts. Its two independent invariants still require the second harmonic.
+
+Both conformal waves pass longitudinal, transverse and quadrature refinement at the shortest band. With the common volume reference, the restored conformal two-wave estimates of $\sigma c_R$ are $0.01187273359$, $0.01187308071$, and $0.01187325470$ at $\sigma=0.024,0.021,0.018$. Their propagated raw-grid shifts are $1.40$ times $10^{-7}$, $1.11$ times $10^{-6}$, and $1.19$ times $10^{-6}$.
+
+🟢 [Done] Both harmonics of both pure probes pass the numerical checks on the 53- and 57-point grids at $[0.018,0.036]$. Restoring the zero sector and applying the common volume reference gives:
+
+| Lower proper time | Scaled Einstein | Scalar squared | Ricci squared |
+|---:|---:|---:|---:|
+| 0.024 | 0.01187273359 | -0.00003425976 | -0.00161961173 |
+| 0.021 | 0.01187308071 | -0.00004125777 | -0.00160086812 |
+| 0.018 | 0.01187325470 | -0.00004383839 | -0.00159505987 |
+| Three-band linear intercept | 0.01187484694 | -0.00007331053 | -0.00151924841 |
+| Two-shortest-band intercept | 0.01187429866 | -0.00005932208 | -0.00156021036 |
+
+The propagated shifts for the three-band extrapolation are $(0.000005365,0.000191201,0.000530828)$. Removing the global sector effect makes the Einstein scale exceptionally stable and the two cutoff intercepts compatible. The scalar-squared shift still exceeds its estimated magnitude, and the Ricci-squared uncertainty remains substantial. The two-wave fit does not independently test higher powers of momentum.
+
+🟠 [Next] Add an independent low momentum for the restored mixed fit and reduce the pure low-wave numerical errors before accepting the ultraviolet counterterm set. No diagnostic coefficient here is used to subtract the sphere. Cancellation of the fixed-generalized-volume $r^4$ term including constraints and state is still undetermined.
+
+### Paired refinement and third mixed momentum
+
+🟢 [Done] Added signed longitudinal, transverse, and quadrature refinement differences in [curvature_band_matching.py](experiments/curvature_band_matching.py). Propagating each simultaneous change through the pure projection keeps the observed cancellations between conformal and shear responses and between harmonics on the same grid. Summing magnitudes only after this propagation preserves the distinction between observed paired changes and the older independent-response variation. The three-band restored pure intercepts remain $(0.01187485,-0.00007331,-0.00151925)$. Their paired observed shifts are $(0.000003601,0.000022329,0.000068691)$, versus $(0.000005365,0.000191201,0.000530828)$ with independent-response propagation. These comparisons do not bound the cutoff or momentum remainder.
+
+🟢 [Done] Implemented [mixed_momentum_holdout.py](experiments/mixed_momentum_holdout.py). It compares the original two low momenta with an independent fundamental at $L_x=3.0$ in $[0.018,0.036]$. The third momentum is $2\pi/3.0$. The code propagates the measured numerical shifts through both a linear prediction from the first two momenta and a quadratic fit to all three. The third zero-sector correction agrees between 9 and 13 points in both orientations.
+
+The same accounting is available for the mixed orientations, whose quadrature shifts are nearly equal before subtraction. In the previous joint two-momentum, two-cutoff intercept the Ricci–clock estimate $+7.38$ times $10^{-6}$ has a paired observed shift of $4.98$ times $10^{-8}$, rather than the independent-response sum $4.16$ times $10^{-5}$. The value therefore exceeds this particular numerical diagnostic. Its sensitivity to the momentum and cutoff fits must be tested separately, and the paired shifts are not a total error bar.
+
+🟢 [Done] Both third-wave orientations pass the longitudinal, transverse, and quadrature checks. From 37 to 41 points the nine-node integrals change from $1.393242594227$ to $1.393242504461$ in the spatial orientation and from $1.485398128938$ to $1.485398036787$ in the temporal orientation.
+
+At fixed proper-time band the restored third-wave residual relative to the two-momentum linear prediction is $(4.763	imes10^{-7},1.379	imes10^{-6})$ in $(RX,mathrm{Ricci!-!clock})$ order. The paired observed shifts are $(6.145	imes10^{-7},5.258	imes10^{-9})$. The independent-response shifts are $(6.145	imes10^{-7},3.682	imes10^{-6})$. Fitting a quadratic in $q^2$ to all three momenta changes the Ricci–clock intercept from $-5.898	imes10^{-6}$ to $+8.552	imes10^{-8}$. The quadratic uses all three data points, and the third point changes both momentum and box length. These values establish sensitivity to the extrapolation and leave the ultraviolet coefficient undetermined.
+
+🟢 [Done] Added `--matched-box` and `--two-bands` to [mixed_momentum_holdout.py](experiments/mixed_momentum_holdout.py). The volume control compares the fundamental in $L_x=3$ with harmonic two in $L_x=6$ at the same $q=2\pi/3$ and proper-time band. The second mode repeats the three-wave test at $[0.021,0.042]$ and compares two-band cutoff intercepts obtained with the two momentum fits. Both diagnostics propagate observed refinement shifts.
+
+The zero-sector correction for the matched wave agrees across the 9- and 13-point calculations and scales inversely with longitudinal volume. In the short band it is $(-3.549\times10^{-5},1.111\times10^{-4})$ at $L_x=3$ and $(-1.774\times10^{-5},5.556\times10^{-5})$ at $L_x=6$. The full-trace comparison restores the corresponding correction in each box before forming their difference.
+
+🟢 [Done] Replaced the dense longitudinal Fourier conjugation in the mixed insertion with orthonormal FFTs along the bra and ket site axes. The mixed heat derivatives agree with the dense reference within $6.9\times10^{-15}$ in representative spatial and temporal blocks, including harmonic two.
+
+🟢 [Done] Both orientations pass longitudinal (37 to 41 points), transverse (8 to 12), and quadrature refinement for $[0.021,0.042]$. The third-wave residuals in $(RX,\mathrm{Ricci\!-!clock})$ order are $(5.962\times10^{-7},1.899\times10^{-6})$, with paired observed variations $(3.253\times10^{-7},7.085\times10^{-10})$. Thus the Ricci–clock discrepancy recurs in both bands. The two-band Ricci–clock cutoff intercept changes from $+7.376\times10^{-6}$ with the linear two-momentum fit to $-1.866\times10^{-7}$ with the quadratic three-momentum fit. The latter has an observed paired refinement variation of $1.284\times10^{-7}$. The two time bands determine a line exactly, and the momentum fit still combines different box lengths, so these intercepts are diagnostics.
+
+🟢 [Done] Both orientations in the doubled box pass the 65-to-73-point longitudinal, transverse, and quadrature checks. The restored differences $L_x=6$ minus $L_x=3$ change from $(1.104\times10^{-8},-1.275\times10^{-9})$ at 65 points to $(9.893\times10^{-11},-8.271\times10^{-12})$ at 73 points. The summed paired observed variations are $(5.143\times10^{-7},4.895\times10^{-9})$. For the Ricci–clock channel the box difference and its observed paired variation are both below the short-band third-wave residual of $1.379\times10^{-6}$. This controls the box-length change at the tested momentum and band.
+
+### Independent cutoff and momentum holdouts
+
+🟢 [Done] Extended [mixed_momentum_holdout.py](experiments/mixed_momentum_holdout.py) with `--three-bands` and `--fourth-wave`. The added proper-time band is $[0.024,0.048]$ at the same three physical momenta. The additional fundamental at $L_x=3.6$ gives $q=2\pi/3.6$. Zero-sector corrections for the new rows agree between 9 and 13 points in each orientation.
+
+Predict the third band from a linear fit in the two shorter lower cutoffs at fixed momenta. Predict the fourth wave from a quadratic in $q^2$ at each fixed band. Compare the holdout residuals with measured numerical refinements. Compare the inferred intercepts with and without each added data point. The fourth wave changes longitudinal volume along with momentum. The earlier matched-wave box control applies at $q=2\pi/3$ and the shortest band.
+
+🟢 [Done] The third band passes longitudinal, transverse, and quadrature refinement for the three fixed momenta. In decreasing momentum order the finite-momentum Ricci–clock holdout residuals are $(6.080\times10^{-7},1.708\times10^{-7},5.777\times10^{-8})$. Each exceeds its paired observed variation of about $2.9\times10^{-9}$. At zero momentum the Ricci–clock residual becomes $-3.693\times10^{-9}$ with paired variation $2.660\times10^{-8}$ after the three-wave projection. The short-pair linear, all-band linear, and all-band quadratic Ricci–clock cutoff intercepts are $-1.866\times10^{-7}$, $-1.749\times10^{-7}$, and $-2.642\times10^{-7}$ respectively. The quadratic intercept's paired variation is $6.871\times10^{-7}$. These are numerical diagnostics. The finite-momentum cutoff curvature and the propagated variation of the quadratic intercept limit inference about the divergence.
+
+🟢 [Done] The fourth wave passes longitudinal (45 to 49 points), transverse, and quadrature checks in all three bands. The $RX$ residual is inside the observed refinement variation in every band.
+
+| Lower cutoff | Fourth-wave Ricci–clock residual | Paired variation | Independent variation |
+| ---: | ---: | ---: | ---: |
+| 0.018 | -1.072e-8 | 6.986e-9 | 5.848e-6 |
+| 0.021 | -1.660e-8 | 9.447e-10 | 2.633e-6 |
+| 0.024 | -2.415e-8 | 2.449e-9 | 2.379e-6 |
+
+The same-sign Ricci–clock residuals exceed the paired numerical variations and are smaller than the independent-response sums. At zero momentum the all-band linear cutoff estimate changes from $-1.749\times10^{-7}$ with three waves to $+5.966\times10^{-8}$ with four. The four-wave quadratic cutoff estimate is $-3.453\times10^{-7}$ with paired numerical variation $1.609\times10^{-6}$. The fourth momentum still needs a matched-volume control, and three bands fix a quadratic in the cutoff without an independent validation point.
+
+🟢 [Done] Added a fourth-wave matched-box diagnostic at $q=2\pi/3.6$ and $[0.024,0.048]$. It compares the fundamental in $L_x=3.6$ with harmonic two in $L_x=7.2$. Independent zero-sector calculations at 9 and 13 points agree in both boxes. The doubled-volume correction is $(-2.637\times10^{-5},8.230\times10^{-5})$, half the original-box correction to within $2.2\times10^{-18}$.
+
+🟢 [Done] Added signed propagation of simultaneous longitudinal, transverse, and quadrature refinements through the momentum and proper-time fits. For the four-wave quadratic cutoff estimate the Ricci–clock shifts in that order are $(-5.468\times10^{-10},-4.510\times10^{-8},8.065\times10^{-9})$. The orientation-paired sum allowing separate changes at every fit point remains $1.609\times10^{-6}$. These two summaries describe the observed refinement patterns and leave momentum and cutoff model uncertainty open.
+
+🟢 [Done] Factorized the transverse Gaussian moments into one-dimensional sums and added configurable cap pairs to [short_mixed_quadrature.py](experiments/short_mixed_quadrature.py). The factorization agrees with explicit transverse enumeration through cap 16. At 9 longitudinal sites in the original fourth-wave box, the largest pointwise cap-10-to-12 changes over the shortest band are about $2.2\times10^{-6}$ in both orientations. The cap-12-to-16 changes are about $1.6\times10^{-10}$. The small-grid comparison tests tail sensitivity and still requires confirmation on the production grids.
+
+🟢 [Done] Both doubled-box orientations pass longitudinal (65 to 73 points), transverse, and quadrature refinement. The restored differences $L_x=7.2$ minus $L_x=3.6$ in $(RX,\mathrm{Ricci\!-!clock})$ order are $(5.322\times10^{-10},-5.290\times10^{-11})$. The orientation-paired variations summed across boxes are $(2.439\times10^{-7},6.729\times10^{-9})$. Both the Ricci–clock box difference and its paired variation are below the magnitude of the fourth-wave residual $2.415\times10^{-8}$ at the tested band. The independent-response variation is $1.457\times10^{-6}$. This comparison controls box length only at this momentum and band to the resolution of the paired checks.
+
+### Production transverse tails and the shorter cutoff holdout
+
+🟢 [Done] Added [mixed_uv_refinement.py](experiments/mixed_uv_refinement.py) for cap-12-to-16 comparisons on the original production grids and for the independent band $[0.015,0.030]$ at all four original physical momenta. The driver reuses the same operator insertions across multiple time grids and retains separate quadrature and checkpoint data for each band. Grouped traces agree with separate evaluations in the small-grid reference.
+
+The new band is held out of the three-band quadratic fit. The analysis reports the pointwise-in-momentum residual, its zero-momentum projection, and the changes in cutoff intercepts under linear, quadratic, and cubic fits. The sign and size of an intercept must be interpreted alongside the measured refinement variations and the changes across fit choices.
+
+🟢 [Done] Applied the existing finite Fourier-transfer trace to the projected zero-transverse-momentum block. The change of basis uses the same mean-zero subspace as the original operator, and each closed curvature-order-two path visits only its starting mode and the two adjacent probe transfers. Grouped traces agree with the original full exponential within $1.8\times10^{-15}$ in tests covering both orientations and harmonics one and two.
+
+🟢 [Done] Verified the cap-12-to-16 comparison at all four momenta and in both orientations on production grids. The largest pointwise trace change is $5.755\times10^{-8}$ in the new shortest band and $1.875\times10^{-10}$ across the three earlier bands. In the shortest band the cap change alters the restored $RX$ and Ricci–clock projections by at most $1.721\times10^{-12}$ and $8.023\times10^{-15}$, respectively. The new band passes longitudinal and quadrature refinement at all four momenta.
+
+At fixed momenta, the fourth-band Ricci–clock residuals against the quadratic cutoff fit to the earlier bands range from $4.294\times10^{-9}$ to $1.487\times10^{-8}$. Their orientation-paired observed variations are at most $1.320\times10^{-9}$. After the four-wave momentum projection the residual is $1.523\times10^{-8}$ with observed variation $2.621\times10^{-8}$. The four-band, four-wave Ricci–clock cutoff intercepts for linear, quadratic, and cubic fits are $+3.174\times10^{-8}$, $-1.556\times10^{-7}$, and $+5.077\times10^{-7}$. The corresponding observed variations are $3.357\times10^{-8}$, $1.983\times10^{-7}$, and $1.058\times10^{-6}$. These are fit diagnostics rather than total uncertainties. For the four-band quadratic intercept the simultaneous Ricci–clock changes are $-1.596\times10^{-8}$ from longitudinal refinement, $-1.014\times10^{-13}$ from the cap increase, and $+4.207\times10^{-9}$ from quadrature refinement.
+
+### Separate quadrature from longitudinal refinement
+
+🟢 [Done] Added nested Romberg integration to [mixed_uv_refinement.py](experiments/mixed_uv_refinement.py). It reuses the nine production time nodes and recomputes the zero-sector correction with the same quadrature. For the four-wave four-band quadratic Ricci–clock cutoff fit, the separately propagated observed shifts decrease from $1.983\times10^{-7}$ to $1.017\times10^{-7}$, while the intercept changes from $-1.556\times10^{-7}$ to $-1.553\times10^{-7}$. The simultaneous longitudinal and quadrature changes in the Romberg fit are $-1.521\times10^{-8}$ and $1.030\times10^{-9}$. The earlier-band longitudinal differences still use the stored Simpson comparisons. These diagnostics measure observed changes under the stated refinements.
+
+The Romberg all-band Ricci–clock intercepts remain sensitive to fit degree. The four-wave linear, quadratic, and cubic intercepts are $+3.165\times10^{-8}$, $-1.553\times10^{-7}$, and $+5.071\times10^{-7}$. Reduced quadrature variation leaves this fit dependence visible.
+
+🟢 [Done] At the lowest momentum and shortest band, verified the overlap of the 9- and 17-node traces at 49 longitudinal points and ran both orientations at 53 points. With Romberg quadrature and the matching zero-sector correction, the Ricci–clock projection changes by $5.267\times10^{-13}$ from adding time nodes and by $2.879\times10^{-12}$ from refining the longitudinal grid. Substituting the refined row shifts the four-wave, four-band quadratic cutoff intercept by $3.330\times10^{-10}$. The measured change is small compared with the spread across fit degrees.
+
+🟢 [Done] Rank individual rows by their observed contributions to the quadratic intercept variation. The largest remaining longitudinal contribution is at $L_x=3$, $\sigma=0.015$ and is $3.335\times10^{-8}$. The $L_x=3$, $\sigma=0.024$ row gives a quadrature contribution of $1.604\times10^{-8}$. The initial ranking still includes the older $L_x=3.6$ grid pair, for which the independent refinement is reported above.
+
+### Audit of ultraviolet matching and the sphere test
+
+🟢 [Done] At $L_x=3$, refined the longitudinal grid from 41 to 45 points in $[0.015,0.030]$ and the time quadrature from 9 to 17 nodes in $[0.024,0.048]$. Both orientations pass the refinement checks, and the denser time grid reproduces the shared nodes. With matched zero-sector corrections, the changes in $(RX,\mathrm{Ricci\!-\!clock})$ are $(-2.621\times10^{-11},+2.281\times10^{-12})$ and $(-3.123\times10^{-10},-1.942\times10^{-12})$, respectively.
+
+🟢 [Done] Refit all four waves and four bands with these rows and the previously verified $L_x=3.6$ refinement. The Ricci–clock cutoff intercepts are $+3.163\times10^{-8}$, $-1.551\times10^{-7}$, and $+5.066\times10^{-7}$ at degrees one, two, and three. The paired variation propagated independently across rows for the quadratic fit decreases to $3.461\times10^{-8}$. The held-out shortest-band residual after the four-wave momentum projection is $1.520\times10^{-8}$, compared with a propagated observed variation of $6.622\times10^{-9}$. The refinements preserve the model dependence. Reproduce with `mixed_uv_refinement.py --analyse --quadrature romberg --refined-fit` and the production checkpoint directory.
+
+The accumulated probes provide useful checks of the discretized trace, of the volume reference, and of individual numerical refinements. The extraction of a local Wilson coefficient needs additional evidence. For the four-wave, four-band quadratic estimate, the sums of absolute momentum and cutoff intercept weights are $21.21$ and $41.00$. Their product $869.64$ is the amplification for arbitrary uniform per-row errors. Signed paired changes can be much smaller, and they test only the simultaneous refinements actually performed. Moreover, a function proportional to $\prod_j(\sigma-\sigma_j)$ vanishes at the measured lower cutoffs $\sigma_j$ and changes the extrapolated constant. An independently justified short-time remainder or an analytic coefficient is therefore needed.
+
+🟠 [Next] Derive the local short-time expansion of the complete gauge-fixed metric, clock, and ghost operator with its measure and contour. Verify the relevant principal symbol and show which power terms survive subtraction. For a projected kernel with a local constant term $k_0$ and bounded $O(s)$ remainder, the dyadic integral $B(\sigma)=\int_\sigma^{2\sigma}k(s)\,ds/s$ approaches $k_0\log 2$. This links the band diagnostic to the logarithmic divergence only after lower powers, operator mixing, and reference terms are controlled. The exact relation $\partial_{\log\sigma}B=k(2\sigma)-k(\sigma)$ gives a check on the running from endpoint traces without a time quadrature. Check the projected kernel directly at shared proper times and check the analytic coefficient against held-out regulated data. The standard Laplace-type result provides a benchmark. [Vassilevich, heat-kernel expansion and one-loop divergences](https://arxiv.org/abs/hep-th/0306138)
+
+🟢 [Done] Evaluated the restored mixed kernel before integration in [mixed_kernel_endpoints.py](experiments/mixed_kernel_endpoints.py). Overlapping bands agree at identical proper times, including points recomputed on different production grids. At $s=0.015$ the measured Ricci–clock ratio $k(s,q)/(sq^2)$ ranges from $-0.0033184$ to $-0.0032992$ over the four momenta. This motivates testing a short-time, finite-momentum correction proportional to $sq^2$. It does not determine the local constant.
+
+The exact endpoint derivative of the shortest band, extrapolated in momentum, is $1.464\times10^{-7}$ with three waves and $2.763\times10^{-9}$ with four. In the longest band it is $1.996\times10^{-7}$ and $-3.285\times10^{-7}$, respectively. Thus strong momentum-model sensitivity is present even before time quadrature. The shortest-band endpoint changes propagated from substituting the refined rows are at most $1.101\times10^{-9}$ in the four-wave projection.
+
+On a periodic smooth background, integration by parts relates $\int R_{\mu\nu}\nabla^\mu T\nabla^\nu T$ to $\int[(\Box T)^2-(\nabla_\mu\nabla_\nu T)^2]$. Fix the bulk basis and track the associated total derivative separately on the replica geometry.
+
+🟢 [Done] Checked the independent bulk basis $(RX,R_{\mu\nu}T^\mu T^\nu,(\Box T)^2)$ for the constant-winding conformal probes in [mixed_invariant_rank.py](experiments/mixed_invariant_rank.py). Normalized by the integrated squared conformal gradient and the squared winding, the parallel and transverse rows are $(-6,0,4)$ and $(-6,-2,0)$. Their null direction is $(2,-6,3)$. The flat clock wave adds the independent row $(0,0,1)$ after its own normalization, giving determinant $12$. If its coefficient is $c_{\Box}$, the two curved-only projections give $c_{RX}-2c_{\Box}/3$ and $c_{\rm Ric}+2c_{\Box}$. The existing flat-wave continuum form factor has zero $q^2$ coefficient in the specified gauge and starts at $-sq^4/60$ after the homogeneous subtraction. This controls the flat bulk combination for that operator. The full mixed short-time coefficient and the replica total derivative remain open.
+
+🟢 [Done] Implemented the transverse physical-period comparison using the same momentum polynomial with rescaled Gaussian moments. Fractional-momentum insertions agree with the rescaled polynomial in both orientations. At fixed $L_x=3$, $q=2\pi/3$, and 41 longitudinal points, changing all three transverse periods from $1.8$ to $2.4$ changes the Ricci–clock endpoint by $-4.272\times10^{-17}$ at $s=0.015$ and by $+3.351\times10^{-7}$ at $s=0.048$. The $RX$ change at $s=0.048$ is $+3.916\times10^{-6}$. The cap tests at both periods agree to floating-point precision at these endpoints. The original-period traces reproduce the production checkpoints. This measures a finite transverse-volume effect in the longer-time data at the tested wave. An all-wave infinite-volume extrapolation is still needed.
+
+### Transverse continuum at fixed longitudinal momentum
+
+🟢 [Done] Added the analytic Gaussian moments and [mixed_transverse_continuum.py](experiments/mixed_transverse_continuum.py). For dimensionless transverse momentum $p=k_\perp/w$ with $w=2\pi/1.8$, the one-dimensional moments are $\Gamma(j+1/2)/(sw^2)^{j+1/2}$. Products and binomial expansions generate the two- and three-dimensional moments of the same polynomial used in the periodic trace. A periodic sum with common transverse period $P$ is multiplied by $(1.8/P)^3$ before comparing to the integral. The periodic comparison restores the global sector, whose isolated contribution per transverse volume vanishes in the continuum. Independent one-dimensional quadrature and normalized periodic Gaussian moments verify the formula.
+
+🟢 [Done] Verified all four waves and four bands in both orientations at transverse periods $1.8$, $2.4$, $3.6$, and $4.8$. The maximum projected Ricci–clock pointwise discrepancies from the transverse continuum, over all waves and time nodes, are $3.387\times10^{-7}$, $2.037\times10^{-12}$, $2.353\times10^{-16}$, and $2.819\times10^{-16}$, respectively. The cap pairs agree at each period. The continuum longitudinal grid comparisons and 9-to-17-node quadrature checks pass. Reproduce the fit with `mixed_transverse_continuum.py --analyse` and the production checkpoint directory.
+
+| Cutoff fit degree | Four-wave transverse-continuum $RX$ intercept | Four-wave finite-period Ricci–clock intercept | Four-wave transverse-continuum Ricci–clock intercept | Observed Ricci–clock refinement variation |
+| ---: | ---: | ---: | ---: | ---: |
+| 1 | 7.315758e-4 | +3.167e-8 | -5.915e-9 | 9.865e-11 |
+| 2 | 7.315580e-4 | -1.553e-7 | +5.681e-9 | 5.591e-10 |
+| 3 | 7.315785e-4 | +5.073e-7 | -2.876e-9 | 2.534e-9 |
+
+The transverse continuum removes the large negative long-band endpoint running seen at period $1.8$. For the four-wave projection on $[0.024,0.048]$ it changes from $-3.285\times10^{-7}$ to $+1.847\times10^{-8}$. After transverse decompactification, the shortest-band Ricci–clock holdout residual is $-1.965\times10^{-10}$ with observed variation $4.536\times10^{-11}$. The remaining cutoff-fit spread and the disagreement of the three- and four-wave extrapolations preclude a matched Ricci–clock coefficient. The $RX$ value near $7.316\times10^{-4}$ is a stable scale in this diagnostic.
+
+### Matched longitudinal boxes in the transverse continuum
+
+🟢 [Done] Added a matched-box mode to [mixed_transverse_continuum.py](experiments/mixed_transverse_continuum.py). It holds the physical momentum fixed when changing from the fundamental in $L_x=1.8$ or $3.6$ to harmonic two in $L_x=3.6$ or $7.2$. It uses the same transverse continuum, 17-node proper-time grids, and four bands in both boxes. The analysis replaces the two matched rows of the four-wave fit without changing its momenta, and reports the separate contribution of each replacement to the cutoff intercept.
+
+🟢 [Done] Added a radial integration path for matched-box traces. The response quadratic in the winding direction has scalar and rank-two dependence under transverse rotations. For a transverse winding the angular average is obtained at $p_t^2=|p|^2/3$. Four radial samples determine the cubic in $|p|^2$, and an independent angular check uses the axial and perpendicular probes. On a test grid in the doubled box the radial and full Gaussian integration paths agree within $8.0\times10^{-13}$ in both orientations.
+
+🟢 [Done] At the highest physical momentum $q=2\pi/1.8$, both orientations in the doubled box pass the 49-to-57 lattice and 9-to-17-node quadrature checks in all four bands. The Ricci–clock integrated difference $L_x=3.6$ minus $L_x=1.8$ grows from $8.780\times10^{-15}$ at $\sigma=0.015$ to $2.307\times10^{-10}$ at $\sigma=0.024$. At the longer band the separate-box refinement variation is $1.667\times10^{-14}$. The change at this fixed physical momentum is a longitudinal finite-volume effect. Substituting the highest-wave row changes the quadratic cutoff intercept by $-4.232\times10^{-10}$.
+
+🟢 [Done] At the lowest physical momentum $q=2\pi/3.6$, both orientations pass the band checks in the doubled box. The longer bands use the 73-to-81 lattice comparison, and the two shorter bands use 81-to-89. At $\sigma=0.015$ the Ricci–clock band difference $L_x=7.2$ minus $L_x=3.6$ is $-2.845\times10^{-10}$ with a separate-box refinement variation of $1.031\times10^{-8}$. In all four bands the difference is below the observed refinement variation. The tested resolution therefore leaves the magnitude of the low-momentum longitudinal finite-volume effect unresolved.
+
+🟢 [Done] Refit the four waves and four bands with both matched-wave substitutions. The Ricci–clock linear, quadratic, and cubic cutoff intercepts are $-1.073\times10^{-8}$, $-2.163\times10^{-8}$, and $-1.301\times10^{-7}$. The corresponding propagated observed variations are $1.835\times10^{-7}$, $1.102\times10^{-6}$, and $5.652\times10^{-6}$. For the quadratic fit, the highest- and lowest-wave substitutions change the intercept by $-4.232\times10^{-10}$ and $-2.689\times10^{-8}$ respectively. The stronger influence of the lowest wave comes with larger longitudinal grid sensitivity. Reproduce using `mixed_transverse_continuum.py --analyse --matched` with the production checkpoint directory.
+
+### Independent local expansion of the mixed operator
+
+🟢 [Done] Implemented [mixed_local_expansion.py](experiments/mixed_local_expansion.py). The calculation starts from the gauge-fixed metric–clock Fourier vertices with the trace contour already applied. The mixed insertion takes two winding derivatives. In this gauge the ghost acts on the metric gauge condition and its winding derivative vanishes. The field normalization depends on the metric, so its Jacobian also has no winding derivative in this calculation.
+
+A vertex at winding degree $w$ is homogeneous of degree $2-w$ in the input momentum and the probe wave number. The driver reconstructs these local polynomials from operator matrix elements and checks them at a separate momentum and wave number. At curvature degree two a closed path from a given input momentum visits only that momentum and the neighboring transfers $\pm q$. The flat $e^{-p^2}$ factor is removed after scaling the loop momenta by $\sqrt{s}$. Expanding the remaining matrix exponential in the two amplitudes and the scaled probe wave number gives finite polynomials that are integrated by Hermite and generalized Laguerre moments over the fully decompactified loop momenta. The homogeneous mixed coefficient reproduces the flat $X$ subtraction.
+
+For $z=sq^2$ the projected $RX$ kernel starts at $1.0554289963\times10^{-3}$, consistent with $1/(96\pi^2)$ in the Euclidean action normalization. The Ricci–clock kernel has zero constant at the evaluated precision and starts at $-0.0033246013383z+0.0001356980138z^2+0.0000194751779z^3$. The constant dyadic-band values are approximately $(7.31567633\times10^{-4},0)$. These numbers are obtained without fitting the production bands. The cubic prediction reduces the maximum Ricci–clock band residual on the highest wave from $9.538\times10^{-4}$ for a constant to $9.335\times10^{-8}$. At the lowest wave its maximum residual is $3.754\times10^{-10}$.
+
+🟢 [Done] Extended the independently derived series to $z^5$ using the probe expansion through $q^{12}$. In the Ricci–clock projection the extra coefficients are $-3.54094144\times10^{-6}z^4$ and $+3.10820852\times10^{-7}z^5$. The constant is stable under the change of expansion order and the independent Gaussian rules, with a Ricci–clock value of $-1.04\times10^{-17}$ in the kernel at the higher order. Against the production data, the maximum Ricci–clock band residual decreases to $3.537\times10^{-10}$ at the highest wave and $3.571\times10^{-14}$ at the lowest. Over all sixteen band and momentum combinations, subtracting the derived nonconstant terms gives an $RX$ band constant in $[7.31567634,7.31569432]\times10^{-4}$ and a Ricci–clock band constant in $[-3.537\times10^{-10},-5.409\times10^{-15}]$. This residual range combines the finite longitudinal volume, truncation of the local series, and numerical effects.
+
+🟢 [Done] Refined the lowest-wave doubled box at $L_x=7.2$ with 97 longitudinal points in the shortest band. The 89-to-97 comparison passes in both orientations. The separate-box Ricci–clock refinement variation decreases from $1.031\times10^{-8}$ to $2.831\times10^{-10}$. The new box difference is $-5.138\times10^{-12}$, and the 97-point residual against the independently derived $z^5$ series is $-5.174\times10^{-12}$. The box difference remains below the observed refinement variation. Substituting both matched waves gives conventional linear, quadratic, and cubic cutoff intercepts $-5.906\times10^{-9}$, $+5.687\times10^{-9}$, and $-7.258\times10^{-9}$. This extrapolation still depends on the fit degree. The directly derived local mixed coefficient and the freely fitted intercept measure different levels of control of finite-momentum terms.
+
+### Independent pure-curvature matching and a local sphere benchmark
+
+🟢 [Done] Extended the independent expansion to the conformal and shear probes in [pure_local_expansion.py](experiments/pure_local_expansion.py). At second amplitude order the local trace contains the diagonal second derivative and a pair of first derivatives linked by the flat heat divided difference. For input longitudinal momentum $k$, the shifted contribution has the weight $\int_0^1 du\,e^{-u(2k\delta q+q^2)}$ for $\delta=\pm1$ after extracting the flat Gaussian. The two metric–clock and ghost traces are evaluated separately and combined as $K_{bb}^{\rm boson}-2K_{bb}^{\rm ghost}$, with the two real Fourier phases divided out. The independent Gaussian rules reproduce the conformal volume term $24/(16\pi^2)$ at scaled time one and zero for the volume-preserving shear. Subtract the volume term and isolate the $q^2$ Einstein term before comparing $q^4$ responses.
+
+In the action integrand with measure $ds/s$, the local Einstein coefficient is $15/(64\pi^2s)$, and the scalar-squared and Ricci-squared logarithmic coefficients are consistent numerically with $-1/(1280\pi^2)$ and $-43/(1920\pi^2)$, respectively. These are in the action normalization of the production traces and the bulk basis modulo the Euler density. The Einstein coefficients inferred from the two orientations agree. The two periodic probes leave the Euler coefficient unidentified.
+
+🟢 [Done] Validated both probes at two physical wave numbers and all four proper-time bands with analytic transverse continuum moments. The longitudinal pairs are 53-to-57 points and, for the shortest band, 57-to-65. All pass the pointwise trace and 9-to-17-node quadrature checks. The independently derived Einstein kernel is subtracted before quadrature to keep its integration error out of the $q^4$ comparison. The band residual of the independent expansion through $q^{10}$ is smaller than the observed longitudinal-plus-quadrature variation in each row. For harmonic two at $\sigma=0.024$, the two-probe scalar-squared estimate after removing the independent higher terms is $-7.91552\times10^{-5}$, compared with the directly derived $-7.91572\times10^{-5}$.
+
+🟢 [Done] Added a flat CFT control with the same matched local band action in [matched_pure_ball.py](experiments/matched_pure_ball.py). Write $A,B,D$ for its $R,R^2,\mathrm{Ricci}^2$ coefficients. For a flat reference sphere its curvature-derivative entropy and first-order generalized-volume variation are
+
+$$
+S_{\rm Wald}=4\pi\int_{\partial B}(A+2BR+D[-R_{uu}+R_{nn}])\,dA,
+\qquad
+\delta W=\delta V+A^{-1}\int_B[3B\,\delta R+(D/2)(\delta R-2\delta R_{uu})],dV_0.
+$$
+
+The standard local smooth-cone Ricci term adds $-2\pi D\int k^2dA$ to the entropy for this static slice. Shift $W$ by the corresponding surface term with linear variation $r\delta S_{\rm cone-Wald}/(8\pi A)$. The code verifies the resulting fixed-$W$ entropy equals the Wald-pair result and agrees with the Weyl representative with topologically completed Euler term. This is a local conical completion. It does not specify the microscopic clock and ghost sewing. [Fursaev, Patrushev, and Solodukhin, squashed cones](https://arxiv.org/abs/1306.4000) · [Bueno et al., paired entropy and volume ambiguities](https://arxiv.org/abs/1612.04374)
+
+Use the static cosine Fourier component from the difference of the two improved-scalar standing-wave preparations with opposite relative phases. Its density amplitude, per inverse normalization volume, is $2q/3$. Conservation and tracelessness give zero longitudinal pressure and transverse pressures equal to half the density. The constraint solution has $\Phi=2\Psi$ and $\Psi_0=\rho_0/(-4Aq^2+4Dq^4)$. The linearized trace and momentum constraints vanish for this profile. Integrate the independently fixed flat-vacuum CFT modular kernel on the ball. For normalized $q=0.8$ the separate $r^4$ coefficients from the Einstein term, the fixed-$W$ Ricci term, and the state are $-2.80378858$, $-0.00356556$, and $+2.80735414$. Their analytic sum is zero, and the four-radius quadrature has maximum absolute residual divided by $r^4$ below $5\times10^{-12}$. This test uses the matched local action as a continuum effective action. It does not evaluate a finite-band microscopic replica trace at these radii. [Casini, Huerta, and Myers, flat CFT ball modular kernel](https://arxiv.org/abs/1102.0440)
+
+For the active clock, the matched smooth $\lambda RX$ term adds $4\pi\lambda\int_{\partial B}X\,dA$ to the curvature derivative and $3\lambda/(2A)\int_B X\,dV$ to the local volume functional at the Einstein reference normalization. The same action contributes $\lambda[XG_{\mu\nu}+(g_{\mu\nu}\Box-\nabla_\mu\nabla_\nu)X+R\nabla_\mu T\nabla_\nu T]$ to the metric variation and $-2\lambda\nabla_\mu(R\nabla^\mu T)$ to the clock variation for $X=(\nabla T)^2$. These smooth variations specify inputs to the physical constraint solve. The local flat CFT test does not involve those active-clock sources or their canonical state response.
+
+🟠 [Next] For the physical clock-aligned sphere, derive the replica total derivatives, boundary and finite renormalization data, and the reduced clock state response in the same regulator. The local flat CFT cancellation leaves the physical preferred-clock $r^4$ test open.
+
+🟠 [Next] Before a physical sphere subtraction, match the counterterms and finite renormalization conditions independently. Derive the generalized volume, boundary terms, constraint response, and state response from the same action and regulator. Preserve the hierarchy $a\ll\sqrt{s}\ll r$ in the renormalized small-ball comparison and demand an independently measured nonzero $r^4$ signal in at least one on-shell test. The causal-diamond identity on a maximally symmetric reference is a benchmark. Applying it to a reference with a preferred clock requires checking the background symmetry and clock contributions. [Bueno et al., higher-order entanglement equilibrium](https://arxiv.org/abs/1612.04374)
+
 ### Punctured cone and the canonical tip condition
 
 🟢 [Done] Matched the punctured-cone boundary to the finite-energy canonical gluing and exhibited an alternative tip prescription with a surviving entropy shift. Reproduce the most slowly converging radial sector with [punctured_cone.py](experiments/punctured_cone.py).
@@ -1954,13 +2351,15 @@ After removing the transverse-integrated $d^{-2}$ factor, the final interval $30
 
 The integrated shell information at $d=36$ is approximately $5.78\times10^{-36}$ and $5.58\times10^{-36}$ nats per unit area. The active rates are closer to the predicted light rates than the full integrated rates, while the exactly separated fixed-momentum rates approach their respective predictions to within $0.001$. The finite-distance and regulator uncertainties are still too large to claim an integrated continuum exponent at this precision.
 
-### Highest-priority follow-up
+### Follow-up for the disjoint-slab calculation
 
-🟠 [Next] Evaluate the branch amplitudes as functions of transverse momentum and compare a two-scale asymptotic expansion with the integrated active-block response. Refine the pure-mode treatment and vary the normal grid, transverse grid, and covariance floor independently. Use the asymptotic amplitudes to test the continuum extrapolation without interpreting disjoint-slab information as a local gravitational entropy coefficient.
+🔴 [Later] Evaluate the branch amplitudes as functions of transverse momentum and compare a two-scale asymptotic expansion with the integrated active-block response. Refine the pure-mode treatment and vary the normal grid, transverse grid, and covariance floor independently. Use the asymptotic amplitudes to test the continuum extrapolation without interpreting disjoint-slab information as a local gravitational entropy coefficient.
 
 ## 3. Joint gravitational response in a single model
 
 ### Entropy-response filter
+
+For the coupled clock–gravity candidate, use the regional algebra and normalized trace tested in the [cut-and-glue calculation](#implementation-order-and-decision-criteria). The vacuum Einstein composition test calibrates the boundary prescription. The microscopic candidate must also satisfy the entropy and geometric response criteria below.
 
 This filter tests whether a candidate's microscopic entropy can be matched to its independently reconstructed geometry at the accuracy needed to start the joint gravitational response tests. The default target is the Einstein area term. A higher-derivative candidate may use a different geometric entropy functional and fixed quantity if both are specified independently before the comparison.
 

@@ -26,7 +26,9 @@ class FourierBlock(FourDimensionalWard):
                               * torch.fft.fft(field, dim=0), dim=0).real
 
 
-def operators(size, momentum, amplitude, velocity, clock_axis=0, shear=False, project_zero=True, harmonic=1, clock_correction_only=False, length_x=None):
+def operators(size, momentum, amplitude, velocity, clock_axis=0, shear=False,
+              project_zero=True, harmonic=1, clock_correction_only=False, length_x=None,
+              *, include_ghost=True):
     model = FourierBlock(size, momentum, length_x=length_x)
     zero_sector = not any(momentum) and project_zero
     phase = torch.arange(1 if zero_sector else 3) * (2 * torch.pi / 3)
@@ -98,9 +100,9 @@ def operators(size, momentum, amplitude, velocity, clock_axis=0, shear=False, pr
     boson = hessian(boson_action)(torch.zeros(nphase * nsite * 11))
     local_rotation = torch.eye(11, dtype=torch.complex128)
     local_rotation[:10, :10] += (1j - 1) * torch.outer(trace, trace)
-    rotation = torch.kron(torch.eye(nphase * nsite, dtype=torch.complex128), local_rotation)
-    rotated = rotation.T @ boson.to(torch.complex128) @ rotation
-    if clock_correction_only:
+    blocks = boson.to(torch.complex128).reshape(nphase * nsite, 11, nphase * nsite, 11)
+    rotated = torch.einsum("ab,pbqc,cd->paqd", local_rotation.T, blocks, local_rotation).reshape(boson.shape)
+    if clock_correction_only or not include_ghost:
         return rotated, torch.zeros((0, 0))
     ghost = jacfwd(ghost_apply)(torch.zeros(nphase * nsite * 4))
     return rotated, ghost

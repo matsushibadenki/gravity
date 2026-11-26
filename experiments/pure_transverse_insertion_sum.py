@@ -5,7 +5,7 @@ from itertools import product
 import numpy as np
 
 from direct_curvature_insertion import operator_jets, second_trace
-from transverse_insertion_sum import WAVE
+from transverse_insertion_sum import WAVE, continuum_moments
 
 
 def sample_trace(size, shear, times, harmonic, length_x, momentum, project_zero=False):
@@ -27,7 +27,7 @@ def zero_projection_trace_shift(size, shear, times, harmonic, length_x):
     return delta if shear else delta + 24
 
 
-def response(size, shear, times, harmonic=1, length_x=1.8):
+def transverse_polynomial(size, shear, times, harmonic, length_x):
     nodes = [(0, 0, 0), (1, 0, 0), (2, 0, 0)]
     if shear:
         nodes.extend(((0, 1, 0), (0, 2, 0), (1, 1, 0), (0, 1, 1)))
@@ -50,9 +50,31 @@ def response(size, shear, times, harmonic=1, length_x=1.8):
     coefficients = np.linalg.solve([monomials(p) for p in nodes], [sample(p) for p in nodes])
     check = (1, 2, 1) if shear else (3, 0, 0)
     np.testing.assert_allclose(monomials(check) @ coefficients, sample(check), atol=1e-7, rtol=1e-7)
-    infrared = sample((0, 0, 0), True) - coefficients[0]
+    return coefficients, monomials
+
+
+def continuum_response(size, shear, times, harmonic, length_x):
+    """Restore the global sector and integrate the transverse heat polynomial."""
+    coefficients, _ = transverse_polynomial(size, shear, times, harmonic, length_x)
+    one, two, three = continuum_moments(times)
+    if shear:
+        moments = np.column_stack((three[:, 0], one[:, 1]*two[:, 0], one[:, 2]*two[:, 0],
+                                   one[:, 0]*two[:, 1], one[:, 0]*two[:, 2], one[:, 1]*two[:, 1],
+                                   one[:, 0]*one[:, 1]**2))
+    else:
+        moments = three[:, :3]
+    total = np.sum(moments * coefficients.T, axis=1)
+    if not shear:
+        k = 2 * np.pi * np.fft.fftfreq(size, length_x / size)
+        total -= 24 * three[:, 0] * np.exp(-times[:, None]*k**2).sum(axis=1)
+    return total
+
+
+def response(size, shear, times, harmonic=1, length_x=1.8, caps=(3, 5, 8)):
+    coefficients, monomials = transverse_polynomial(size, shear, times, harmonic, length_x)
+    infrared = sample_trace(size, shear, times, harmonic, length_x, (0, 0, 0), True) - coefficients[0]
     result = {}
-    for cap in (3, 5, 8):
+    for cap in caps:
         p = np.array(list(product(range(-cap, cap+1), repeat=3)))
         p2 = (p*p).sum(axis=1)
         heat = np.exp(-times[:, None] * WAVE**2 * p2)
