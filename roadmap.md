@@ -87,6 +87,35 @@ Here $Y=P_2(\cos\theta)$ and $c'$ is the radial derivative. The mixed metric ter
 
 🟠 [Next] Retain the charged smearings and construct a common inner-ball and outer-shell discretization. Determine the interface measure with the proper orbits removed on each side and independently compose the sourced amplitude. The proper-constraint algebra supplies a bulk consistency check. The residual boundary measure and geometric source map remain open.
 
+### Charged lapse–shift pairing across the sphere
+
+🟢 [Done] Used common Cartesian polynomial smearings on the inner ball and outer annulus with radii $1$ and $2$. For a shift-generated metric variation $h=\mathcal L_W\delta$, the scalar constraint $C_h$ vanishes identically. The bulk contraction $\int h_{ij}(\partial_i\partial_j N-\delta_{ij}\Delta N)$ must therefore equal minus the oriented lapse flux. The code computes the contraction by exact volume moments and the flux independently by exact surface moments. Subtract the known outer-sphere contribution when comparing the two sides at the seam. [Exact ball and annulus check](experiments/einstein_even_shell.py)
+
+For charged lapse basis $(Y,r^2Y)$ and shift basis $(Qx,Yx)$, the inner contraction divided by $\pi$ is
+$$
+\begin{pmatrix}
+8 &16/5\\
+56/5 &-16/5
+\end{pmatrix}.
+$$
+It has rank two and determinant $-1536/25$ in this convention. The charged block on the shell has the opposite oriented cut contribution. Adding lapse smearings with both seam traces zero and shifts with seam value zero leaves the cut contraction zero in every added row and column. This gives a boundary pairing to preserve during reduction. Its determinant depends on the smearing coordinates and on the action normalization. Computing the quantum seam measure still requires the canonical boundary variables and the treatment of diagonal and relative transformations.
+
+🟠 [Next] Build the constrained interface phase space with this pairing and the induced metric matching conditions. Determine the Jacobian for integrating the shared geometric data and test it against the sourced radial composition control.
+
+### Canonical measure of the charged interface block
+
+🟢 [Done] Put the nondegenerate charged quadrupole pairing into geometric coordinates on both faces. In the shift basis $(Qx,Yx)$ the variations of the induced trace amplitude and trace-free Hessian amplitude are the columns of $U=\left(\begin{smallmatrix}-1&2\\1&0\end{smallmatrix}\right)$. If $D$ is the mixed pairing in the preceding section and $a,b$ are lapse and shift coefficients, the block has coordinates $h=Ub$ and $p=U^{-T}D^Ta$. Their oriented symplectic pairing reproduces $a^TDb$. An overall common action factor may be absorbed into $p$.
+
+Impose the two induced metric matching conditions $h_+-h_-=0$ in this block. With opposite symplectic signs on the faces, these commute and generate a common shift of $p_+$ and $p_-$. Fix their average, leaving the common induced metric $h$ and relative momentum $p_+-p_-$ as canonical coordinates. The Faddeev–Popov determinant cancels the coordinate Jacobian exactly, including under a nondiagonal rescaling of the gauge conditions. The result is the canonical Liouville measure in these variables. This calculation fixes the normalization of the isolated charged block under metric matching. It leaves the embedding of the block into the bulk constraint surface and any further junction conditions to the full reduction. [Exact interface reduction](experiments/einstein_interface_measure.py)
+
+🟠 [Next] Construct the projection from constrained ball and annulus data onto these interface variables and the radiative master field. Derive the residual measure after all junction conditions and use the same geometric source in independent glued and uncut amplitudes.
+
+### Intrinsic-curvature source and the static radial response
+
+🟢 [Done] Derived a geometric quadrupole source for a displaced unit sphere. Write the induced metric perturbation as $cY\gamma_{AB}+d(D_AD_BY)^{\rm TF}$ before accounting for a radial displacement $\zeta Y$. Its intrinsic scalar curvature perturbation is $4(c+3d+2\zeta)Y$. Under a spatial coordinate shift with normal and angular amplitudes $w$ and $v$, $(c,d,\zeta)$ change by $(2w-6v,2v,-w)$. The curvature source is invariant when the embedding transforms along with the metric.
+
+For the static scalar-potential vacuum control choose $h_{ij}=-2\Phi\delta_{ij}$ with the relational embedding fixed in this gauge. Normalize the angular source by the harmonic norm so that it couples to the curvature coefficient. At radius one the source $j$ couples as $-8j\,u(1)$ with $u=r\Phi$ in unit radial action normalization. The regular and exterior Dirichlet solutions for the test box are proportional to $r^3$ and $r^{-2}-r^3/32$. Solving the sourced jump equation directly and composing the two interval actions give the same response $62j/5$. The radial lattice test uses the same mapped source against both amplitudes. This is the static potential control. The physical action normalization and the projection onto the dynamical Einstein master variable, including the junction conditions and determinant, remain to be derived. [Geometric source check](experiments/einstein_geometric_quadrupole.py)
+
 ## Established results
 
 | Test | Result |
