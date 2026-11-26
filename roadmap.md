@@ -42,6 +42,51 @@ Keep the completed bulk coefficient and flat-sphere calculations as controls. Re
 
 - 🟠 [Next] Extend this calculation to the spherical boundary. Integrations by parts in the lapse and shift constraints change the generator when smearing functions have nonzero boundary values. Derive those surface terms, evaluate the constraint and gauge Jacobians with the same allowed boundary data on each side, and compare the induced seam measure with the radial master-field control. The Fourier calculation fixes the bulk normalization. The boundary charge measure and the source map to the induced two-metric remain open.
 
+### Surface terms of the linearized ADM generators
+
+🟢 [Done] Derived the surface terms before eliminating lapse and shift. On a flat spatial slice, set $C_h=\partial_i\partial_j h_{ij}-\Delta h_{ii}$ and $C^i_\pi=2\partial_j\pi^{ij}$ in the flux sign convention. With outward normal $n$ and $\partial_n=n^i\partial_i$ the Green identities are
+$$
+\begin{aligned}
+\int_D \big[N C_h-h_{ij}(\partial_i\partial_j N-\delta_{ij}\Delta N)\big]\,d^3x
+&=\int_{\partial D}\big[Nn_i(\partial_jh_{ij}-\partial_i h_{jj})
+-n_i h_{ij}\partial_j N+h_{jj}\partial_n N\big]\,dA,\\
+\int_D (W_i C^i_\pi+2\pi^{ij}\partial_j W_i)\,d^3x
+&=\int_{\partial D}2W_i n_j\pi^{ij}\,dA.
+\end{aligned}
+$$
+
+For $N=0$ on the sphere the first flux reduces to $(\partial_n N)\operatorname{tr}_{\Sigma}h$. Multiplying the flux by the Einstein normalization $1/(16\pi G_{\rm N})$ gives $\int_\Sigma (\partial_n N)\delta(dA)/(8\pi G_{\rm N})$, since $\delta(dA)=\tfrac12\operatorname{tr}_{\Sigma}h\,dA$. Thus even lapse smearings vanishing on the seam can carry a boost charge. Pure gauge generators supported away from the seam have zero boundary flux. For a common smooth smearing across an artificial seam, the opposite oriented fluxes cancel when their geometric data agree. The shift tests the normal momentum flux, while a nonzero lapse value also probes first derivatives of the metric.
+
+🟢 [Done] Tested both Green identities on the inner ball, outer shell, and their union using an axisymmetric quadrupole. The one-sided dimensionless lapse and shift fluxes at unit radius are $10.0530964915$ and $5.0265482457$. Both internal sums vanish and the lapse flux agrees with the independent area variation. The polynomial probe is an off-shell test of the identities. [Boundary calculation](experiments/einstein_adm_boundary.py)
+
+🟠 [Next] Construct the spherical constraint and gauge matrices with these surface terms. Retain the nonvanishing boundary charges when defining the proper gauge subgroup and determine the residual mode and seam Jacobians. Compare the induced metric source with the radial master-field source. The boundary identities supply tests for this construction. The induced quantum seam measure remains open.
+
+### Spherical lapse constraint and boundary trace matrix
+
+🟢 [Done] Assembled the quadrupolar lapse matrix on the unit ball with conformal metric probes $h_{ij}=f\delta_{ij}$. Expand both $f$ and $N$ in $r^2P_2(\cos\theta)$ times Legendre polynomials in $2r^2-1$. The bulk matrix represents $\int N(-2\Delta f)\,d^3x$. Its antisymmetric part is exactly the Green flux $2\int_\Sigma(f\partial_n N-N\partial_n f)\,dA$. The code computes the volume and boundary matrices independently.
+
+Let $T$ return the two radial boundary traces $(N(1),N'(1))$. For basis sizes 4, 6, 8, and 10, the boundary matrix has rank two and vanishes on $\ker T$. The restricted bulk constraint matrix has full row rank on $\ker T$, with dimensions 2, 4, 6, and 8 respectively. For this canonical lapse block, its singular vectors give gauge coordinates for the proper momentum shifts. The Faddeev–Popov determinant cancels the corresponding delta-function Jacobian to within $1.1\times10^{-14}$ in log measure. The two lapse traces remain available to probe the seam. This rank counts boundary data in the restricted ansatz. A count of physical gravitational edge modes requires the full gauge and constraint system. [Reproduction script](experiments/einstein_spherical_lapse.py)
+
+🟠 [Next] Include the independent even-parity metric and momentum components and radial and angular shift constraints in the spherical matrix. Use the same angular and radial spaces on each face for the oriented charge match, then determine the induced interface measure and compare the geometric quadrupole source with the master-field source.
+
+### Even-parity quadrupole boundary charge map
+
+🟢 [Done] Extended the spherical calculation to independent even-parity boundary traces of the metric and momentum. On the unit sphere write $h_{rr}=aY$, $h_{rA}=bD_A Y$, and the tangential trace as $2cY$, in a frame with unit tangential normalization at each radius. Include the tangential trace-free component independently. Write the corresponding momentum amplitudes as $p$ and $s$ for the radial and mixed components. In a common radial orientation the four flux coefficients paired with the lapse value, lapse slope, radial shift, and gradient shift are
+$$
+\frac{4\pi}{5}(2a-12b-2c-2c',\ 2c,\ 2p,\ 12s).
+$$
+Here $Y=P_2(\cos\theta)$ and $c'$ is the radial derivative. The mixed metric term receives equal contributions from the tangential divergence and from the angular derivative of the lapse in the Green identity. All coefficients use the flux normalization of the preceding ADM calculation.
+
+🟢 [Done] The boundary matrix computed by angular quadrature has rank four, with a five-dimensional kernel on the nine input trace amplitudes. The calculation verifies cancellation for opposite orientations when the four paired charges agree, including a test with different one-sided traces in the kernel of the charge map. Independent jumps in the four charges are detected by the four smearings. The common tangential trace-free metric remains part of induced metric matching even though this charge map is insensitive to it. Charge matching therefore supplies four linear tests alongside continuity of geometric data. [Boundary charge matrix](experiments/einstein_even_boundary.py)
+
+🟠 [Next] Construct the radial bulk matrices for these even-parity components and test the first-class algebra for the zero-trace lapse and shift smearings. Use the charge map as a boundary test and derive the remaining seam Jacobian from the constrained canonical measure. The boundary matrix alone does not determine that Jacobian or the map from the induced metric source to the master variable.
+
+### Even-parity radial constraint algebra
+
+🟢 [Done] Constructed exact polynomial Galerkin matrices on the unit ball for the proper lapse and both even-parity shift components. The tensor basis consists of radial polynomials multiplying $YI$, $Q$, $x(Qx)^T+(Qx)x^T$, and $Yxx^T$, where $Y=x^TQx=r^2P_2$ and $Q=\operatorname{diag}(-1/2,-1/2,1)$. Lapses contain $(1-r^2)^2$ and shifts contain $(1-r^2)$, which kill their boundary fluxes. The rows are the integrated pairings with $\partial_i\partial_j N-\delta_{ij}\Delta N$ and $-(\partial_i W_j+\partial_j W_i)$, respectively. The inverse tensor Gram matrix enters the canonical contraction. The shift gradients are reconstructed exactly in the tensor basis before computing the mixed bracket. Consequently a projection of the gauge variations cannot be responsible for the zero bracket. Same-kind brackets vanish because their rows depend only on the metric or only on its canonical momentum. The test uses exact unit-ball polynomial moments. [Reproduction script](experiments/einstein_even_bulk.py)
+
+🟠 [Next] Retain the charged smearings and construct a common inner-ball and outer-shell discretization. Determine the interface measure with the proper orbits removed on each side and independently compose the sourced amplitude. The proper-constraint algebra supplies a bulk consistency check. The residual boundary measure and geometric source map remain open.
+
 ## Established results
 
 | Test | Result |
