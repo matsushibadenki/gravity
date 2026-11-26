@@ -41,9 +41,13 @@ def shift_gradient(shift):
     return derivative + derivative.T
 
 
-def check(order):
-    tensors = [R2**j * tensor for j in range(order + 3) for tensor in
+def tensor_basis(order):
+    return [R2**j * tensor for j in range(order + 3) for tensor in
                (Y * I, Q, X * (Q * X).T + (Q * X) * X.T, Y * X * X.T)]
+
+
+def assemble(order):
+    tensors = tensor_basis(order)
     lapses = [Y * R2**j * (1 - R2)**2 for j in range(order)]
     shifts = [R2**j * (1 - R2) * vector for j in range(order)
               for vector in (Q * X, Y * X)]
@@ -60,9 +64,14 @@ def check(order):
         reconstructed = sum((gauge_vectors[j, column] * tensor
                              for j, tensor in enumerate(tensors)), sp.zeros(3))
         assert (reconstructed + field).applyfunc(sp.expand) == sp.zeros(3)
-    assert scalar * gauge_vectors == sp.zeros(order, 2 * order)
+    return gram, scalar, vector
+
+
+def check(order):
+    gram, scalar, vector = assemble(order)
+    assert scalar * gram.inv() * vector.T == sp.zeros(order, 2 * order)
     assert scalar.rank() == order and vector.rank() == 2 * order
-    print(f"order={order}: tensor modes={len(tensors)}, "
+    print(f"order={order}: tensor modes={gram.rows}, "
           f"constraint ranks=({order}, {2 * order}), mixed bracket exactly zero")
 
 
