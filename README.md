@@ -156,9 +156,20 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Physical flux density on the smooth embedded junction.** The two-face symplectic pullback retains both common fluxes and agrees with the direct Dirac density in the linear trace-and-frame model. Using this density for the shared endpoint packets yields the same constrained geometric and master amplitudes. The original ADM integral with independent relative frames remains open. [Embedded trace calculation](experiments/einstein_physical_flux_density.py)
 
+- **Independent relative-frame determinant.** The linear trace model with independent frames on the two faces gives a rank-16 mixed junction matrix. Its determinant reproduces the direct Dirac density while retaining the common physical flux. The resulting packet gives the same reduced geometric and master response. [Relative-frame determinant](experiments/einstein_relative_frame_density.py)
+
+- **Frame histories in the physical transfer.** The tensor-derived packet matrix now contains independent two-face time, tangent and boost histories and their charge momenta before frame constraints. With the declared smooth reduced junction it agrees with the master determinant and curvature-source response. The endpoint measure before bulk constraint elimination remains open. [Frame-extended transfer](experiments/einstein_polynomial_packet_phase.py)
+
+- **Strong tensor flux pairing.** With both geometric traces matched, pure common flux shifts have zero bulk pairing at fixed master momentum. The spatial embedding shift charge supplies a candidate conjugate relative displacement. Its survival under the full geometric junction is unresolved. [Strong tensor flux test](experiments/einstein_strong_flux_pairing.py)
+
+- **Dressed spatial displacement.** The ADM momentum pairing reproduces both oriented shift charges. A compensating embedding cancels the coordinate variation, and smooth matching of both induced trace and shear fixes both relative displacement components in this block. The dynamical geometric flux measure remains open. [Spatial embedding junction](experiments/einstein_spatial_embedding_junction.py)
+
+- **Normal-frame fluxes.** A time displacement and a normal boost give explicit linear corrections to both quadrupole fluxes. For a surface-fixed lapse with a varying normal frame, the bare combination $a+2b$ is invariant under its slope. The dressed two-face matching gives two independent relations among the bare jumps and relative frame variables. Their physical brackets remain open. [Normal-frame flux calculation](experiments/einstein_normal_frame_flux.py)
+
 ## Open problems
 
-- Complete the original ADM time-link integral with the physical geometric Hessian, a derived contour, the displaced collar source, and the geometric embedding measure. Compare its boundary determinant and finite source term with the master transfer using the same endpoint packets.
+- The next calculation tests whether radial and angular flux define independent physical observables after smooth ADM gluing. Derive the fluxes with the time-dependent boundary frame and radiative traces retained. Compare the two orders of constraint reduction on the same regulated phase space. This determines which endpoint packet can be prepared. [Decision criteria and evidence](roadmap.md#decision-after-the-common-flux-tests)
+- Once the endpoint state is identified, complete the original ADM time-link integral with the physical geometric Hessian, a derived contour, the displaced collar source, and the geometric embedding measure. Compare the absolute amplitude and the finite source response with the master transfer for that state.
 - Derive the allowed low-energy states, physical regional algebra, and regulator matching in a single microscopic model that passes the entropy-response filter.
 - Match the smooth gravitational determinant and geometric boundary terms to the proper-distance collar. Determine the finite curvature and clock contributions independently and repeat the moving-ball test across perturbation profiles.
 - Derive a common causal cone, two gapless tensor polarizations, and the same Newton coupling from vacuum entropy and static response.

@@ -54,6 +54,52 @@ def tensor_forms(order):
     return kinetic_matrix, link_matrix
 
 
+def add_frame_links(action, phase, drive, sites, steps, inverse, pairing_form):
+    """Attach independent two-face frame coordinates and momenta to each link."""
+    # Per face: coordinate at every slice, charge momentum on every link.
+    coordinates = 3*(steps+1)
+    momenta = 3*steps
+    size = len(action)
+    width = 2*(coordinates+momenta)
+    enlarged = block_diag(action, np.zeros((width, width), dtype=complex))
+    constraints = np.zeros((width, size+width))
+    row = 0
+    for side, orientation in ((0, 1), (1, -1)):
+        start = size+side*(coordinates+momenta)
+        for t in range(steps):
+            frame = np.arange(start+3*t, start+3*t+3)
+            charge = np.arange(start+coordinates+3*t, start+coordinates+3*t+3)
+            enlarged[np.ix_(frame, charge)] += 1j*orientation*np.eye(3)
+            enlarged[np.ix_(frame+3, charge)] -= 1j*orientation*np.eye(3)
+            constraints[row:row+3, charge] = np.eye(3)
+            # Match the linear ADM charge definitions while keeping T,X,eta free.
+            seam = (t+1)*sites-2
+            constraints[row, seam:seam+2] = [-.6, .4]
+            constraints[row+1, frame] = [.6, 0., -.6]
+            constraints[row+2, seam+1] = -.1
+            # In the declared trace polarization f=B^T p. The last
+            # two canonical momenta are obtained using the pairing matrix.
+            physical = slice((steps+1+t)*sites, (steps+2+t)*sites)
+            constraints[row+1, physical] = -np.linalg.solve(
+                inverse.T, pairing_form[-2:, :])[1]
+            row += 3
+    enlarged = enlarged + enlarged.T
+    enlarged[:size, :size] = action
+    for t in range(steps+1):
+        left = np.arange(size+3*t, size+3*t+3)
+        right = left+coordinates+momenta
+        constraints[row:row+3, left] = np.eye(3)
+        constraints[row:row+3, right] = -np.eye(3)
+        constraints[row+3:row+6, left] = np.eye(3)/2
+        constraints[row+3:row+6, right] = np.eye(3)/2
+        row += 6
+    assert row == width
+    assert np.isclose(np.linalg.slogdet(constraints[:, size:])[1], 0, atol=1e-12)
+    bordered = np.block([[enlarged, constraints.T],
+                         [constraints, np.zeros((width, width))]])
+    return bordered, np.pad(phase, (0, 2*width)), np.pad(drive, (0, 2*width))
+
+
 def integrate_phase(order, steps, inverse, tensors):
     kappa, sigma, dt = .3, .2, 1/steps
     stiffness, mass, load = assemble(order, geometric=True)
@@ -92,6 +138,8 @@ def integrate_phase(order, steps, inverse, tensors):
     action = np.block([[block_diag(action, zero), gauge.T], [gauge, zero]])
     phase_source = np.r_[phase_source, np.zeros(len(kinetic)+2*len(fp_links))]
     drive = np.r_[drive, np.zeros(len(kinetic)+2*len(fp_links))]
+    action, phase_source, drive = add_frame_links(
+        action, phase_source, drive, sites, steps, inverse, pairing_form)
     bordered_log, phase_square, linear, quadratic = integrate_spatial_embedding(
         action, phase_source, drive, sites, steps)
     # Include the normalized Euclidean momentum-link measure and FP density.
