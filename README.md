@@ -166,6 +166,12 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Normal-frame fluxes.** A time displacement and a normal boost give explicit linear corrections to both quadrupole fluxes. For a surface-fixed lapse with a varying normal frame, the bare combination $a+2b$ is invariant under its slope. The dressed two-face matching gives two independent relations among the bare jumps and relative frame variables. Their physical brackets remain open. [Normal-frame flux calculation](experiments/einstein_normal_frame_flux.py)
 
+- **Oriented lapse-slope charge.** At matched induced area the common radial lapse derivative has zero total ADM charge. A relative lapse derivative pairs with the shared area when the frame is fixed. The compensating boost cancels its charge variation in the extended area–boost sector. [Charge calculation](experiments/einstein_boost_junction_charge.py)
+
+- **Compensated slopes on time links.** The master momentum and dressed fluxes are invariant on the linear constraint surface. The canonical link variation telescopes to a boost-polarization endpoint phase and vanishes link by link in area polarization. [Time-link check](experiments/einstein_boost_time_links.py)
+
+- **Kinetic surface energy under lapse slopes.** A common slope cancels between faces at matched bare fluxes. Independent slopes change the bare kinetic surface energy. Substituting the boost-corrected fluxes gives the required quadratic completion at fixed zero time displacement. The comparison with the tilted ADM boundary action remains open. [Kinetic surface check](experiments/einstein_boost_kinetic_boundary.py)
+
 ## Open problems
 
 - The next calculation tests whether radial and angular flux define independent physical observables after smooth ADM gluing. Derive the fluxes with the time-dependent boundary frame and radiative traces retained. Compare the two orders of constraint reduction on the same regulated phase space. This determines which endpoint packet can be prepared. [Decision criteria and evidence](roadmap.md#decision-after-the-common-flux-tests)

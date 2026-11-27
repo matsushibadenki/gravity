@@ -633,6 +633,26 @@ The linear ADM lapse jet $(N,N')$ shifts $(a,b)$ by the same matrix that acts on
 
 Using the same radial reference normal on both faces, equality of the dressed fluxes relates the two bare jumps to the relative time and boost. The matrix has determinant $4/r^3$. If one also imposes equality of both bare components, the relative time and boost vanish in this block. This rank condition is kinematic. Classification of the slope transformation as proper gauge requires the full boundary symplectic form and the allowed boost charge. The calculation supplies candidate junction rows for the comparison of the two reduction orders.
 
+### Lapse slope and the oriented boost charge
+
+🟢 [Done] For a lapse that vanishes on the sphere, let $s_L,s_R$ denote its radial derivatives in a common radial reference direction. Let $h_L,h_R$ be the amplitudes of the full induced trace, including the dressed spatial displacement and the radiative metric contribution. The linearized ADM Green identity gives the oriented charge $c(s_Lh_L-s_Rh_R)$, where $c=r^2/(20G_{\rm N})$ for $Y=P_2$. In average and jump variables its expression is $c(\bar s\Delta h+\Delta s\bar h)$. At matched induced area the common derivative has zero total charge. An independent jump in the derivative still couples to the shared area in the bulk generator.
+
+The oriented corner potential in the convention $\delta_s\eta=-s$ is $-c(h_L\delta\eta_L-h_R\delta\eta_R)$. In the convention $\Omega=\delta\Theta$, its contraction cancels the bulk charge variation for the compensated transformation on each face. On the matched-area surface the corner potential is $-c\bar h\delta(\Delta\eta)$. Thus varying the relative normal frame alone pairs with the shared area, while changing the lapse slope together with its compensating boost is null in this part of the extended form. The dressed flux junction is invariant under the compensated change. A fixed-frame boundary problem instead retains the area charge for a relative lapse slope when area variations are allowed. [Symbolic charge calculation](experiments/einstein_boost_junction_charge.py)
+
+🟠 [Next] Include these oriented rows in the joint dynamical constraint and gauge matrix. Check the kernel against the radiative and time-link junctions before quotienting either compensated slope. Derive the brackets and the independent endpoint state coordinates on that quotient.
+
+### Compensated lapse slopes on canonical time links
+
+🟢 [Done] On each face, arbitrary surface-fixed lapse slopes on successive slices leave the linear radiative master momentum and the frame-corrected flux amplitudes invariant. For a constraint-satisfying metric increment with induced trace amplitude $\Delta h$, the ADM kinetic term varies by $-c\bar s\Delta h$, with the overall face orientation understood. The boost-polarized corner term varies by $c\bar h\Delta s$. The midpoint product rule combines the two into $c\Delta(hs)$, where $c=r^2/(20G_{\rm N})$. This telescopes on a time lattice with an independent slope on every slice. The area polarization differs by $c\delta(h\eta)$ and cancels the variation link by link. [Canonical link check](experiments/einstein_boost_time_links.py)
+
+In boost polarization an open kernel therefore has an endpoint phase for a transformation that acts at the temporal endpoints. Opposite normals cancel the common phase at matched induced trace. A relative transformation leaves an endpoint term proportional to the shared trace and the slope jump. A state transported between the two polarizations must account for that term. This check uses the linear constraint surface and canonical kinetic term. The independent ADM Hamiltonian boundary terms, multiplier transformations, and determinant of the full time-link matrix still enter the comparison of reduction orders.
+
+### Kinetic surface energy under independent lapse slopes
+
+🟢 [Done] In the strong-constraint kinetic form, factor out the common Einstein and harmonic normalization and write the oriented endpoint energy as $B(a,b)=r^3(a^2+12ab+12b^2)/4$. At fixed master momentum a surface-fixed lapse slope $s$ changes it by $2r^2as-2rs^2$. At identical initial bare traces the oriented variations cancel for a common slope. For independent slopes their sum is $2r(s_L-s_R)(ra-s_L-s_R)$. Thus the bare ADM kinetic form generally varies even though the compensated canonical time-link variation is an endpoint term. [Kinetic surface check](experiments/einstein_boost_kinetic_boundary.py)
+
+With time displacement fixed at zero, evaluating $B$ on the frame-corrected fluxes gives the invariant completion $B(a,b)+2r^2a\eta-2r\eta^2$. Its additional term has zero value at $\eta=0$ and cancels the bare variation for each face. This calculation derives the term required by kinetic invariance in this sector. Whether the actual tilted ADM boundary Hamiltonian supplies that term, together with the required multiplier transformations, remains open. Compare its coefficients directly before using the completed form in a determinant or a packet normalization.
+
 ## Established results
 
 | Test | Result |
