@@ -691,6 +691,30 @@ The transformation has unit Jacobian and preserves the exterior derivative of th
 
 For the alternative matched flat isometric reference, the first-order reference sphere displacement is $rKY/2$. The mean-curvature variation is $2KY/r$. With the perturbed area element included, reference subtraction gives $E_{\rm sub}=-3\Psi/(5G_{\rm N})$. In the geometric $\beta$ coordinate its potential differs from the Green potential by $4A_c\,\delta T/r$. This extra one-face term cancels in the oriented sum when both $K$ and $T$ match. It contributes to the presymplectic form before matching, so the reference functional and endpoint conditions must be fixed when comparing the two reductions.
 
+### Temporal and boost junction with a fluctuating area
+
+🟢 [Done] In the strong ADM trace sector at fixed master momentum, write the unsubtracted corner in the adapted coordinate $\beta=\eta-T/r$ and use metric-coordinate polarization. The two frame columns are the lapse-value and lapse-slope columns of the ADM trace matrix. Shifting $(T,\beta)$ by $(-N,-N')$ cancels both bulk momentum shifts. Matching both metric traces and the fluxes defined with these frame columns gives a zero shared mixed block. The pullback gives the same result whether the frame directions are quotiented first or matching is imposed first. [Exact rank calculation](experiments/einstein_temporal_dressed_junction.py)
+
+Keeping the original geometric transformation $(\delta T,\delta\eta)=(-N,-N')$ instead gives $\delta\beta=-N'+N/r$. Its residual is an area–time pairing of rank one in this trace sector. In units of $I_Y/(16\pi G_{\rm N})$ the normalized coefficient against $\delta K$ is $-2rN$ before reference subtraction and $+6rN$ with the matched flat isometric reference. The respective common transformations cancel in the oriented sum at matched area. Relative transformations still pair with the shared area. The algebra therefore distinguishes two transformation laws that agree for surface-fixed lapses. Determining the proper geometric time transformation requires the full time-dependent embedding and multiplier variation before constructing the flux packet.
+
+### Lapse jet from a fixed timelike tube
+
+🟢 [Done] In flat spacetime keep the tube at $r=R$ and displace the ADM slice by the time graph $N(r)Y$. The future normal to the new slice has radial component $N'Y$. The future normal to its cut within the tube has zero radial component. Both normals have the same tangential component $D^A(NY)/R^2$. Their relative rapidity in the common outward radial convention is therefore $\delta\eta=-N'Y$. The inverse time-label displacement is $\delta T=-NY$. This gives the amplitude $\delta\beta=-N'+N/R$. [Fixed tube geometry](experiments/einstein_fixed_tube_lapse_jet.py)
+
+The fixed-tube geometry selects the trace calculation with a relative time–area pairing. With matched area the common lapse-value variation cancels between opposite orientations. A relative lapse value retains the rank-one area term in that sector of the unsubtracted calculation. This result concerns the geometric transformation at a flat round reference tube. Full Hamiltonian reduction still requires the boundary evolution multipliers and the momenta conjugate to the independent embeddings.
+
+### Reduced relative time and area pair
+
+🟢 [Done] At fixed master momentum pull back the two-face strong trace form to matched $(\Psi,K)$ and matched geometrically dressed fluxes. Keep both boost angles and both time embeddings independent during the pullback. The mixed block has rank one, with potential $p_K\,\delta K$. In the left-minus-right orientation $p_K=r\Delta T/(10G_{\rm N})$ for the unsubtracted corner and $p_K=-3r\Delta T/(10G_{\rm N})$ with the matched flat isometric reference. Thus the surviving two-form in this sector is $\delta p_K\wedge\delta K$. It gives local Liouville densities $r/(10G_{\rm N})$ and $3r/(10G_{\rm N})$ in $(K,\Delta T)$, respectively, before any time matching or endpoint projection. [Exact pullback](experiments/einstein_relative_time_area.py)
+
+The common dressed flux columns vanish at fixed master momentum even with the relative time retained. The densities are for the time–area pair. The physical flux density requires the bulk symplectic form, temporal junction constraints and endpoint conditions from the same action.
+
+### Relative time with dynamical radiative momentum
+
+🟢 [Done] For a sewn linear strong-constraint trace, let $q_j$ be smooth master configuration coordinates and $p_j$ their dual momenta. The induced trace is $K=\sum_j k_j q_j$ at the seam, from $K=\Psi'+3\Psi/r$. The radiative and time–area potentials combine to $\sum_j[p_j+C\Delta T k_j]\delta q_j$, where $C$ is the coefficient of the chosen reference prescription. The change of radiative momenta has unit Jacobian with the configurations and relative time held fixed. The pullback therefore has a null variation $\delta p_j=-C k_j\delta(\Delta T)$, and both common dressed flux columns remain zero. This is exact in the linear block. The symbolic check uses two regular modes $r^3,r^5$ with seam coefficients $6,8$ at radius one. [Radiative and time–area check](experiments/einstein_radiative_time_area.py)
+
+The earlier separate time–area pair describes the restriction at fixed radiative momentum. With radiative momentum included the area coordinate belongs to the radiative configuration space, so the extra term shifts its momentum. To classify the joint null variation, apply it to the time-link Hamiltonian and the embedding momentum constraints before computing a quotient measure.
+
 ## Established results
 
 | Test | Result |

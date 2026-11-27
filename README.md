@@ -182,6 +182,14 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Adapted temporal corner coordinate.** The unsubtracted mean-curvature and Green charges give the same corner potential after the unit-Jacobian change $\beta=\eta-T/r$. A matched flat reference subtraction contributes an additional area-dependent term before matching. [Corner polarization check](experiments/einstein_temporal_corner_shear.py)
 
+- **Temporal junction rank.** The adapted time and boost shifts give a zero shared trace block in either reduction order. Holding the transformation law of the original boost fixed instead leaves a relative time–area pairing when the area fluctuates. [Exact rank calculation](experiments/einstein_temporal_dressed_junction.py)
+
+- **Fixed tube lapse jet.** The slice and cut normals give the geometric transformation $\delta\eta=-N'$ and $\delta\beta=-N'+N/r$ on the round reference tube. It selects the relative time–area pairing in the linear trace calculation. [Fixed tube geometry](experiments/einstein_fixed_tube_lapse_jet.py)
+
+- **Relative time and area.** Matching the geometric traces and dressed fluxes leaves a rank-one mixed block at fixed master momentum. Its conjugate pair is shared induced trace and relative time. The common flux columns vanish in this sector. [Exact pullback](experiments/einstein_relative_time_area.py)
+
+- **Radiative momentum and relative time.** Allowing radiative momentum to fluctuate absorbs the time–area term by a unit-Jacobian momentum shift. The common dressed flux directions still have zero pairing in the tested block. [Radiative symplectic check](experiments/einstein_radiative_time_area.py)
+
 ## Open problems
 
 - The next calculation tests whether radial and angular flux define independent physical observables after smooth ADM gluing. Derive the fluxes with the time-dependent boundary frame and radiative traces retained. Compare the two orders of constraint reduction on the same regulated phase space. This determines which endpoint packet can be prepared. [Decision criteria and evidence](roadmap.md#decision-after-the-common-flux-tests)
