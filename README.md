@@ -142,6 +142,14 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Geometric flux packet before matching.** The oriented endpoint action pairs the common flux with the jump of the geometric traces. Matching both geometry and flux removes that endpoint pairing. The Gaussian in the pre-matching jump polarization is normalized explicitly. Its map to the Dirac packet of the bulk tensor regulator remains open. [Flux polarization](experiments/einstein_flux_junction_symplectic.py)
 
+- **Separate endpoint traces.** The constrained geometric and master transfers agree when both use the same normalized jump packet. The earlier packet on the Dirac-reduced shared trace produces a different curvature response in the tested regulator. The embedding-dependent state map and full ADM boundary measure remain open. [Endpoint comparison](experiments/einstein_jump_packet_transfer.py)
+
+- **Sharp endpoint projection.** Evaluating the geometric jump packet at a smooth junction leaves a constant on the shared trace. The Dirac packet instead has nonzero Gaussian curvature there. A link incident to an independent jump retains time and boost charge phases even with matched frames. Their full ADM integration remains open. [Projection and frame-phase calculation](experiments/einstein_jump_state_reduction.py)
+
+- **Endpoint time and boost integral.** A Gaussian integral of the common frame increments penalizes geometric jumps without generating the shared-trace Dirac packet. With the same regulated endpoint prescription, the constrained geometric and master calculations agree. The embedding weight from the full ADM action remains open. [Endpoint frame integral](experiments/einstein_endpoint_frame_integral.py)
+
+- **Sharp projection with a shared-state preparation.** Canonical Fourier projection of the jump packet leaves a constant. A separately specified normalized shared Dirac packet restores agreement of the constrained geometric and master transfers. The full original ADM endpoint multiplier measure remains open. [Sharp endpoint calculation](experiments/einstein_sharp_endpoint_measure.py)
+
 ## Open problems
 
 - Complete the original ADM time-link integral with the physical geometric Hessian, a derived contour, the displaced collar source, and the geometric embedding measure. Compare its boundary determinant and finite source term with the master transfer using the same endpoint packets.
