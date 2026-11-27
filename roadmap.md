@@ -715,6 +715,18 @@ The common dressed flux columns vanish at fixed master momentum even with the re
 
 The earlier separate time–area pair describes the restriction at fixed radiative momentum. With radiative momentum included the area coordinate belongs to the radiative configuration space, so the extra term shifts its momentum. To classify the joint null variation, apply it to the time-link Hamiltonian and the embedding momentum constraints before computing a quotient measure.
 
+### Hamiltonian preservation of the relative-time direction
+
+🟢 [Done] In the two-mode radiative truncation, with canonical momentum $P=p+T v$ for relative time $T=\Delta T$ and $v=C\,dK$, the bare kinetic term is $(P-Tv)^TM^{-1}(P-Tv)/(2\kappa)$. Here $M$ is the positive Gram matrix of the radial profiles on the uncut interval. With the primary condition $p_T=0$, its preservation gives $v^TM^{-1}(P-Tv)/\kappa=0$. The bracket of the two conditions has magnitude $v^TM^{-1}v/\kappa>0$. The Dirac density cancels the integration Jacobian in $T$. Eliminating $T$ yields a kinetic Hessian of rank one in this two-mode example, while both canonical radiative coordinates remain in the symplectic form. Both reference prescriptions give this result. [Hamiltonian preservation check](experiments/einstein_relative_time_hamiltonian.py)
+
+If the full Hamiltonian preserves the relative-time null direction and agrees with the reference kinetic energy at $T=0$, its kinetic part in bare momentum coordinates requires the correction $T p^TM^{-1}v/\kappa+T^2v^TM^{-1}v/(2\kappa)$. Match these two coefficients and the primary embedding condition to the full boundary action before assigning the physical classification. The rank loss is for the bare kinetic model with the stated primary condition.
+
+### Radial refinement of the relative-time kinetic coefficient
+
+🟢 [Done] The coefficient $v^TM^{-1}v/\kappa$ in the required kinetic completion is the squared dual norm of $C K/\sqrt{\kappa}$ on the regulated radiative kinetic space. The free radial kinetic norm is $\int |\Psi|^2dr$. At seam radius $R$, take $\Psi=h x(1-x^2)^3$ on $|x|\leq1$, with $x=(r-R)/h$, and extend by zero. This profile is $C^2$, vanishes outside the seam neighborhood, and has $K=\Psi'(R)+3\Psi(R)/R=1$. Its squared norm is $2048h^3/45045$. A space containing this direction gives $v^TM^{-1}v/\kappa\geq45045 C^2/(2048\kappa h^3)$. Hence the sharp trace is unbounded on the continuum kinetic space. This lower bound uses the profile width and makes no rate claim for a specific lattice or polynomial cutoff. [Refinement calculation](experiments/einstein_relative_time_refinement.py)
+
+🟠 [Next] Derive the relative-time coupling and its quadratic completion in a single geometric regulator before removing the radial cutoff. A fixed-width averaged trace has the square-integrable representative $-w'(r)+3w(r)/r$ when $w$ vanishes at the collar endpoints. For a parabolic collar its derivative contribution has squared norm $3/(2h^3)$. The prescribed half-width $1/8$ applies to the moving curvature source. Deriving a corresponding averaged relative-time term from the action is a distinct step. Track the leading cutoff sensitivity in the sharp prescription and compare any cancellation in the Hamiltonian before assigning a finite packet density.
+
 ## Established results
 
 | Test | Result |

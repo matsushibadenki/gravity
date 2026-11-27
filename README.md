@@ -190,6 +190,10 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Radiative momentum and relative time.** Allowing radiative momentum to fluctuate absorbs the time–area term by a unit-Jacobian momentum shift. The common dressed flux directions still have zero pairing in the tested block. [Radiative symplectic check](experiments/einstein_radiative_time_area.py)
 
+- **Relative-time Hamiltonian check.** In the bare two-mode model the relative-time condition and its preservation form a second-class pair. The calculation fixes the kinetic correction required for a gauge direction in the completed boundary Hamiltonian. [Preservation check](experiments/einstein_relative_time_hamiltonian.py)
+
+- **Radial refinement of the time–area shift.** Seam-localized test profiles show that the sharp induced trace is unbounded in the radiative kinetic norm. The quadratic coefficient grows at least as the inverse cube of the test width in spaces containing these profiles. [Refinement calculation](experiments/einstein_relative_time_refinement.py)
+
 ## Open problems
 
 - The next calculation tests whether radial and angular flux define independent physical observables after smooth ADM gluing. Derive the fluxes with the time-dependent boundary frame and radiative traces retained. Compare the two orders of constraint reduction on the same regulated phase space. This determines which endpoint packet can be prepared. [Decision criteria and evidence](roadmap.md#decision-after-the-common-flux-tests)
