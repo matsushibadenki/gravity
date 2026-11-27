@@ -653,6 +653,44 @@ In boost polarization an open kernel therefore has an endpoint phase for a trans
 
 With time displacement fixed at zero, evaluating $B$ on the frame-corrected fluxes gives the invariant completion $B(a,b)+2r^2a\eta-2r\eta^2$. Its additional term has zero value at $\eta=0$ and cancels the bare variation for each face. This calculation derives the term required by kinetic invariance in this sector. Whether the actual tilted ADM boundary Hamiltonian supplies that term, together with the required multiplier transformations, remains open. Compare its coefficients directly before using the completed form in a determinant or a packet normalization.
 
+### Quasilocal energy check of the kinetic completion
+
+🟢 [Done] For unit boundary lapse and zero boundary shift, use the Einstein quasilocal term $-\int k\,dA/(8\pi G_{\rm N})$, with $k$ the outward mean curvature in the boundary-adapted normal frame. Keep the intrinsic geometry and reference subtraction fixed in the comparison. On the round background, $k=2/r$ and the first-order future-normal trace is $-aY$. The normal boost $\eta Y$ gives a second-order change $\Delta k=(-a\eta+\eta^2/r)Y^2$ from the Lorentz transformation of the two traces. After angular integration the energy difference is $[I_Y/(16\pi G_{\rm N})](2r^2a\eta-2r\eta^2)$, with $I_Y=4\pi/5$. This agrees with both coefficients of the previously required kinetic completion. [Symbolic energy check](experiments/einstein_boost_boundary_energy.py) · [Booth and Mann, nonorthogonal boundary Hamiltonian](https://arxiv.org/abs/gr-qc/9810009)
+
+🟠 [Next] Keep the boundary evolution vector fixed while decomposing it into ADM lapse and shift on both faces. Include the tangential momentum term and the time-dependent corner contribution on the same links to test the full compensated null direction before defining the packet measure.
+
+### Fixed boundary evolution with a tangential shift
+
+🟢 [Done] At a common round reference sphere, hold the boundary evolution vector fixed with arbitrary adapted lapse $L$ and tangential shift $V^A$. In the ADM normal frame its lapse and radial shift are $(N,V^\perp)=L(\cosh\eta,\sinh\eta)$. Under a boost $s$ of that frame the rapidity changes to $\eta-s$, while the two mean-curvature traces $(k,\ell)$ transform by the opposite matrix to $(N,V^\perp)$. The resulting boundary energy combination $Nk+V^\perp\ell$ is invariant. The tangential term uses the adapted normal connection $\omega_A+D_A\eta$. Its two changes $D_As$ and $-D_As$ cancel even for angularly varying $s$ and nonzero $V^A$. [Boundary evolution check](experiments/einstein_boundary_evolution_boost.py)
+
+These identities hold on each face and permit independent frame changes on successive time slices. Together with the midpoint canonical-link identity they give bulk-constraint-surface invariance of the tested canonical and boundary Hamiltonian terms in area polarization. In boost polarization the canonical endpoint phase still applies. The result uses a fixed boundary evolution vector and reference subtraction. An independent time-dependent deformation of the physical tube is a separate variation.
+
+🟠 [Next] Implement the fixed-evolution multiplier transformations and the dressed geometric junction in the unreduced regulator. Compare the kernel and reduced Liouville form for the two constraint orders. The boundary invariance identities alone do not determine the rank of the dressed flux bracket or the endpoint measure.
+
+### Order of boost reduction and dressed trace matching
+
+🟢 [Done] At unit reference radius, fixed time embedding and fixed master momentum, the strong-constraint one-face trace pairing in $(\Psi,K)$ against $(a,b)$ is $M=\left(\begin{smallmatrix}-3&-6\\1&0\end{smallmatrix}\right)$ after taking out the common normalization. The area-polarized corner adds the column $(0,-2)^T=M(-2,1)^T$ for $\eta$. The resulting rank-two form has the compensated boost direction $(-2,1,-1)$ in its kernel. It factors through the two dressed fluxes $(a-2\eta,b+\eta)$. [Exact trace calculation](experiments/einstein_dressed_trace_pairing.py)
+
+With independent boosts on the two faces, pulling back to matched $(\Psi,K)$ and matched dressed fluxes gives a zero mixed block. Quotienting the boosts on each face before matching gives the same block. This calculation holds at fixed master momentum. It neither supplies a bracket for independent flux observables on the full sewn phase space nor shows that a flux varying with the radiative data is absent. The joint reduction still needs the time embedding, its charge, and the full unreduced ADM constraints.
+
+### Temporal embedding charge and its area dependence
+
+🟢 [Done] Compared the lapse-value column of the strong ADM trace pairing with the gradient of the mean-curvature energy used in the temporal frame constraint $p_T=-E$. Use the same radial orientation, the even quadrupole in spatial Regge–Wheeler gauge, and normalization $I_Y/(16\pi G_{\rm N})$. The lapse-value shift in $(a,b)$ is $(6,-1)/r^2$. Contracting it with the endpoint trace pairing gives the gradient of $(-12\Psi+6rK)/(20G_{\rm N})$. The unsubtracted mean-curvature energy in the sign convention of $E$, including its perturbed area element, is $(-12\Psi+8rK)/(20G_{\rm N})$. The two agree in the master-trace direction. Their difference is $rK/(10G_{\rm N})$ and contributes when $K$ fluctuates. [Temporal charge check](experiments/einstein_temporal_trace_charge.py)
+
+The difference cancels from the oriented charge jump at matched induced metric. It remains in the independent one-face charge gradients used for constraint brackets. Determine its treatment by varying the fixed boundary evolution data and reference prescription in the same action before comparing the two reduction orders with fluctuating time embedding.
+
+### Temporal corner charge in the adapted boost coordinate
+
+🟢 [Done] At fixed reference radius the area charge is $A_c=r^2K/(10G_{\rm N})$. The unsubtracted mean-curvature charge and ADM Green charge satisfy $E_{\rm BY}=E_{\rm Green}+A_c/r$. With $p_T=-E$ and $p_\eta=A_c$, the one-face corner potentials obey
+$$
+-E_{\rm BY}\,\delta T+A_c\,\delta\eta
+=-E_{\rm Green}\,\delta T+A_c\,\delta\beta,
+\qquad \beta=\eta-T/r .
+$$
+The transformation has unit Jacobian and preserves the exterior derivative of the potential. The same adapted coordinate determines the gradient contribution to the normal connection. The identity holds on both faces before matching, with their respective orientations. [Corner polarization check](experiments/einstein_temporal_corner_shear.py)
+
+For the alternative matched flat isometric reference, the first-order reference sphere displacement is $rKY/2$. The mean-curvature variation is $2KY/r$. With the perturbed area element included, reference subtraction gives $E_{\rm sub}=-3\Psi/(5G_{\rm N})$. In the geometric $\beta$ coordinate its potential differs from the Green potential by $4A_c\,\delta T/r$. This extra one-face term cancels in the oriented sum when both $K$ and $T$ match. It contributes to the presymplectic form before matching, so the reference functional and endpoint conditions must be fixed when comparing the two reductions.
+
 ## Established results
 
 | Test | Result |

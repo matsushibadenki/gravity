@@ -172,6 +172,16 @@ QIEG studies whether entropy and spacetime geometry emerge from the same quantum
 
 - **Kinetic surface energy under lapse slopes.** A common slope cancels between faces at matched bare fluxes. Independent slopes change the bare kinetic surface energy. Substituting the boost-corrected fluxes gives the required quadratic completion at fixed zero time displacement. The comparison with the tilted ADM boundary action remains open. [Kinetic surface check](experiments/einstein_boost_kinetic_boundary.py)
 
+- **Quasilocal boost energy.** At unit boundary lapse and zero boundary shift the boost of the mean curvature reproduces both coefficients of the kinetic completion, including the Einstein normalization. The remaining Hamiltonian check uses the full lapse and shift decomposition of the boundary evolution vector. [Energy check](experiments/einstein_boost_boundary_energy.py)
+
+- **Fixed boundary evolution.** The lapse and radial shift terms combine into a frame-invariant boundary energy. The boost gradient in the normal connection keeps the nonzero tangential-shift term invariant. The unreduced constraint determinant and dressed flux bracket remain open. [Boundary evolution check](experiments/einstein_boundary_evolution_boost.py)
+
+- **Dressed trace pairing.** At fixed time embedding and master momentum, the compensating boost is a one-face null direction. Matching both metric traces and dressed fluxes gives a zero shared mixed block in either order of boost quotient and matching. [Symbolic trace calculation](experiments/einstein_dressed_trace_pairing.py)
+
+- **Temporal embedding charge.** The ADM lapse-value column and unreferenced quasilocal energy agree in the master-trace direction. Their difference lies entirely in the induced area and cancels from the jump at matched area. [Temporal charge check](experiments/einstein_temporal_trace_charge.py)
+
+- **Adapted temporal corner coordinate.** The unsubtracted mean-curvature and Green charges give the same corner potential after the unit-Jacobian change $\beta=\eta-T/r$. A matched flat reference subtraction contributes an additional area-dependent term before matching. [Corner polarization check](experiments/einstein_temporal_corner_shear.py)
+
 ## Open problems
 
 - The next calculation tests whether radial and angular flux define independent physical observables after smooth ADM gluing. Derive the fluxes with the time-dependent boundary frame and radiative traces retained. Compare the two orders of constraint reduction on the same regulated phase space. This determines which endpoint packet can be prepared. [Decision criteria and evidence](roadmap.md#decision-after-the-common-flux-tests)
