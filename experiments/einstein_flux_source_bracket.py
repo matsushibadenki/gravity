@@ -8,7 +8,7 @@ from einstein_even_shell import integrate
 from einstein_trace_dirac_sewing import poisson
 
 
-def rows(tensors, lower, upper, lo, hi):
+def rows(tensors, lower, upper, lo, hi, proper_distance=False):
     gram = sp.Matrix([[integrate(sum(a*b for a, b in zip(left, right)),
                                     lower, upper)/sp.pi
                        for right in tensors] for left in tensors])
@@ -19,7 +19,13 @@ def rows(tensors, lower, upper, lo, hi):
     for tensor in tensors:
         c = ((tensor[0, 0]+tensor[1, 1])/2).subs({x: 0, y: 0, z: r})
         three_d = (tensor[2, 2]-tensor[1, 1]).subs({x: r, y: 0, z: 0})
-        source.append(sp.integrate(sp.expand(4*rho*(c+three_d)/r**2),
+        curvature = c+three_d
+        if proper_distance:
+            # Proper radial distance to the fixed central sphere.
+            radial = tensor[2, 2].subs({x: 0, y: 0, z: r})
+            displacement = -sp.integrate(radial/2, (r, 1, r))
+            curvature += 2*displacement/r
+        source.append(sp.integrate(sp.expand(4*rho*curvature/r**2),
                                    (r, lo, hi)))
     count = len(tensors)
     trace = trace_rows(tensors)

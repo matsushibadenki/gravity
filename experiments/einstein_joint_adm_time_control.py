@@ -10,8 +10,8 @@ from einstein_flux_source_bracket import rows as collar_rows
 from einstein_even_shell import integrate
 
 
-def region(tensors, lo, hi, sign, projected_gauge=False):
-    gram, q, f, lapse, shift = region_rows(tensors, lo, hi)
+def region(tensors, lo, hi, sign, projected_gauge=False, spatial_order=None, whole=False):
+    gram, q, f, lapse, shift = region_rows(tensors, lo, hi, (1-R2)*(4-R2) if whole else None)
     gram, q, f, lapse, shift = map(lambda value: np.array(value, dtype=float),
                                    (gram, q, f, lapse, shift))
     inverse = np.linalg.inv(np.linalg.cholesky(gram))
@@ -21,7 +21,7 @@ def region(tensors, lo, hi, sign, projected_gauge=False):
     proper = block_diag(lapse @ inverse.T, shift @ inverse.T)
     gauge = proper @ poisson
     if projected_gauge:
-        cutoff = (1-R2) * ((4-R2) if lo else 1)
+        cutoff = (1-R2) * ((4-R2) if lo or whole else 1)
         image = lapse_gradient(Y*cutoff**2).trace()
         trace_row = np.array([integrate(image*tensor.trace(), lo, hi)/pi
                               for tensor in tensors], dtype=float)
@@ -31,19 +31,54 @@ def region(tensors, lo, hi, sign, projected_gauge=False):
         assert abs((gauge @ poisson @ proper.T)[0, 0]) > 0
     traces = block_diag(q @ inverse.T, f @ inverse.T)
     bounds = (Rational(7, 8), 1) if lo == 0 else (1, Rational(9, 8))
-    _, _, load = collar_rows(tensors, lo, hi, *bounds)
+    if whole:
+        bounds = (Rational(7, 8), Rational(9, 8))
+    _, _, load = collar_rows(tensors, lo, hi, *bounds, proper_distance=spatial_order is not None)
     source = block_diag(inverse, inverse) @ np.array(load, dtype=float).ravel()
     trace_gram = np.array([[integrate(a*b, lo, hi)/pi for b in
                                 [tensor.trace() for tensor in tensors]]
                            for a in [tensor.trace() for tensor in tensors]], dtype=float)
     kinetic = unit-inverse@trace_gram@inverse.T/2
-    return sign*poisson, np.vstack((proper, gauge)), traces, source, kinetic
+    result = sign*poisson, np.vstack((proper, gauge)), traces, source, kinetic
+    if spatial_order is not None:
+        from einstein_tensor_spatial_energy import spatial_hessian
+        return (*result, spatial_hessian(spatial_order, lo, hi, inverse), inverse)
+    return result
 
 
-def check(steps=3, projected_gauge=False):
-    tensors = tensor_basis(2)
-    left, right = (region(tensors, 0, 1, 1, projected_gauge),
-                   region(tensors, 1, 2, -1, projected_gauge))
+def compare_fresnel(action, joint, subspace, source, constraint_log, pullback_log):
+    """Compare signed Gaussian factors in the bordered and reduced controls."""
+    bordered = np.block([[action, joint.T],
+                         [joint, np.zeros((len(joint), len(joint)))]])
+    reduced = subspace.T @ action @ subspace
+
+    def factor(matrix, density_log):
+        spectrum = np.linalg.eigvalsh(matrix)
+        assert np.min(abs(spectrum)) > 1e-10
+        signature = np.sign(spectrum).sum()
+        value = (density_log-np.log(abs(spectrum)).sum())/2
+        return value-1j*np.pi*signature/4, int(signature)
+
+    full, signature = factor(bordered, constraint_log)
+    direct, direct_signature = factor(reduced, pullback_log)
+    assert signature == direct_signature
+    np.testing.assert_allclose(full, direct, atol=1e-8, rtol=0)
+
+    bordered_source = np.pad(source, (0, len(joint)))
+    projected_source = subspace.T @ source
+    response = bordered_source @ np.linalg.solve(bordered, bordered_source)
+    direct_response = projected_source @ np.linalg.solve(reduced, projected_source)
+    np.testing.assert_allclose(response, direct_response, atol=1e-8, rtol=0)
+    print(f"Lorentzian joint signature={signature}, "
+          f"log factor gap={abs(full-direct):.3e}, "
+          f"source quadratic gap={abs(response-direct_response):.3e}")
+
+
+def check(steps=3, projected_gauge=False, order=2, charge_match=False, open_time=False):
+    tensors = tensor_basis(order)
+    spatial_order = order if open_time else None
+    left, right = (region(tensors, 0, 1, 1, projected_gauge, spatial_order),
+                   region(tensors, 1, 2, -1, projected_gauge, spatial_order))
     n = len(tensors)
     frame_unit = np.eye(3)
     frame_poisson = np.block([[np.zeros((3, 3)), frame_unit],
@@ -65,10 +100,66 @@ def check(steps=3, projected_gauge=False):
         frame[3*side+2] -= .1*k
     gauge_rows = np.vstack((positions[:3]-positions[3:],
                             (positions[:3]+positions[3:])/2))
+    if open_time:
+        # The common clock is fixed. Relative time is an independent
+        # coordinate until consistency of the remaining rows is tested.
+        from einstein_open_time_link import diagnose
+        charge_rows = jump.copy()
+        charge_rows[1] = .4*jump[0]-.6*jump[1]
+        # Canonical momentum coefficients use the Cartesian Gram / pi.
+        # Geometric momentum K_ij-g_ij K is 16 G times these coefficients.
+        delta_t, _, delta_eta = positions[:3]-positions[3:]
+        charge_rows[2] += (6*delta_t-2*delta_eta)/16
+        charge_rows[3] += (-delta_t+delta_eta)/16
+        for side in (0, 1):
+            # 2 * l(l+1) * I_Y/pi multiplies b in the shift generator.
+            frame[3*side+1] -= (9.6-1)*traces[4*side+3]
+        primary = np.vstack((proper, charge_rows, frame, gauge_rows[1:]))
+        hamiltonian = block_diag(left[5], 32*left[4], right[5], 32*right[4], np.zeros((12, 12)))
+        # Only the symmetric part enters the quadratic action.
+        hamiltonian = (hamiltonian+hamiltonian.T)/2
+        diagnose(primary, poisson, hamiltonian, positions[0]-positions[3],
+                 np.r_[left[3], right[3], np.zeros(12)], steps, order, n, left[6], right[6])
+        return
     constraints = np.vstack((proper, jump, frame, gauge_rows))
     bracket = constraints@poisson@constraints.T
     assert np.linalg.matrix_rank(bracket) == len(bracket)
     assert np.linalg.norm(frame@poisson@jump.T) > 0
+    if charge_match:
+        # Replace the master jump with the lapse-charge jump at G=1.
+        # Keep the raw geometric jump for the existing packet map.
+        charge_basis = np.eye(len(constraints))
+        index = len(proper) + 1
+        charge_basis[index, index-1:index+1] = [.4, -.6]
+        raw_log = np.linalg.slogdet(bracket)[1]
+        constraints = charge_basis @ constraints
+        bracket = constraints @ poisson @ constraints.T
+        np.testing.assert_allclose(np.linalg.slogdet(bracket)[1]-raw_log,
+                                   2*np.log(.6), atol=1e-9, rtol=0)
+        # The source is linear. Check convergence of the original
+        # momentum quadratic on homogeneous allowed directions.
+        momentum_indices = np.r_[np.arange(n, 2*n), np.arange(3*n, 4*n),
+                                 np.arange(4*n+3, 4*n+6), np.arange(4*n+9, 4*n+12)]
+        allowed = null_space(constraints[:, momentum_indices])
+        physical_kinetic = block_diag(left[4], right[4], np.zeros((6, 6)))
+        eigenvalues = np.linalg.eigvalsh(allowed.T@physical_kinetic@allowed)
+        negative = eigenvalues[eigenvalues < -1e-9]
+        assert len(negative) > 0
+        print(f"order={order}: rank={len(bracket)}, physical momentum "
+              f"negative directions={len(negative)}, minimum={negative.min():.9g}")
+        # Real Lorentzian momenta with e^{-i dt H}, regulated with
+        # exp(-epsilon |p|^2/2). This checks the momentum subintegral.
+        assert np.min(np.abs(eigenvalues)) > 1e-9
+        signature = len(eigenvalues)-2*len(negative)
+        scaled = eigenvalues/steps
+        limiting_log = -0.5*np.log(abs(scaled)).sum()-1j*np.pi*signature/4
+        for relative_epsilon in (1e-3, 1e-6, 1e-9):
+            epsilon = relative_epsilon*np.min(abs(scaled))
+            regulated_log = -0.5*np.log(epsilon+1j*scaled).sum()
+            assert abs(regulated_log-limiting_log) < len(scaled)*relative_epsilon
+        print(f"order={order}: momentum dimension={len(scaled)}, signature={signature}, "
+              f"Fresnel log modulus={limiting_log.real:.9g}, "
+              f"unwrapped phase/pi={limiting_log.imag/np.pi:.9g}")
     reduced = null_space(constraints)
 
     # Positive tensor Gaussian for the measure test. The original geometric
@@ -91,6 +182,17 @@ def check(steps=3, projected_gauge=False):
     subspace = np.kron(np.eye(steps+1), reduced)
     raw = np.r_[left[3], right[3], np.zeros(12)]
     source = np.kron(dt*np.sin(np.pi*np.arange(steps+1)/steps), raw)
+    if charge_match:
+        # Physical DeWitt momentum block and the existing control
+        # configuration Hessian. Packet weights are excluded here.
+        lorentzian_quadratic = block_diag(np.eye(n), left[4],
+                                         np.eye(n), right[4], np.zeros((12, 12)))
+        lorentzian = dt*np.kron(np.eye(steps+1), lorentzian_quadratic)
+        lorentzian -= canonical+canonical.T
+        pulled_form = reduced.T @ np.linalg.inv(poisson) @ reduced
+        compare_fresnel(lorentzian, joint, subspace, source,
+                        (steps+1)*np.linalg.slogdet(bracket)[1],
+                        (steps+1)*np.linalg.slogdet(pulled_form)[1])
     charge = jump@poisson@jump.T
     cross = poisson@jump.T
     trace_poisson = average@(poisson+cross@np.linalg.solve(charge, cross.T))@average.T

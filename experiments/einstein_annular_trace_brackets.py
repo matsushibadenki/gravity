@@ -7,7 +7,7 @@ from einstein_even_bulk import Q, R2, X, Y, lapse_gradient, shift_gradient, tens
 from einstein_even_shell import integrate
 
 
-def region_rows(tensors, lower, upper):
+def region_rows(tensors, lower, upper, cutoff=None):
     def dot(left, right):
         integrand = sum(a*b for a, b in zip(left, right))
         return integrate(integrand, lower, upper)/sp.pi
@@ -16,9 +16,8 @@ def region_rows(tensors, lower, upper):
     inverse = gram.inv()
     traces = trace_rows(tensors)
     geometry, flux = traces[:2, :], traces[2:, :]
-    cutoff = 1-R2
-    if lower:
-        cutoff *= 4-R2
+    if cutoff is None:
+        cutoff = (1-R2)*(4-R2) if lower else 1-R2
     lapse = lapse_gradient(Y*cutoff**2)
     shifts = [shift_gradient(cutoff*v) for v in (Q*X, Y*X)]
     lapse_row = sp.Matrix([[dot(lapse, a)] for a in tensors])
